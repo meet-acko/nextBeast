@@ -40,6 +40,7 @@ beforeEach(async () => {
             switch (properties.driverType) {
                 case "webdriverio" : {
                     global.driver = await getDriver();
+                    Helper.setCurrentContext("native");
                     break;
                 }
             }

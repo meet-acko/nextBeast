@@ -6,9 +6,7 @@
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest --config ./config/jest.config.js --forceExit --detectOpenHandles",
     "update-snapshot": "node --experimental-vm-modules node_modules/.bin/jest --config ./config/jest.config.js --forceExit --detectOpenHandles -u",
-    "playwrightExample": "npx playwright test --config=config/playwright.config.js tests/visualPlaywrightExample.test.js",
-    "jestPlaywrightExample": "driverType=playwright npm test tests/visualJestPlaywrightExample.test.js",
-    "jestWebdriverIOExample": "driverType=webdriverio npm test tests/visualJestWebdriverIOExample.test.js",
+    "example": "driverType=webdriverio npm test tests/example.test.js",
     "report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
   },
   "author": "",

@@ -22,8 +22,21 @@ exports.Helper = class Helper{
         console.log(this.file);
         this.request = request;
     }
+
     static async verifySoftAssert(){
         await softAssert.verify();
+    }
+
+    static setCurrentContext(context){
+        this.currentContext = context;
+    }
+    
+    static getCurrentContext(){
+        return this.currentContext;
+    }
+
+    async getSelectorsType(key){
+        return await key.toLowerCase().includes("xpath") ? "xpath" : key.toLowerCase(); 
     }
 
     async sleep(second) {
@@ -464,5 +477,601 @@ exports.Helper = class Helper{
             statenum += num.charAt(Math.floor(Math.random() * numLength));
         }
         return statecode[state] + statenum + city + citycode;
-      }
+    }
+
+    async findRefreshAppElement(elementName, replaceWith, timeOut=60, elementStatus, refreshCount=2){
+        return await this.findAppElement(elementName, replaceWith, timeOut, elementStatus, refreshCount);
+    }
+
+    async findDisplayedElement(elementName, replaceWith, timeOut, elementStatus = "displayed", returnListElements){
+        switch(properties.configType){
+            case "web":{
+                let timerValue = timeOut ? timeOut : 15;
+                return await this.findWebElement(elementName, replaceWith, timerValue, elementStatus, returnListElements);
+            }
+            case "mweb":{
+                let timerValue = timeOut ? timeOut : 15;
+                return await this.findWebElement(elementName, replaceWith, timerValue, elementStatus, returnListElements);
+            }
+            case "android":{
+                let timerValue = timeOut ? timeOut : 40;
+                return await this.findAppElement(elementName, replaceWith, timerValue, elementStatus);
+            }
+        }
+    }
+
+    async findElement(elementName, replaceWith, timeOut, elementStatus){
+        switch(properties.configType){
+            case "web":{
+                let timerValue = timeOut ? timeOut : 15;
+                return await this.findWebElement(elementName, replaceWith, timerValue, elementStatus);
+            }
+            case "mweb":{
+                let timerValue = timeOut ? timeOut : 15;
+                return await this.findWebElement(elementName, replaceWith, timerValue, elementStatus);
+            }
+            case "android":{
+                let timerValue = timeOut ? timeOut : 40;
+                return await this.findAppElement(elementName, replaceWith, timerValue, elementStatus);
+            }
+        }
+    }
+
+    async findAppElement(elementName, replaceWith, timeOut = 10, elementStatus= "clickable", refreshCount=0){
+        let resultElement;
+        return await new Promise(async (resolve, reject) => {
+            try{
+                await fs.readFile(this.file, "utf8", async (err, data) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    var obj = await JSON.parse(data);
+                    if (await obj[elementName]) {
+                        if("context" in obj[elementName])
+                            await this.switchContext(obj[elementName].context);
+                        let startTime = await (new Date()).getTime();
+                        let endTime = await startTime + (timeOut*1000);
+                        let refreshInterval = await parseInt((timeOut*1000)/(refreshCount+1));
+                        let refreshTime = await startTime + await refreshInterval;
+                        while( await ((new Date()).getTime() < endTime)){
+                            switch (await Helper.getCurrentContext()) {
+                                case "native":{
+                                    let selectors = await JSON.parse(JSON.stringify(obj[elementName]));
+                                    if("context" in selectors) delete selectors.context;
+                                    let element;
+                                    for (var key in selectors) {
+                                        try{
+                                            element = await driver.findElement(await this.getSelectorsType(key), await this.replaceElement(selectors[key], replaceWith));
+                                            break;
+                                        }catch(e){
+                                            console.log(e);
+                                        }
+                                    }
+                                    if(await element.ELEMENT){
+                                        resultElement = await element.ELEMENT;
+                                        break;
+                                    }
+                                    await this.sleep(0.5);
+                                }
+                                break;
+                                default:{
+                                    let selectors = await JSON.parse(JSON.stringify(obj[elementName]));
+                                    if("context" in selectors) delete selectors.context;
+                                    let element;
+                                    for (var key in selectors) {
+                                        try{
+                                            element = await driver.$(await this.replaceElement(selectors[key], replaceWith));
+                                            await this.sleep(0.1);
+                                            let webEleExist = await element.isExisting();
+                                            if( await webEleExist && await (elementStatus == "clickable")){
+                                                if (await element.isClickable()) {
+                                                    resultElement = await element;
+                                                    break;
+                                                }
+                                            }else if(await webEleExist && await (elementStatus == "displayed")){
+                                                if (await element.isDisplayed()) {
+                                                    resultElement = await element;
+                                                    break;
+                                                }
+                                            }else if(await webEleExist){
+                                                resultElement = await element;
+                                                break;
+                                            }
+                                        }catch(e){
+                                            console.log(e);
+                                        }
+                                    }
+                                    if(await resultElement){
+                                        break;
+                                    }
+                                    await this.sleep(0.5);
+                                    if(await ((new Date()).getTime() > refreshTime) && await refreshCount >0){
+                                        await driver.refresh();
+                                        await --refreshCount;
+                                        refreshTime += await refreshInterval;
+                                    }
+                                }
+                                break;
+                            }
+                            if(await resultElement) break;
+                        }
+                        if(await resultElement)
+                            resolve(await resultElement);
+                        else
+                            reject(new Error(elementName + " is not found"));
+                    }else{
+                        await reject(new Error(elementName + " is not available in json file"));
+                    }
+                });
+            }catch(e){
+                console.log(e);
+                await reject(new Error(e + "\nElement name is : " + elementName));
+            }
+        });
+    }
+
+    async refreshFlutterPage(){
+        let previousContext = await Helper.getCurrentContext();
+        // await this.sleep(3);
+        await this.switchContext("native");
+        const { width, height } = await driver.getWindowSize();
+        await driver.actions([
+            await driver.action('pointer')
+            .move(parseInt(width/3), parseInt((height * 2) / 10))
+            .down()
+            .move(parseInt(width/3), parseInt((height * 9) / 10))
+            .up()
+            // { action: 'press', options: { x: parseInt(width/3), y: parseInt((height * 2) / 10) }},
+            // { action: 'moveTo', options: { x: parseInt(width/3), y: parseInt((height * 3) / 10) }},
+            // { action: 'moveTo', options: { x: parseInt(width/3), y: parseInt((height * 9) / 10) }},
+            // { action: 'release', options: { }}
+        ]);
+        await this.switchContext(previousContext);
+    }
+
+    async tapOnElement(element){
+        let location;
+        let previousContext = await Helper.getCurrentContext();
+        switch (Helper.getCurrentContext()) {
+            case "webview":
+                // await console.log(await element.getLocation());
+                await this.switchContext("native");
+                location = await driver.getElementRect((await element).elementId);
+                break;
+            case "native":
+                // pass id in this method
+                await this.switchContext("native");
+                location = await driver.getElementRect(element);
+                break;
+            default:
+                break;
+        }
+        await console.log(await location);
+        await this.tapOnCoordinate(parseInt(await location.x) + parseInt(parseInt(await location.width)/10), parseInt(await location.y) + parseInt(parseInt(await location.height)/10));
+        await this.switchContext(previousContext);
+    }
+
+    async tapOnCoordinate(xCoOrdinate, yCoOrdinate){
+        let previousContext = await Helper.getCurrentContext();
+        await this.switchContext("native");
+        if(xCoOrdinate || yCoOrdinate){
+            await driver.actions([
+                await driver.action('pointer')
+                .move(await xCoOrdinate, await yCoOrdinate)
+                .down()
+                .pause(100)
+                .up()
+                // { action: 'press', options: { x: xCoOrdinate, y: yCoOrdinate }},
+                // { action: 'release', options: { }}
+            ]);
+        }else{
+            const { width, height } = await driver.getWindowSize();
+            await driver.actions([
+                await driver.action('pointer')
+                .move(parseInt(width/10), parseInt(height/10))
+                .down()
+                .up()
+                // { action: 'press', options: { x: parseInt(width/10), y: parseInt(height/10) }},
+                // { action: 'release', options: { }}
+            ]);
+        }
+        
+        await this.switchContext(previousContext);
+    }
+
+    async switchContext(context){
+        if(await Helper.getCurrentContext() != context){
+            switch (context) {
+                case "native":
+                    await driver.switchContext("NATIVE_APP"); 
+                    await Helper.setCurrentContext(context);
+                    return;
+                case "webview":
+                    await driver.switchContext("WEBVIEW"); 
+                    await Helper.setCurrentContext(context);
+                    return;
+                default:
+                    await driver.switchContext(context); 
+                    await Helper.setCurrentContext(context);
+                    return;
+            }
+        }
+    }
+
+    async forceClearElement(element){
+        return await this.clearElement(element, true);
+    }
+
+    async clearElement(element, force){
+        switch(properties.configType){
+            case "web":{
+                await element.clearValue();
+                let value = await this.getElement(element);
+                if(!force){
+                    await element.clearValue();
+                    value = await this.getElement(element);
+                    if(await value === '')
+                        return;
+                }
+                await element.click();
+                for(let i=0; i < await value.length; i++){
+                    await driver.keys('\uE003');
+                    await this.sleep(0.1);
+                }
+                value = await this.getElement(element);
+                if(await value === '')
+                    return;
+                throw Error("Element is not getting cleared");
+            }
+            case "mweb":{
+                let value = await this.getElement(element);
+                if(!force){
+                    await element.clearValue();
+                    value = await this.getElement(element);
+                    if(await value === '')
+                        return;
+                }
+                for(let i=0; i < await value.length; i++){
+                    await driver.keys('\uE003');
+                    await this.sleep(0.1);
+                }
+                value = await this.getElement(element);
+                if(await value === '')
+                    return;
+                throw Error("Element is not getting cleared");
+            }
+            case "android":{
+                let value = await this.getElement(element);
+                if(!force){
+                    await driver.elementClear(element)
+                    value = await this.getElement(element);
+                    if(await value === '')
+                        return;
+                }
+                for(let i=0; i < value.length; i++){
+                    await driver.elementSendKeys(element, '\uE003');
+                    await this.sleep(0.1);
+                }
+                value = await this.getElement(element);
+                if(await value === '')
+                    return;
+                throw Error("Element is not getting cleared");
+            }
+        }
+    }
+
+    async getCode(i){
+        switch(i){
+            case "0":
+                return 7;
+            case "1":
+                return 8;
+            case "2":
+                return 9;
+            case "3":
+                return 10;
+            case "4":
+                return 11;
+            case "5":
+                return 12;
+            case "6":
+                return 13;
+            case "7":
+                return 14;
+            case "8":
+                return 15;
+            case "9":
+                return 16;
+            case "A":
+                return 29;
+            case "B":
+                return 30;
+            case "C":
+                return 31;
+            case "D":
+                return 32;
+            case "E":
+                return 33;
+            case "F":
+                return 34;
+            case "G":
+                return 35;
+            case "H":
+                return 36;
+            case "I":
+                return 37;
+            case "J":
+                return 38;
+            case "K":
+                return 39;
+            case "L":
+                return 40;
+            case "M":
+                return 41;
+            case "N":
+                return 42;
+            case "O":
+                return 43;
+            case "P":
+                return 44;
+            case "Q":
+                return 45;
+            case "R":
+                return 46;
+            case "S":
+                return 47;
+            case "T":
+                return 48;
+            case "U":
+                return 49;
+            case "V":
+                return 50;
+            case "W":
+                return 51;
+            case "X":
+                return 52;
+            case "Y":
+                return 53;
+            case "Z":
+                return 54;
+            case "a":
+                return 29;
+            case "b":
+                return 30;
+            case "c":
+                return 31;
+            case "d":
+                return 32;
+            case "e":
+                return 33;
+            case "f":
+                return 34;
+            case "g":
+                return 35;
+            case "h":
+                return 36;
+            case "i":
+                return 37;
+            case "j":
+                return 38;
+            case "k":
+                return 39;
+            case "l":
+                return 40;
+            case "m":
+                return 41;
+            case "n":
+                return 42;
+            case "o":
+                return 43;
+            case "p":
+                return 44;
+            case "q":
+                return 45;
+            case "r":
+                return 46;
+            case "s":
+                return 47;
+            case "t":
+                return 48;
+            case "u":
+                return 49;
+            case "v":
+                return 50;
+            case "w":
+                return 51;
+            case "x":
+                return 52;
+            case "y":
+                return 53;
+            case "z":
+                return 54;
+            case " ":
+                return 62;
+        }
+    }
+
+    async hideKeyboard(){
+        let currentContext = Helper.getCurrentContext();
+        await this.switchContext("native");
+        await driver.hideKeyboard();
+        await this.switchContext(currentContext);
+    }
+
+    async setElement(element, value){
+        switch(properties.configType){
+            case "web":
+                return await element.setValue(value);
+            case "mweb":
+                return await element.setValue(value);
+            case "android":
+                {
+                    switch(Helper.getCurrentContext()){
+                        case "webview":
+                            return await element.setValue(value);
+                        case "native":
+                            return await driver.elementSendKeys(element, "" + value);
+                    }
+                }
+        }
+    }
+
+    async getElement(element){
+        switch(properties.configType){
+            case "web":
+                return await element.getValue();
+            case "mweb":
+                return await element.getValue();
+            case "android":
+                return await driver.getElementText(element);
+        }
+    }
+
+    async savePageSource(context){
+        switch (properties.configType) {
+            case "web":
+                await fs.writeFile( path.resolve( __dirname, "../data/web") +  "/webPageSource.html", await driver.getPageSource(), function(err) {
+                    if(err) {
+                        return console.log(err);
+                    }
+                    console.log("The file was saved!");
+                });   
+                return;
+            case "mweb":
+                await fs.writeFile( path.resolve( __dirname, "../data/web") +  "/webPageSource.html", await driver.getPageSource(), function(err) {
+                    if(err) {
+                        return console.log(err);
+                    }
+                    console.log("The file was saved!");
+                });   
+                return;
+            case "android":
+                switch (context ? context : Helper.getCurrentContext()) {
+                    case "native":
+                        if(context) await this.switchContext("native");
+                        await fs.writeFile( path.resolve( __dirname, "../data/app") +  "/nativeRenderedTree.html", await driver.getPageSource(), function(err) {
+                            if(err) {
+                                return console.log(err);
+                            }
+                            console.log("The file was saved!");
+                        });
+                        return;
+                    case "webview":
+                        if(context) await this.switchContext("webview")
+                        await fs.writeFile( path.resolve( __dirname, "../data/app") +  "/webPageSource.html", await driver.getPageSource(), function(err) {
+                            if(err) {
+                                return console.log(err);
+                            }
+                            console.log("The file was saved!");
+                        });   
+                        return;
+                    default:
+                        return;
+                }
+                return;
+            default:
+                return;
+        }
+    }
+
+    async writeFile(data, relativePath){
+        await new Promise(async (resolve, reject)=>{
+            await fs.writeFile(relativePath, await data, function(err) {
+                if(err) {
+                    reject(err);
+                }
+                resolve();
+            }); 
+        });
+    }
+
+    async switchToMatchingURLWindow(matchingURL, isError = true){
+        switch(properties.configType){
+            case "android":{
+                await this.switchContext("webview");
+            }
+        }
+        let initURL = await driver.getUrl();
+        if(await initURL.includes(matchingURL))
+            return true;
+        let windowsList = await driver.getWindowHandles();
+        for(let i=0; i<windowsList.length; i++){
+            await driver.switchToWindow(await windowsList[i]);
+            let url = await driver.getUrl();
+            if(await url.includes(matchingURL)){
+                return true;
+            }
+        }
+        if(isError)
+            throw new Error("No matching window found");
+        return false;
+    }
+
+    async goBack(count=1){
+        switch(properties.configType){
+            case "web":{
+                for (let i = 0; i < count; i++) {
+                    await driver.back();
+                    await this.sleep(0.5);
+                }
+                return;
+            }
+            case "mweb":{
+                for (let i = 0; i < count; i++) {
+                    await driver.back();
+                    await this.sleep(0.5);
+                }
+                return;
+            }
+            case "android":{
+                let currentContext = await Helper.getCurrentContext();
+                await this.switchContext("native");
+                for (let i = 0; i < count; i++) {
+                    await driver.back();
+                }
+                await this.switchContext(currentContext);
+                return;
+            }
+        }
+    }
+
+    async switchToFrame(frameId){
+        await driver.switchToFrame(frameId);
+    }
+
+    async getUrl(){
+        let currentContext = await Helper.getCurrentContext();
+        await this.switchContext("webview");
+        let url = await driver.getUrl();
+        await this.switchContext(currentContext);
+        return url;
+    }
+
+    async pushFile(filePath, fileBinary){
+        await this.switchContext("native");
+        return await driver.pushFile(filePath, fileBinary)
+    }
+
+    async touchScroll(xoffset, yoffset, element){
+        return await driver.touchScroll(xoffset, yoffset, element)
+    }
+
+    async refresh(){
+        switch(properties.configType){
+            case "web":{
+                return await driver.refresh();
+            }
+            case "mweb":{
+                return await driver.refresh();
+            }
+            case "android":{
+                switch (Helper.getCurrentContext()) {
+                    case "native":
+                        return await this.refreshFlutterPage();
+                    case "webview":
+                        return await driver.refresh();
+                }
+            }
+        }
+    }
 }
