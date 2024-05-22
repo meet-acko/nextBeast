@@ -47,6 +47,13 @@
     "otpFillInput" : {
         "xpath" : "//android.widget.EditText"
     },
+    "verifyButton" : {
+        "xpath" : "//*[contains(@content-desc,'Verify your number')]"
+    },
+    "myPolicyTab": {
+        "context" : "native",
+        "xpath" : "//*[contains(@content-desc,'My policies')]"
+    }, 
     "dontHaveAnyPolicy" : {
         "xpath" : "//*[contains(text(),'t have any policy')]"
     }
