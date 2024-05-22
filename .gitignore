@@ -1,3 +1,14 @@
+allure-results/*
+allure-report/*
+report.xml
+package-lock.json
+**/*.png
+*.txt
+*.html
+**/*.snap
+*.apk
+.DS_Store
+
 # Logs
 logs
 *.log

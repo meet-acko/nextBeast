@@ -1,0 +1,53 @@
+{
+    "noPolicyFoundText" : {
+        "context" : "native",
+        "xpath": "//*[contains(@content-desc,\"don't have any policies\")]"
+    },
+    "skipEnrolment" : {
+        "xpath" : "//*[@content-desc=\"I'll do this later\"]"
+    },
+    "hamburger" : {
+        "xpath" : "//*[@id='header']/*[2]/*"
+    },
+    "loginCTA" : {
+        "xpath" : "//*[text()='Login']"
+    },
+    "otpSentText" : {
+        "xpath" : "//*[contains(text(),'sent to $')]"
+    },
+    "getOTPCTA" : {
+        "xpath" : "//*[text()='Log in']"
+    },
+    "mobileNumberInput" : {
+        "xpath" : "//*[@type='number']",
+        "xpath2" : "//*[contains(text(),'phone number')]/..//input"
+    },
+    "otpInput" : {
+        "xpath" : "(//input)[$]"
+    },
+    "getQuoteCTA" : {
+        "xpath" : "//$[contains(text(),'Get a quote')]"
+    },
+    "skipButton" : {
+        "context" : "native",
+        "xpath" : "//*[@content-desc='Skip']"
+    },
+    "LoginWithPhoneCTA" : {        
+        "xpath" : "//*[@content-desc='Log in with phone number']"
+    },
+    "mobileInput" : {
+        "xpath" : "//android.widget.EditText"
+    },
+    "waitForOtp" : {
+        "xpath" : "//*[contains(@content-desc,'sent to $')]"
+    },
+    "continueButton" : {
+        "xpath" : "//*[contains(@content-desc,'Continue')]"
+    },
+    "otpFillInput" : {
+        "xpath" : "//android.widget.EditText"
+    },
+    "dontHaveAnyPolicy" : {
+        "xpath" : "//*[contains(text(),'t have any policy')]"
+    }
+}
