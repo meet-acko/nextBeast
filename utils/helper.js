@@ -446,6 +446,10 @@ exports.Helper = class Helper{
         return "" + (arr[index] * 1000000 + result);
     }
 
+    randomNumber(low, high){
+        return Math.floor((Math.random() * (high - low)) + low);
+    }
+
     randomName(length) {
         var result = "";
         var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -608,6 +612,21 @@ exports.Helper = class Helper{
                 await reject(new Error(e + "\nElement name is : " + elementName));
             }
         });
+    }
+
+    async swipe(initXPercentage, initYPercentage, endXPercentage, endYPercentage, duration=500){
+        let previousContext = await Helper.getCurrentContext();
+        await this.switchContext("native");
+        const { width, height } = await driver.getWindowSize();
+        await driver.actions([
+            await driver.action('pointer')
+            .move(parseInt((initXPercentage * width) / 100), parseInt((initYPercentage * height) / 100))
+            .down()
+            .pause(10)
+            .move({ "duration" : duration, "x" : parseInt((endXPercentage * width) / 100), "y" : parseInt((endYPercentage * height) / 100) })
+            .up()
+        ]);
+        await this.switchContext(previousContext);
     }
 
     async refreshFlutterPage(){

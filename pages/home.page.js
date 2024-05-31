@@ -91,19 +91,18 @@ class HomePage extends Helper{
         await this.clickElement(verifyButton);
         await this.findElement("waitForOtp", mobileNumber, 150);
         let otpInput = await this.findElement("otpFillInput");
-        await this.sleep(2);
         for(let i=40; i>0; i--){
             let result = await this.executeSQLQuery(`SELECT template_context_data->>'otp' AS otp FROM sms_report WHERE template_name = 'send_otp_default' AND recipient='${mobileNumber}' AND created_on > NOW()- INTERVAL '150 second' ORDER BY id DESC LIMIT 1`);
             if(result.length > 0){
                 if("otp" in result[0]){
                     let otp = result[0].otp;
                     await this.setElement(otpInput, otp);
-                    await this.sleep(2);
+                    await this.sleep(1);
                     return;
                 }
                 break;
             }else{
-                await this.sleep(2);
+                await this.sleep(1);
             }
         }
         throw await new Error('OTP not found');
@@ -132,6 +131,10 @@ class HomePage extends Helper{
             case "mweb":
                 return this.mWebLogin(mobileNumber);
         }
+    }
+
+    async addKYCSuccess(name , mobileNumber){
+        await this.executeSQLQuery(`UPDATE kyc_details SET name='${name}',phone='${mobileNumber}' WHERE id='91007757-9c00-4300-8b32-9ba0d088825f'`, properties.centralKYCDBHost, properties.centralKYCDBUsername, properties.centralKYCDBPassword, properties.centralKYCDBName);
     }
 }
 

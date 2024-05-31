@@ -1,0 +1,26 @@
+{
+    "contentContains" : {
+        "xpath" : "//*[contains(@content-desc, '$')]"
+    },
+    "textContains" : {
+        "xpath" : "//*[contains(@text, '$')]"
+    },
+    "textContainsWeb" : {
+        "xpath" : "//*[contains(text(), '$')]"
+    },
+    "contentEquals" : {
+        "xpath" : "//*[@content-desc='$']"
+    },
+    "textEquals" : {
+        "xpath" : "//*[@text='$']"
+    },
+    "hintContains" : {
+        "xpath" : "//*[contains(@hint,'$')]"
+    },
+    "firstSceenshotFile" : {
+        "xpath" : "(//*[contains(@text,'Screenshot')])[1]"
+    },
+    "addPayOutAccount" : {
+        "xpath" : "(//*[@text='Add'])[$]"
+    }
+}

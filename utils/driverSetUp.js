@@ -77,20 +77,39 @@ exports.getDriver = async function getDriver(){
                     }
                 }
                 case "android" : {
-                    return await remote({
-                        logLevel: "info",
-                        path: properties.appiumDriverPath,
-                        port: parseInt(properties.appiumPort),
-                        capabilities: {
-                            'appium:autoGrantPermissions' : true,
-                            'appium:platformName' : properties.androidPlatform,
-                            'appium:udid' : properties.androidDeviceName,
-                            'appium:app' : path.resolve(__dirname,"..") + properties.androidBuildPath,
-                            'appium:automationName' : properties.appiumAutomationName,
-                            'appium:chromedriverExecutableDir' : path.resolve(__dirname,"..") + properties.chromeDriverExecutablePath,
-                            'appium:chromedriverChromeMappingFile' : path.resolve(__dirname,"..") + properties.chromeDriverMappingFilePath
-                        }
-                    });
+                    if(properties.isDebugModeEnabled)
+                        return await remote({
+                            logLevel: "info",
+                            path: properties.appiumDriverPath,
+                            port: parseInt(properties.appiumPort),
+                            capabilities: {
+                                'appium:autoGrantPermissions' : true,
+                                'appium:platformName' : properties.androidPlatform,
+                                'appium:udid' : properties.androidDeviceName,
+                                'appium:appPackage' : properties.appPackageName,
+                                'appium:noReset' : properties.noReset,
+                                'appium:enforceXPath1' : properties.enforceXPath1,
+                                'appium:automationName' : properties.appiumAutomationName,
+                                'appium:chromedriverExecutableDir' : path.resolve(__dirname,"..") + properties.chromeDriverExecutablePath,
+                                'appium:chromedriverChromeMappingFile' : path.resolve(__dirname,"..") + properties.chromeDriverMappingFilePath
+                            }
+                        });
+                        
+                    else
+                        return await remote({
+                            logLevel: "info",
+                            path: properties.appiumDriverPath,
+                            port: parseInt(properties.appiumPort),
+                            capabilities: {
+                                'appium:autoGrantPermissions' : true,
+                                'appium:platformName' : properties.androidPlatform,
+                                'appium:udid' : properties.androidDeviceName,
+                                'appium:app' : path.resolve(__dirname,"..") + properties.androidBuildPath,
+                                'appium:automationName' : properties.appiumAutomationName,
+                                'appium:chromedriverExecutableDir' : path.resolve(__dirname,"..") + properties.chromeDriverExecutablePath,
+                                'appium:chromedriverChromeMappingFile' : path.resolve(__dirname,"..") + properties.chromeDriverMappingFilePath
+                            }
+                        });
                 }
                 case "api" : {
                     return;

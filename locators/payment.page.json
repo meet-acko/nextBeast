@@ -1,0 +1,53 @@
+{
+    "successCTA" : {
+        "xpath": "//*[@text='Success']"
+    },
+    "successMockCTA" : {
+        "context" : "webview",
+        "xpath": "//*[text()='Success']"
+    },
+    "netBankingCTA" : {
+        "context": "native",
+        "xpath": "//*[@text='Net Banking']"
+    },
+    "hdfcBankCTA" : {
+        "xpath": "//*[@text='HDFC']"
+    },
+    "netBankingUsername" : {
+        "xpath": "//*[@resource-id='username']"
+    },
+    "paymentPassword" : {
+        "xpath": "//*[@resource-id='password']"
+    },
+    "submitCTA" : {
+        "xpath": "//*[@text='Submit']"
+    },
+    "successSimulateCTA" : {
+        "xpath": "//*[@text='Simulate Success Response']"
+    },
+    "monthlyPaymentPlan" : {
+        "xpath": "//*[text()='Monthly']"
+    },
+    "cardPaymentOption" : {
+        "context": "native",
+        "xpath": "//*[@text='Pay using card']"
+    },
+    "cardNumberInput" : {
+        "xpath": "//*[@text='Enter card number here']"
+    },
+    "expiryDateInput" : {
+        "xpath": "//*[@text='MM / YY']"
+    },
+    "cvvInput" : {
+        "xpath": "//*[@content-desc='edt_cvv']"
+    },
+    "cardPayBtn" : {
+        "xpath": "//*[@content-desc='btn_pay']"
+    },
+    "secureAndPayBtn" : {
+        "xpath": "//*[@text='Secure & Pay']"
+    },
+    "submitOTPBtn" : {
+        "xpath": "//*[@resource-id='submitBtn']"
+    }
+}
