@@ -18,7 +18,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('unbundledPlan'))
     }
 
-    async provideBundledPlanDetailsScenario1(){
+    async buy_journey_for_2_Adults_30_days_period_and_200K_SI(){
         await this.sleep(2)
         await this.clickElement(await this.findElement('wherePlaceholder'))
         await this.clickElement(await this.findElement('clickOnCountry1','United Kingdom'))
@@ -69,7 +69,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('continueCTA'))
     }
 
-    async provideBundledPlanDetailsScenario2(){
+    async buy_journey_for_1_Adults_and_1_Senior_120_days_period_and_100K_SI(){
         await this.sleep(2)
         await this.clickElement(await this.findElement('wherePlaceholder'))
         await this.clickElement(await this.findElement('clickOnCountry1','United Kingdom'))
@@ -126,7 +126,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('specializedContinue'))
     }
 
-    async provideBundledPlanDetailsScenario3(){
+    async buy_journey_for_1_Adults_and_1_Child_10_days_period_and_50K_SI(){
         await this.sleep(2)
         await this.clickElement(await this.findElement('wherePlaceholder'))
         await this.clickElement(await this.findElement('clickOnCountry1','Indonesia'))
@@ -180,7 +180,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('specializedContinue'))
     }
 
-    async provideBundledPlanDetailsScenario4(){
+    async buy_journey_for_2_Adults_10_days_period_100K_SI_only_medical_cover(){
         await this.sleep(2)
         await this.clickElement(await this.findElement('wherePlaceholder'))
         await this.clickElement(await this.findElement('clickOnCountry1','Indonesia'))
@@ -235,7 +235,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('continueCTA'))
     }
 
-    async provideBundledPlanDetailsScenario5(){
+    async buy_journey_for_2_Adults_10_days_period_4hrs_only_flight_cover(){
         await this.sleep(2)
         await this.clickElement(await this.findElement('wherePlaceholder'))
         await this.clickElement(await this.findElement('clickOnCountry1','Indonesia'))
@@ -292,7 +292,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('continueCTA'))
     }
 
-    async provideBundledPlanDetailsScenario6(){
+    async buy_journey_for_2_Adults_10_days_period_and_only_baggage_cover(){
         await this.sleep(2)
         await this.clickElement(await this.findElement('wherePlaceholder'))
         await this.clickElement(await this.findElement('clickOnCountry1','Indonesia'))
@@ -347,7 +347,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('continueCTA'))
     }
 
-    async provideBundledPlanDetailsScenario7(){
+    async buy_journey_for_2_Adults_10_days_period_100K_SI_4hrs_and_all_covers(){
         await this.sleep(2)
         await this.clickElement(await this.findElement('wherePlaceholder'))
         await this.clickElement(await this.findElement('clickOnCountry1','Indonesia'))
