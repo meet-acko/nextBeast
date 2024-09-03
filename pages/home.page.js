@@ -13,7 +13,7 @@ class HomePage extends Helper{
         await this.setElement(await mobileNumberInput, mobileNumber);
         await this.clickElement(await this.findElement("getOTPCTA"));
         await this.findElement("otpSentText", mobileNumber);
-        await this.sleep(1);
+        await this.sleep(3);
         let result = await this.executeSQLQuery(`SELECT template_context_data->>'otp' AS otp FROM sms_report WHERE template_name = 'send_otp_default' AND recipient='${mobileNumber}' AND created_on > NOW()- INTERVAL '600 second' ORDER BY id DESC LIMIT 1`);
         if("otp" in result[0]){
             let otp = result[0].otp;
