@@ -1059,11 +1059,20 @@ exports.Helper = class Helper{
     }
 
     async getUrl(){
-        let currentContext = await Helper.getCurrentContext();
-        await this.switchContext("webview");
-        let url = await driver.getUrl();
-        await this.switchContext(currentContext);
-        return url;
+        switch(properties.configType){
+            case "web" : {
+                return await driver.getUrl();
+
+            }
+            case "android" : {
+                let currentContext = await Helper.getCurrentContext();
+                await this.switchContext("webview");
+                let url = await driver.getUrl();
+                await this.switchContext(currentContext);
+                return url;
+            }
+        }
+        
     }
 
     async pushFile(filePath, fileBinary){

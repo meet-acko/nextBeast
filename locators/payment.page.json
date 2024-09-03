@@ -6,6 +6,9 @@
         "context" : "webview",
         "xpath": "//*[text()='Success']"
     },
+    "successMockCTAForWeb" : {
+        "xpath": "//*[text()='Success']"
+    },
     "netBankingCTA" : {
         "context": "native",
         "xpath": "//*[@text='Net Banking']"
@@ -49,5 +52,33 @@
     },
     "submitOTPBtn" : {
         "xpath": "//*[@resource-id='submitBtn']"
+    },
+    "iframe":{
+        "xpath" : "//iframe[@name='HyperServices']"
+    },
+    "netBankingUsernameForWeb" : {
+        "xpath": "//*[@name='username']"
+    },
+    "paymentPasswordForWeb" : {
+        "xpath": "//*[@id='password']"
+    },
+    "submitCTAForWeb" : {
+        "xpath": "//*[text()='Submit']"
+    },
+    "successSimulateCTAForWeb" : {
+        "xpath": "//*[text()='Simulate Success Response']"
+    },
+    "netBanking":{
+        "xpath2" : "//*[contains(text(),'Netbanking')]"
+    },
+    "selectBank":{
+        "xpath1" : "//*[contains(text(),'$')]"
+    },
+    "kotakBank":{
+
+        "xpath1" : "//*[contains(text(),'Kotak')]"
+    },
+    "successButton":{
+        "xpath" : "//*[contains(text(),'Success')]"
     }
 }

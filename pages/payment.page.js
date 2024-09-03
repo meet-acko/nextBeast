@@ -6,7 +6,53 @@ class PaymentPage extends Helper{
         super(__filename);
     }
 
-    async completePayment(paymentMethod="yearly", timeOut=100){
+    async completePaymentForWebInWebdriverIO(){
+        if(properties.isMockPaymentEnabled){
+            let url = await this.getUrl();
+            let id = await (url.split("?id="))[1];
+            await console.log(id);
+            await this.setUrl("https://platform-simulator-frontend-uat.internal.ackodev.com/payments?id=" + id);
+            await this.clickElement(await this.findElement("successMockCTAForWeb", "", 30));
+            await this.sleep(3);
+        }else{
+            let iframe = await this.findElement("iframe",null,40);
+            await this.switchToFrame(await iframe);
+            await this.sleep(2);
+            let netBanking = await this.findElement("netBanking","",20);
+            await this.clickElement(await netBanking);
+            await this.sleep(2);
+            let selectBank = await this.findElement("selectBank", "Axis");
+            await this.clickElement(await selectBank);
+            await this.sleep(2);
+            let netBankingUsername = await this.findElement("netBankingUsernameForWeb");
+            await this.setElement(await netBankingUsername, "payu");
+            let paymentPassword = await this.findElement("paymentPasswordForWeb");
+            await this.setElement(await paymentPassword, "payu");
+            let submitCTA = await this.findElement("submitCTAForWeb");
+            await this.clickElement(await submitCTA);
+            let successSimulateCTA = await this.findElement("successSimulateCTAForWeb");
+            await this.clickElement(await successSimulateCTA);
+            await this.sleep(2);
+        }
+    }
+
+
+    async completePayment(){
+        switch(properties.configType){
+            case "web":
+                switch(properties.driverType){
+                    case "webdriverio":
+                        return this.completePaymentForWebInWebdriverIO();
+                    case "playwright":
+                        // return this.completePaymentForWebInPlayeright();
+                }
+            case "android":
+                return this.completePaymentForApp(mobileNumber);
+        }
+    }
+
+
+    async completePaymentForApp(paymentMethod="yearly", timeOut=100){
         await this.sleep(3);
         let startTime = await (new Date()).getTime();
         let endTime = await startTime + (timeOut*1000);
