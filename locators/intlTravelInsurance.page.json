@@ -1,0 +1,101 @@
+{
+    "getTravel" : {
+        "xpath" : "(//p[text()='Travel'])[1]"
+    },
+    "pickFromOurStandardPlans" : {
+        "xpath" : "//div[text()='Pick from our standard plans']"
+    },
+    "wherePlaceholder" : {
+        "xpath" : "//*[@placeholder='Where']/../../.."
+    },
+    "clickOnCountry1" : {
+        "xpath" : "//*[text()='Popular countries']//following::*[text()='$']"
+    },
+    "clickOnCountry2" : {
+        "xpath" : "//*[text()='Popular countries']//following::*[text()='$']"
+    },
+    "done" : {
+        "xpath" : "//*[text()='Done']"
+    },
+    "dateInput" : {
+        "xpath" : "//label[text()='When']/../../.."
+    },
+    "1stOfMonth" : {
+        "xpath" : "(//*[text()='$']//following::*[text()='1'])[1]"
+    },
+    "30thOfMonth" : {
+        "xpath" : "(//*[text()='$']//following::*[text()='30'])[1]"
+    },
+    "31stOfMonth" :{
+        "xpath" : "(//*[text()='$']//following::*[text()='31'])[1]"
+    },
+    "addTravellerCount" : {
+        "xpath" : "(//*[text()='$']//following::*[text()='+'])[1]"
+    },
+    "continueCTA" : {
+        "xpath" : "//*[text()='Continue']"
+    },
+    "priceBreakUp" : {
+        "xpath" : "//div[text()='Price breakup']"
+    },
+    "denailAddOn" : {
+        "xpath" : "(//*[text()='Booking denial']//following::*[text()='Add'])[1]"
+    },
+    "fullName" : {
+        "xpath" : "(//label[text()='Full name']/../..)[$]"
+    },
+    "dayOfDOB" : {
+        "xpath" : "(//*[@placeholder='dd'])[$]"
+    },
+    "monthOfDOB" : {
+        "xpath" : "(//*[@placeholder='mm'])[$]"
+    },
+    "yearOfDOB" : {
+        "xpath" : "(//*[@placeholder='yyyy'])[$]"
+    },
+    "gender" : {
+        "xpath" : "(//*[@label='Gender'])[$]"
+    },
+    "selectGender" : {
+        "xpath" : "//div[text()='$']"
+    },
+    "pincode" : {
+        "xpath" : "(//*[contains(text(),'Pin code')]/../..)"
+    },
+    "emailInput" : {
+        "xpath" : "(//*[contains(text(),'Email')]/../..)[$]"
+    },
+    "paySecurely" : {
+        "xpath" : "//*[text()='Pay securely']"
+    },
+    "netBanking" : {
+        "xpath" : "//article[text()='Netbanking']"
+    },
+    "priceSet" : {
+        "xpath" : "(//*[text()='$100,000'])[1]"   
+    },
+    "specializedContinue" : {
+        "xpath" : "//div[@class='sc-iwsKbI bEaGUN']//div[@class='sc-gqjmRU dHIiPq'][normalize-space()='Continue']"
+    },
+    "10thOfMonth" : {
+        "xpath" : "(//*[text()='$']//following::*[text()='10'])[1]"
+    },
+    "priceSetLower" : {
+        "xpath" : "(//*[text()='$50,000'])[1]"
+    },
+    "unbundledPlan" : {
+        "xpath" : "//div[text()='Pay only for what you want']"
+    },
+    "addFor" : {
+        "xpath" : "(//*[contains(text(),'Add for')])[$]"
+    },
+    "noThanks" : {
+        "xpath" : "(//*[contains(text(),'No, I am willing to take the risk')])[$]"
+    },
+    "skip" : {
+        "xpath" : "//*[contains(text(),'Skip')]"
+    },
+    "4hours" : {
+        "xpath" : "//*[text()='4 hours']"
+    } 
+}
