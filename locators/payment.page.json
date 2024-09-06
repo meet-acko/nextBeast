@@ -63,10 +63,10 @@
         "xpath": "//*[@id='password']"
     },
     "submitCTAForWeb" : {
-        "xpath": "//*[text()='Submit']"
+        "xpath": "//*[@type='submit']"
     },
     "successSimulateCTAForWeb" : {
-        "xpath": "//*[text()='Simulate Success Response']"
+        "xpath": "//*[@value='Simulate Success Response']"
     },
     "netBanking":{
         "xpath2" : "//*[contains(text(),'Netbanking')]"
@@ -77,6 +77,9 @@
     "kotakBank":{
 
         "xpath1" : "//*[contains(text(),'Kotak')]"
+    },
+    "scanAndPay" : {
+        "xpath" : "//*[text() = 'Scan QR and Pay']"
     },
     "successButton":{
         "xpath" : "//*[contains(text(),'Success')]"
