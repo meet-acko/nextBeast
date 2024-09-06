@@ -13,21 +13,29 @@ class HomePage extends Helper{
         await this.setElement(await mobileNumberInput, mobileNumber);
         await this.clickElement(await this.findElement("getOTPCTA"));
         await this.findElement("otpSentText", mobileNumber);
-        await this.sleep(3);
-        let result = await this.executeSQLQuery(`SELECT template_context_data->>'otp' AS otp FROM sms_report WHERE template_name = 'send_otp_default' AND recipient='${mobileNumber}' AND created_on > NOW()- INTERVAL '600 second' ORDER BY id DESC LIMIT 1`);
-        if("otp" in result[0]){
-            let otp = result[0].otp;
-            let input1 = await this.findElement("otpInput", "1");
-            await this.setElement(await input1, otp[0]);
-            let input2 = await this.findElement("otpInput", "2");
-            await this.setElement(await input2, otp[1]);
-            let input3 = await this.findElement("otpInput", "3");
-            await this.setElement(await input3, otp[2]);
-            let input4 = await this.findElement("otpInput", "4");
-            await this.setElement(await input4, otp[3]);
-        }
         await this.sleep(1);
-        // await this.findElement("dontHaveAnyPolicy");
+        for(let i=40; i>0; i--){
+            let result = await this.executeSQLQuery(`SELECT template_context_data->>'otp' AS otp FROM sms_report WHERE template_name = 'send_otp_default' AND recipient='${mobileNumber}' AND created_on > NOW()- INTERVAL '150 second' ORDER BY id DESC LIMIT 1`);
+            if(result.length > 0){
+                if("otp" in result[0]){
+                    let otp = result[0].otp;
+                    let input1 = await this.findElement("otpInput", "1");
+                    await this.setElement(await input1, otp[0]);
+                    let input2 = await this.findElement("otpInput", "2");
+                    await this.setElement(await input2, otp[1]);
+                    let input3 = await this.findElement("otpInput", "3");
+                    await this.setElement(await input3, otp[2]);
+                    let input4 = await this.findElement("otpInput", "4");
+                    await this.setElement(await input4, otp[3]);
+                    await this.sleep(1);
+                    return;
+                }
+                break;
+            }else{
+                await this.sleep(1);
+            }
+        }
+        throw await new Error('OTP not found');
     }
 
     async webLoginPlaywright(mobileNumber){
