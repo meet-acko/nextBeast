@@ -23,12 +23,6 @@
     "1stOfMonth" : {
         "xpath" : "(//*[text()='$']//following::*[text()='1'])[1]"
     },
-    "30thOfMonth" : {
-        "xpath" : "(//*[text()='$']//following::*[text()='30'])[1]"
-    },
-    "31stOfMonth" :{
-        "xpath" : "(//*[text()='$']//following::*[text()='31'])[1]"
-    },
     "addTravellerCount" : {
         "xpath" : "(//*[text()='$']//following::*[text()='+'])[1]"
     },
@@ -72,16 +66,13 @@
         "xpath" : "//article[text()='Netbanking']"
     },
     "priceSet" : {
-        "xpath" : "(//*[text()='$100,000'])[1]"   
+        "xpath" : "(//*[text()='$'])[1]"   
     },
     "specializedContinue" : {
         "xpath" : "//div[@class='sc-iwsKbI bEaGUN']//div[@class='sc-gqjmRU dHIiPq'][normalize-space()='Continue']"
     },
     "10thOfMonth" : {
         "xpath" : "(//*[text()='$']//following::*[text()='10'])[1]"
-    },
-    "priceSetLower" : {
-        "xpath" : "(//*[text()='$50,000'])[1]"
     },
     "unbundledPlan" : {
         "xpath" : "//div[text()='Pay only for what you want']"
@@ -95,7 +86,7 @@
     "skip" : {
         "xpath" : "//*[contains(text(),'Skip')]"
     },
-    "4hours" : {
-        "xpath" : "//*[text()='4 hours']"
+    "hours" : {
+        "xpath" : "//*[text()='$']"
     } 
 }
