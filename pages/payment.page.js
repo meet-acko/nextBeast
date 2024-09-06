@@ -6,7 +6,7 @@ class PaymentPage extends Helper{
         super(__filename);
     }
 
-    async completePaymentForWebInWebdriverIO(){
+    async completePaymentForWebInWebdriverIO(paymentGateWay = "v2"){
         if(properties.isMockPaymentEnabled){
             let url = await this.getUrl();
             let id = await (url.split("?id="))[1];
@@ -15,34 +15,55 @@ class PaymentPage extends Helper{
             await this.clickElement(await this.findElement("successMockCTAForWeb", "", 30));
             await this.sleep(3);
         }else{
-            let iframe = await this.findElement("iframe",null,40);
-            await this.switchToFrame(await iframe);
-            await this.sleep(2);
-            let netBanking = await this.findElement("netBanking","",20);
-            await this.clickElement(await netBanking);
-            await this.sleep(2);
-            let selectBank = await this.findElement("selectBank", "Axis");
-            await this.clickElement(await selectBank);
-            await this.sleep(2);
-            let netBankingUsername = await this.findElement("netBankingUsernameForWeb");
-            await this.setElement(await netBankingUsername, "payu");
-            let paymentPassword = await this.findElement("paymentPasswordForWeb");
-            await this.setElement(await paymentPassword, "payu");
-            let submitCTA = await this.findElement("submitCTAForWeb");
-            await this.clickElement(await submitCTA);
-            let successSimulateCTA = await this.findElement("successSimulateCTAForWeb");
-            await this.clickElement(await successSimulateCTA);
-            await this.sleep(2);
+            if(paymentGateWay == "v2"){
+                let iframe = await this.findElement("iframe",null,40);
+                await this.switchToFrame(await iframe);
+                await this.sleep(2);
+                await this.findElement("scanAndPay");
+                await this.sleep(1);
+                let netBanking = await this.findElement("netBanking","",20);
+                await this.clickElement(await netBanking);
+                let selectBank = await this.findElement("selectBank", "Axis");
+                await this.clickElement(await selectBank);
+                await this.sleep(3);
+                await driver.switchToParentFrame();
+                let netBankingUsername = await this.findElement("netBankingUsernameForWeb", "", 30);
+                await this.setElement(await netBankingUsername, "payu");
+                let paymentPassword = await this.findElement("paymentPasswordForWeb");
+                await this.setElement(await paymentPassword, "payu");
+                let submitCTA = await this.findElement("submitCTAForWeb");
+                await this.clickElement(await submitCTA);
+                let successSimulateCTA = await this.findElement("successSimulateCTAForWeb");
+                await this.clickElement(await successSimulateCTA);
+                await this.sleep(2);
+            }else if(paymentGateWay == "v1"){
+                let iframe = await this.findElement("iframe",null,40);
+                await this.switchToFrame(await iframe);
+                await this.sleep(2);
+                await this.findElement("scanAndPay");
+                await this.sleep(1);
+                let netBanking = await this.findElement("netBanking","",20);
+                await this.clickElement(await netBanking);
+                let selectBank = await this.findElement("selectBank", "Axis");
+                await this.clickElement(await selectBank);
+                await this.sleep(5);
+                await driver.switchToParentFrame();
+                let successButton = await this.findElement("successButton");
+                await this.clickElement(await successButton);
+                await this.sleep(2);
+            }else{
+                throw new Error("No such payment gateway found : " + paymentGateWay);
+            }
         }
     }
 
 
-    async completePayment(){
+    async completePayment(paymentGateWay = "v2"){
         switch(properties.configType){
             case "web":
                 switch(properties.driverType){
                     case "webdriverio":
-                        return this.completePaymentForWebInWebdriverIO();
+                        return this.completePaymentForWebInWebdriverIO(paymentGateWay);
                     case "playwright":
                         // return this.completePaymentForWebInPlayeright();
                 }
