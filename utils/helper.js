@@ -450,6 +450,20 @@ exports.Helper = class Helper{
         return Math.floor((Math.random() * (high - low)) + low);
     }
 
+    generateRandomPincode() {
+        const pincodeLength = 6;
+        const randomNumber = Math.floor(Math.random() * (10 ** pincodeLength));
+        const pincode = randomNumber.toString().padStart(pincodeLength, '0');
+        return pincode;
+      }
+      
+
+    getRandomGender() {
+        const genders = ['Male','Female'];
+        const randomIndex = Math.floor(Math.random() * genders.length);
+        return genders[randomIndex];
+    }
+
     randomName(length) {
         var result = "";
         var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

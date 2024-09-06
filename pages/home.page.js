@@ -8,6 +8,7 @@ class HomePage extends Helper{
 
     async webLogin(mobileNumber){
         await this.clickElement(await this.findElement("loginCTA"));
+        await this.sleep(1)
         let mobileNumberInput = await this.findElement("mobileNumberInput");
         await this.clickElement(await mobileNumberInput);
         await this.setElement(await mobileNumberInput, mobileNumber);
