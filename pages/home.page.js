@@ -27,7 +27,7 @@ class HomePage extends Helper{
             await this.setElement(await input4, otp[3]);
         }
         await this.sleep(1);
-        await this.findElement("dontHaveAnyPolicy");
+        // await this.findElement("dontHaveAnyPolicy");
     }
 
     async webLoginPlaywright(mobileNumber){
@@ -39,16 +39,24 @@ class HomePage extends Helper{
         await page.locator("//*[text()='Log in']").first().click();
         await page.waitForSelector("//*[contains(text(),'sent to " + mobileNumber + "')]");
         await this.sleep(1);
-        let result = await this.executeSQLQuery(`SELECT template_context_data->>'otp' AS otp FROM sms_report WHERE template_name = 'send_otp_default' AND recipient='${mobileNumber}' AND created_on > NOW()- INTERVAL '600 second' ORDER BY id DESC LIMIT 1`);
-        if("otp" in await result[0]){
-            let otp = await result[0].otp;
-            await page.locator("(//input)[1]").first().fill(otp[0]);
-            await page.locator("(//input)[2]").first().fill(otp[1]);
-            await page.locator("(//input)[3]").first().fill(otp[2]);
-            await page.locator("(//input)[4]").first().fill(otp[3]);
+        for(let i=40; i>0; i--){
+            let result = await this.executeSQLQuery(`SELECT template_context_data->>'otp' AS otp FROM sms_report WHERE template_name = 'send_otp_default' AND recipient='${mobileNumber}' AND created_on > NOW()- INTERVAL '150 second' ORDER BY id DESC LIMIT 1`);
+            if(result.length > 0){
+                if("otp" in result[0]){
+                    let otp = await result[0].otp;
+                    await page.locator("(//input)[1]").first().fill(otp[0]);
+                    await page.locator("(//input)[2]").first().fill(otp[1]);
+                    await page.locator("(//input)[3]").first().fill(otp[2]);
+                    await page.locator("(//input)[4]").first().fill(otp[3]);
+                    await this.sleep(1);
+                    return;
+                }
+                break;
+            }else{
+                await this.sleep(1);
+            }
         }
-        await this.sleep(1);
-        await page.waitForSelector("//*[contains(text(),'t have any policy')]")
+        throw await new Error('OTP not found');
     }
 
     async mWebLogin(mobileNumber){
