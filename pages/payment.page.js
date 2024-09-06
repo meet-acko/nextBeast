@@ -8,6 +8,7 @@ class PaymentPage extends Helper{
 
     async completePaymentForWebInWebdriverIO(paymentGateWay = "v2"){
         if(properties.isMockPaymentEnabled){
+            await this.findElement("premiumOnPaymentGateway");
             let url = await this.getUrl();
             let id = await (url.split("?id="))[1];
             await console.log(id);
@@ -16,6 +17,7 @@ class PaymentPage extends Helper{
             await this.sleep(3);
         }else{
             if(paymentGateWay == "v2"){
+                await this.findElement("premiumOnPaymentGateway");
                 let iframe = await this.findElement("iframe",null,40);
                 await this.switchToFrame(await iframe);
                 await this.sleep(2);
@@ -37,6 +39,7 @@ class PaymentPage extends Helper{
                 await this.clickElement(await successSimulateCTA);
                 await this.sleep(2);
             }else if(paymentGateWay == "v1"){
+                await this.findElement("premiumOnPaymentGateway");
                 let iframe = await this.findElement("iframe",null,40);
                 await this.switchToFrame(await iframe);
                 await this.sleep(2);

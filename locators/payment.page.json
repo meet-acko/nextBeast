@@ -81,6 +81,9 @@
     "scanAndPay" : {
         "xpath" : "//*[text() = 'Scan QR and Pay']"
     },
+    "premiumOnPaymentGateway" : {
+        "xpath" : "//*[text()='Premium']"
+    },
     "successButton":{
         "xpath" : "//*[contains(text(),'Success')]"
     }
