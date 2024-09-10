@@ -12,14 +12,15 @@ class PaymentPage extends Helper{
             let id = await (url.split("?id="))[1];
             await console.log(id);
             await this.setUrl("https://platform-simulator-frontend-uat.internal.ackodev.com/payments?id=" + id);
+            await this.sleep(3);
             await this.clickElement(await this.findElement("successMockCTAForWeb", "", 30));
             await this.sleep(3);
         }else{
             if(paymentGateWay == "v2"){
                 let iframe = await this.findElement("iframe",null,40);
-                await this.switchToFrame(await iframe);
+                await this.switchToFrame(iframe);
                 await this.sleep(2);
-                await this.findElement("scanAndPay");
+                await this.findDisplayedElement("scanAndPay");
                 await this.sleep(1);
                 let netBanking = await this.findElement("netBanking","",20);
                 await this.clickElement(await netBanking);

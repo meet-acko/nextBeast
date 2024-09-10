@@ -1,13 +1,15 @@
 const HomePage = require("../pages/home.page");
+const PaymentPage = require("../pages/payment.page")
 const IntlTravelInsurancePage = require("../pages/intlTravelInsurance.page");
 
 const pages={
     intlTravelInsurancePage : new IntlTravelInsurancePage(),
-    homePage : new HomePage()
+    homePage : new HomePage(),
+    paymentPage : new PaymentPage()
 }
 
 describe('International travel insurance scenarios',()=>{
-    it('Intl Travel buy journey for bundled plan for 1 Adults & 1 Child 10 days period and 50K SI', async()=>{
+    it.only('Intl Travel buy journey for bundled plan for 1 Adults & 1 Child 10 days period and 50K SI', async()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
@@ -16,26 +18,29 @@ describe('International travel insurance scenarios',()=>{
             travellerType1: "Adult",
             travellerType2: "Child",
             priceSet:'$50,000',
-            fullName1: "Self " + pages.homePage.randomName(5),
+            fullName1: "JOHN DOE",
             dayOfDOB1: pages.homePage.randomNumber(5, 20),
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
-            pincode: pages.homePage.generateRandomPincode(),
+            pincode: "560037",
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
-            fullName2: "Self " + pages.homePage.randomName(4),
+            fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1991, 1995),
             selectGender2: pages.homePage.getRandomGender(),
-            specializedContinue: 'specializedContinue'
+            specializedContinue: 'specializedContinue',
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
+        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.intlTravelInsurancePage.clickOnBundledPlan(data)
-        await pages.intlTravelInsurancePage.paymentProcess()
+        await pages.paymentPage.sleep(2)
+        await pages.paymentPage.completePayment()
+        await pages.paymentPage.sleep(8)
+        await pages.intlTravelInsurancePage.apiValidationUsingId(data)
     })
 
     it('Intl Travel buy journey for bundled plan for 1 Adults & 1 Senior 120 days period and 100K SI', async()=>{
@@ -47,14 +52,14 @@ describe('International travel insurance scenarios',()=>{
             travellerType1: "Adult",
             travellerType2: "Senior citizen",
             priceSet:'$100,000',
-            fullName1: "Self " + pages.homePage.randomName(5),
+            fullName1: "JOHN DOE",
             dayOfDOB1: pages.homePage.randomNumber(5, 20),
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
             pincode: pages.homePage.generateRandomPincode(),
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
-            fullName2: "Self " + pages.homePage.randomName(4),
+            fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1991, 1995),
@@ -62,11 +67,12 @@ describe('International travel insurance scenarios',()=>{
             specializedContinue: 'specializedContinue'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
+        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.intlTravelInsurancePage.clickOnBundledPlan(data)
-        await pages.intlTravelInsurancePage.paymentProcess()
+        await pages.paymentPage.sleep(2)
+        await pages.paymentPage.completePayment()
     })
 
     it('Intl Travel buy journey for bundled plan for 2 Adults 30days period and 200K SI', async()=>{
@@ -78,25 +84,26 @@ describe('International travel insurance scenarios',()=>{
             travellerType1: "Adult",
             travellerType2: "Adult",
             priceSet:'$200,000',
-            fullName1: "Self " + pages.homePage.randomName(5),
+            fullName1: "JOHN DOE",
             dayOfDOB1: pages.homePage.randomNumber(5, 20),
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
             pincode: pages.homePage.generateRandomPincode(),
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
-            fullName2: "Self " + pages.homePage.randomName(4),
+            fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1991, 1995),
             selectGender2: pages.homePage.getRandomGender(),
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
+        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.intlTravelInsurancePage.clickOnBundledPlan(data)
-        await pages.intlTravelInsurancePage.paymentProcess()
+        await pages.paymentPage.sleep(2)
+        await pages.paymentPage.completePayment()
     })
 
     it('Intl Travel buy journey for unbundled plan for 2 Adults 10 days period 4 hrs only flight cover', async()=>{
@@ -107,14 +114,14 @@ describe('International travel insurance scenarios',()=>{
             lastOfMonth: '10thOfMonth',
             travellerType1: "Adult",
             travellerType2: "Adult",
-            fullName1: "Self " + pages.homePage.randomName(5),
+            fullName1: "JOHN DOE",
             dayOfDOB1: pages.homePage.randomNumber(5, 20),
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
             pincode: pages.homePage.generateRandomPincode(),
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
-            fullName2: "Self " + pages.homePage.randomName(4),
+            fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1991, 1995),
@@ -126,11 +133,12 @@ describe('International travel insurance scenarios',()=>{
             addForOnlyFlightCover: 'addFor'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
+        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
-        await pages.intlTravelInsurancePage.paymentProcess()
+        await pages.paymentPage.sleep(2)
+        await pages.paymentPage.completePayment()
     })
 
     it('Intl Travel buy journey for unbundled plan for 2 Adults, 10 days period, 100K SI, 4hrs, and all covers', async()=>{
@@ -142,14 +150,14 @@ describe('International travel insurance scenarios',()=>{
             travellerType1: "Adult",
             travellerType2: "Adult",
             priceSet:'$100,000',
-            fullName1: "Self " + pages.homePage.randomName(5),
+            fullName1: "JOHN DOE",
             dayOfDOB1: pages.homePage.randomNumber(5, 20),
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
             pincode: pages.homePage.generateRandomPincode(),
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
-            fullName2: "Self " + pages.homePage.randomName(4),
+            fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1991, 1995),
@@ -158,11 +166,12 @@ describe('International travel insurance scenarios',()=>{
             addForAllCovers: 'addFor'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
+        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
-        await pages.intlTravelInsurancePage.paymentProcess()
+        await pages.paymentPage.sleep(2)
+        await pages.paymentPage.completePayment()
     })
 
     it('Intl Travel buy journey for unbundled plan for 2 Adults 10 days period 100K SI only medical cover', async()=>{
@@ -173,14 +182,14 @@ describe('International travel insurance scenarios',()=>{
             lastOfMonth: '10thOfMonth',
             travellerType1: "Adult",
             travellerType2: "Adult",
-            fullName1: "Self " + pages.homePage.randomName(5),
+            fullName1: "JOHN DOE",
             dayOfDOB1: pages.homePage.randomNumber(5, 20),
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
             pincode: pages.homePage.generateRandomPincode(),
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
-            fullName2: "Self " + pages.homePage.randomName(4),
+            fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1991, 1995),
@@ -190,11 +199,12 @@ describe('International travel insurance scenarios',()=>{
             noThanksBagaggeCover: 'noThanks'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
+        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
-        await pages.intlTravelInsurancePage.paymentProcess()
+        await pages.paymentPage.sleep(2)
+        await pages.paymentPage.completePayment()
     })
 
     it('Intl Travel buy journey for unbundled plan for 2 Adults 10 days period and only baggage cover', async()=>{
@@ -205,14 +215,14 @@ describe('International travel insurance scenarios',()=>{
             lastOfMonth: '10thOfMonth',
             travellerType1: "Adult",
             travellerType2: "Adult",
-            fullName1: "Self " + pages.homePage.randomName(5),
+            fullName1: "JOHN DOE",
             dayOfDOB1: pages.homePage.randomNumber(5, 20),
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
             pincode: pages.homePage.generateRandomPincode(),
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
-            fullName2: "Self " + pages.homePage.randomName(4),
+            fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1991, 1995),
@@ -223,10 +233,11 @@ describe('International travel insurance scenarios',()=>{
             addForBagaggeCover: 'addFor'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
+        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
-        await pages.intlTravelInsurancePage.paymentProcess()
+        await pages.paymentPage.sleep(2)
+        await pages.paymentPage.completePayment()
     })
 })

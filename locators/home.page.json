@@ -13,7 +13,8 @@
         "xpath" : "//*[text()='Login']"
     },
     "otpSentText" : {
-        "xpath" : "//*[contains(text(),'sent to $')]"
+        "xpath" : "//*[contains(text(),'sent to $')]",
+        "xpath2": "//*[contains(text(),'send to $')]"
     },
     "getOTPCTA" : {
         "xpath" : "//*[text()='Log in']"

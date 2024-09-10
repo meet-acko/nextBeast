@@ -1,5 +1,7 @@
 const { properties } = require("../utils/config");
 const { Helper } = require("../utils/helper");
+const { URL } = require('url');
+const axios = require('axios').default;
 
 class IntlTravelInsurancePage extends Helper{
     constructor(){
@@ -8,7 +10,9 @@ class IntlTravelInsurancePage extends Helper{
 
     async clickOnBundledPlan(data){
         await this.clickElement(await this.findElement('getTravel'))
+        await this.sleep(1)
         await this.clickElement(await this.findElement('pickFromOurStandardPlans'))
+        await this.sleep(1)
         await this.clickElement(await this.findElement('wherePlaceholder'))
         await this.clickElement(await this.findElement('clickOnCountry1',data.clickOnCountry1))
         await this.clickElement(await this.findElement('done'))
@@ -25,7 +29,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.sleep(0.5)
         await this.clickElement(await this.findElement('addTravellerCount',data.travellerType2))
         await this.clickElement(await this.findElement('continueCTA'))
-        await this.sleep(0.5)
+        await this.sleep(2)
         if('priceSet' in data)
         {
             await this.clickElement(await this.findElement('priceSet',data.priceSet))
@@ -63,6 +67,8 @@ class IntlTravelInsurancePage extends Helper{
         {
             await this.clickElement(await this.findElement(data.specializedContinue))
         }
+        await this.sleep(1)
+        await this.clickElement(await this.findElement('paySecurely'))
     }
 
     async clickOnUnbundledPlan(data){
@@ -165,11 +171,20 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('gender',2))
         await this.clickElement(await this.findElement('selectGender',data.selectGender2))
         await this.clickElement(await this.findElement('continueCTA'))
+        await this.clickElement(await this.findElement('paySecurely'))
     }
 
-    async paymentProcess(){
+    async apiValidationUsingId(data){
         await this.sleep(2)
-        await this.clickElement(await this.findElement('paySecurely'))
+        let url = await this.getUrl();
+        let id = await (url.split("/pdp/"))[1];
+        let idAgain = await (id.split("?utm_"))[0]
+        await console.log(idAgain);
+        let mUrl = "https://sureos-policy-service.internal.ackodev.com/policy-service/v1/policies/" + idAgain;
+        let apiResponse = await axios.get(mUrl)
+        expect(apiResponse).toHaveProperty('id', expectedData.id);
+        expect(apiResponse).toHaveProperty('title', expectedData.title);
+        expect(apiResponse).toHaveProperty('body', expectedData.body);
     }
 }
 

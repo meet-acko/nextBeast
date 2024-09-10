@@ -3,10 +3,11 @@
         "xpath" : "(//p[text()='Travel'])[1]"
     },
     "pickFromOurStandardPlans" : {
-        "xpath" : "//div[text()='Pick from our standard plans']"
+        "xpath" : "//*[contains(text(),'Pick from our standard plans')]",
+        "xpath2": "//*[contains(text(),'Pick from our standard plans')]//following-sibling::div[contains(text(),'Get')]"
     },
     "wherePlaceholder" : {
-        "xpath" : "//*[@placeholder='Where']/../../.."
+        "xpath" : "//input[@placeholder='Where']/../../.."
     },
     "clickOnCountry1" : {
         "xpath" : "//*[text()='Popular countries']//following::*[text()='$']"

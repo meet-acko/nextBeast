@@ -52,7 +52,7 @@ exports.Helper = class Helper{
             port: port,
             statement_timeout: 30000
         });
-        return await new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             pool.connect((err, client, done) => {
                 if (err) throw err;
                 console.log(`SQL Query : ${sqlQuery}`);
@@ -1069,7 +1069,7 @@ exports.Helper = class Helper{
     }
 
     async switchToFrame(frameId){
-        await driver.switchToFrame(frameId);
+        await driver.switchToFrame(frameId)
     }
 
     async getUrl(){

@@ -54,7 +54,8 @@
         "xpath": "//*[@resource-id='submitBtn']"
     },
     "iframe":{
-        "xpath" : "//iframe[@name='HyperServices']"
+        "xpath" : "//iframe[@name='HyperServices']",
+        "xpath2": "//div[@id='ifame']//child::iframe"
     },
     "netBankingUsernameForWeb" : {
         "xpath": "//*[@name='username']"
@@ -69,7 +70,8 @@
         "xpath": "//*[@value='Simulate Success Response']"
     },
     "netBanking":{
-        "xpath2" : "//*[contains(text(),'Netbanking')]"
+        "xpath" : "//*[contains(text(),'Netbanking')]",
+        "xpath2": "//*[text()='Netbanking']/../../.."
     },
     "selectBank":{
         "xpath1" : "//*[contains(text(),'$')]"
@@ -79,7 +81,7 @@
         "xpath1" : "//*[contains(text(),'Kotak')]"
     },
     "scanAndPay" : {
-        "xpath" : "//*[text() = 'Scan QR and Pay']"
+        "xpath" : "//*[text() = 'UPI']"
     },
     "successButton":{
         "xpath" : "//*[contains(text(),'Success')]"
