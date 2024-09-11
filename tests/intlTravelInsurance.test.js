@@ -36,11 +36,11 @@ describe('International travel insurance scenarios',()=>{
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.intlTravelInsurancePage.clickOnBundledPlan(data)
+        let { nextMonthDate,newTargetDate } = await pages.intlTravelInsurancePage.clickOnBundledPlan(data)
         await pages.paymentPage.sleep(2)
         await pages.paymentPage.completePayment()
         await pages.paymentPage.sleep(8)
-        await pages.intlTravelInsurancePage.apiValidationUsingId(data)
+        await pages.intlTravelInsurancePage.apiValidationUsingId({...data,nextMonthDate,newTargetDate})
     })
 
     it('Intl Travel buy journey for bundled plan for 1 Adults & 1 Senior 120 days period and 100K SI', async()=>{

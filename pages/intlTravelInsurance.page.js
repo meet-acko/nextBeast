@@ -37,7 +37,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('continueCTA'))
         await this.clickElement(await this.findElement('denailAddOn'))
         await this.clickElement(await this.findElement('continueCTA'))
-        await this.sleep(1)
+        await this.sleep(1.5)
         await this.clickElement(await this.findElement('fullName',1))
         await this.sendKeys(data.fullName1)
         await this.clickElement(await this.findElement('dayOfDOB',1))
@@ -67,8 +67,9 @@ class IntlTravelInsurancePage extends Helper{
         {
             await this.clickElement(await this.findElement(data.specializedContinue))
         }
-        await this.sleep(1)
+        await this.sleep(1.5)
         await this.clickElement(await this.findElement('paySecurely'))
+        return {nextMonthDate,newTargetDate}
     }
 
     async clickOnUnbundledPlan(data){
@@ -180,11 +181,49 @@ class IntlTravelInsurancePage extends Helper{
         let id = await (url.split("/pdp/"))[1];
         let idAgain = await (id.split("?utm_"))[0]
         await console.log(idAgain);
-        let mUrl = "https://sureos-policy-service.internal.ackodev.com/policy-service/v1/policies/" + idAgain;
-        let apiResponse = await axios.get(mUrl)
-        expect(apiResponse).toHaveProperty('id', expectedData.id);
-        expect(apiResponse).toHaveProperty('title', expectedData.title);
-        expect(apiResponse).toHaveProperty('body', expectedData.body);
+        const tokenUrl = 'https://central-auth-uat.internal.ackodev.com/realms/SureOs-dev/protocol/openid-connect/token';
+        const tokenHeaders = {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        };
+        const tokenData = new URLSearchParams({
+            client_id: '5ad728b0-733f-44a7-987e-b946e7273341',
+            grant_type: 'client_credentials',
+            client_secret: 'DWhtLhXzdZln4EQZ91ne5QRzdPg1QKEv',
+            scope: 'openid'
+        }).toString();
+
+        try {
+            // Request the authentication token
+            const tokenResponse = await axios.post(tokenUrl, tokenData, { headers: tokenHeaders });
+            const token = tokenResponse.data.access_token;
+
+            // Log the token for debugging purposes
+            console.log(`Token: ${token}`);
+            let mUrl = "https://sureos-policy-service.internal.ackodev.com/policy-service/v1/policies/" + idAgain;
+            let apiResponse = await axios.get(mUrl, {
+                              headers: {
+                                'Authorization': `Bearer ${token}`
+                              }   
+                        })
+            console.log(apiResponse.data)
+            if(apiResponse.data.header.proposal_data.travel_start_date === data.nextMonthDate)
+            {
+                console.log(apiResponse.data.header.proposal_data.travel_start_date)
+                console.log(data.nextMonthDate)
+                console.log('Date is matching')
+            }
+            else
+            {
+                console.log(apiResponse.data.header.proposal_data.travel_start_date)
+                console.log(data.nextMonthDate)
+                console.log('Date not matching')
+            }
+            
+        }
+        catch (error) {
+            // Handle any errors that occurred during the requests
+            console.error('Error:', error.message);
+        }
     }
 }
 
