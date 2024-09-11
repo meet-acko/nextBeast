@@ -83,6 +83,9 @@
     "scanAndPay" : {
         "xpath" : "//*[text() = 'UPI']"
     },
+    "premiumOnPaymentGateway" : {
+        "xpath" : "//*[text()='Premium']"
+    },
     "successButton":{
         "xpath" : "//*[contains(text(),'Success')]"
     }

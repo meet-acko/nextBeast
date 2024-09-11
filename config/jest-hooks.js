@@ -63,7 +63,7 @@ afterEach(async () => {
                         break;
                     }
                     case "webdriverio" : {
-                        await allure.attachment(new Buffer.from(await driver.takeScreenshot(), "base64"), "image/png", "Screenshot");
+                        await allure.attachment(new Buffer.from(await global.driver.takeScreenshot(), "base64"), "image/png", "Screenshot");
                         break;
                     }
                 }
@@ -72,7 +72,7 @@ afterEach(async () => {
             case "android" : {
                 switch (properties.driverType) {
                     case "webdriverio" : {
-                        await allure.attachment(new Buffer.from(await driver.takeScreenshot(), "base64"), "image/png", "Screenshot");
+                        await allure.attachment(new Buffer.from(await global.driver.takeScreenshot(), "base64"), "image/png", "Screenshot");
                         break;
                     }
                 }
