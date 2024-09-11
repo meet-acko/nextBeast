@@ -27,5 +27,8 @@
     "playwright": "*",
     "properties-reader": "*",
     "webdriverio": "8.40.5"
+  },
+  "dependencies": {
+    "moment": "^2.30.1"
   }
 }

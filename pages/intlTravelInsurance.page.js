@@ -2,6 +2,8 @@ const { properties } = require("../utils/config");
 const { Helper } = require("../utils/helper");
 const { URL } = require('url');
 const axios = require('axios').default;
+const moment = require('moment');
+
 
 class IntlTravelInsurancePage extends Helper{
     constructor(){
@@ -69,7 +71,7 @@ class IntlTravelInsurancePage extends Helper{
         }
         await this.sleep(1.5)
         await this.clickElement(await this.findElement('paySecurely'))
-        return {nextMonthDate,newTargetDate}
+        return {startFormattedDate,endFormattedDate}
     }
 
     async clickOnUnbundledPlan(data){
@@ -206,19 +208,25 @@ class IntlTravelInsurancePage extends Helper{
                               }   
                         })
             console.log(apiResponse.data)
-            if(apiResponse.data.header.proposal_data.travel_start_date === data.nextMonthDate)
-            {
-                console.log(apiResponse.data.header.proposal_data.travel_start_date)
-                console.log(data.nextMonthDate)
-                console.log('Date is matching')
+
+            if(startFormattedDate in data){
+                const travelStartDateFromAPI = moment(apiResponse.data.header.proposal_data.travel_start_date, "DD-MM-YYYY");
+                const travelStartDateFromInput = moment((data.firstOfMonth.split("stOf"))[0]+data.startFormattedDate, "DDMMMM YYYY");
+                if (travelStartDateFromAPI.isSame(travelStartDateFromInput, 'day')) {
+                    console.log('The travel start dates are equal.');
+                } else {
+                    console.log('The travel start dates are not equal.');
+                }
             }
-            else
-            {
-                console.log(apiResponse.data.header.proposal_data.travel_start_date)
-                console.log(data.nextMonthDate)
-                console.log('Date not matching')
+            if(endFormattedDate in data){
+                const travelEndDateFromAPI = moment(apiResponse.data.header.proposal_data.travel_end_date, "DD-MM-YYYY");
+                const travelEndDateFromInput = moment((data.firstOfMonth.split("stOf"))[0]+data.endFormattedDate, "DDMMMM YYYY");
+                if (travelEndDateFromAPI.isSame(travelEndDateFromInput, 'day')) {
+                    console.log('The travel end dates are equal.');
+                } else {
+                    console.log('The travel end dates are not equal.');
+                }
             }
-            
         }
         catch (error) {
             // Handle any errors that occurred during the requests

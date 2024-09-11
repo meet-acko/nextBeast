@@ -21,7 +21,7 @@
     "dateInput" : {
         "xpath" : "//label[text()='When']/../../.."
     },
-    "1stOfMonth" : {
+    "01stOfMonth" : {
         "xpath" : "(//*[text()='$']//following::*[text()='1'])[1]"
     },
     "addTravellerCount" : {

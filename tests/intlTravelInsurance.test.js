@@ -13,7 +13,7 @@ describe('International travel insurance scenarios',()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
-            firstOfMonth: '1stOfMonth',
+            firstOfMonth: '01stOfMonth',
             lastOfMonth: '10thOfMonth',
             travellerType1: "Adult",
             travellerType2: "Child",
@@ -36,19 +36,19 @@ describe('International travel insurance scenarios',()=>{
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        let { nextMonthDate,newTargetDate } = await pages.intlTravelInsurancePage.clickOnBundledPlan(data)
+        let {startFormattedDate,endFormattedDate} = await pages.intlTravelInsurancePage.clickOnBundledPlan(data)
         await pages.paymentPage.sleep(2)
         await pages.paymentPage.completePayment()
         await pages.paymentPage.sleep(8)
-        await pages.intlTravelInsurancePage.apiValidationUsingId({...data,nextMonthDate,newTargetDate})
+        await pages.intlTravelInsurancePage.apiValidationUsingId({...data,startFormattedDate,endFormattedDate})
     })
 
     it('Intl Travel buy journey for bundled plan for 1 Adults & 1 Senior 120 days period and 100K SI', async()=>{
         let data = {
             clickOnCountry1 : "United Kingdom",
             setMonth : 4,
-            firstOfMonth: '1stOfMonth',
-            lastOfMonth: '1stOfMonth',
+            firstOfMonth: '01stOfMonth',
+            lastOfMonth: '01stOfMonth',
             travellerType1: "Adult",
             travellerType2: "Senior citizen",
             priceSet:'$100,000',
@@ -79,8 +79,8 @@ describe('International travel insurance scenarios',()=>{
         let data = {
             clickOnCountry1 : "United Kingdom",
             setMonth : 1,
-            firstOfMonth: '1stOfMonth',
-            lastOfMonth: '1stOfMonth',
+            firstOfMonth: '01stOfMonth',
+            lastOfMonth: '01stOfMonth',
             travellerType1: "Adult",
             travellerType2: "Adult",
             priceSet:'$200,000',
@@ -110,7 +110,7 @@ describe('International travel insurance scenarios',()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
-            firstOfMonth: '1stOfMonth',
+            firstOfMonth: '01stOfMonth',
             lastOfMonth: '10thOfMonth',
             travellerType1: "Adult",
             travellerType2: "Adult",
@@ -145,7 +145,7 @@ describe('International travel insurance scenarios',()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
-            firstOfMonth: '1stOfMonth',
+            firstOfMonth: '01stOfMonth',
             lastOfMonth: '10thOfMonth',
             travellerType1: "Adult",
             travellerType2: "Adult",
@@ -178,7 +178,7 @@ describe('International travel insurance scenarios',()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
-            firstOfMonth: '1stOfMonth',
+            firstOfMonth: '01stOfMonth',
             lastOfMonth: '10thOfMonth',
             travellerType1: "Adult",
             travellerType2: "Adult",
@@ -211,7 +211,7 @@ describe('International travel insurance scenarios',()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
-            firstOfMonth: '1stOfMonth',
+            firstOfMonth: '01stOfMonth',
             lastOfMonth: '10thOfMonth',
             travellerType1: "Adult",
             travellerType2: "Adult",
