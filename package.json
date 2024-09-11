@@ -11,7 +11,7 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "@playwright/test": "*",
     "allure-commandline": "*",
     "allure-jest": "*",
@@ -26,6 +26,6 @@
     "pg": "*",
     "playwright": "*",
     "properties-reader": "*",
-    "webdriverio": "*"
+    "webdriverio": "8.40.5"
   }
 }
