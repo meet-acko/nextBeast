@@ -497,6 +497,18 @@ exports.Helper = class Helper{
         return statecode[state] + statenum + city + citycode;
     }
 
+    async travellerTypeCount(data) {
+        let travellerTypes = [];
+        for (let key in data) {
+            // Check if the key starts with 'travellerType'
+            if (key.startsWith('travellerType')) {
+                // Add the value to the travellerTypes array
+                travellerTypes.push(data[key]);
+            }
+        }
+        return travellerTypes
+    }
+
     async findRefreshAppElement(elementName, replaceWith, timeOut=60, elementStatus, refreshCount=2){
         return await this.findAppElement(elementName, replaceWith, timeOut, elementStatus, refreshCount);
     }

@@ -21,7 +21,7 @@
     "dateInput" : {
         "xpath" : "//label[text()='When']/../../.."
     },
-    "01stOfMonth" : {
+    "01" : {
         "xpath" : "(//*[text()='$']//following::*[text()='1'])[1]"
     },
     "addTravellerCount" : {
@@ -72,7 +72,7 @@
     "specializedContinue" : {
         "xpath" : "//div[@class='sc-iwsKbI bEaGUN']//div[@class='sc-gqjmRU dHIiPq'][normalize-space()='Continue']"
     },
-    "10thOfMonth" : {
+    "10" : {
         "xpath" : "(//*[text()='$']//following::*[text()='10'])[1]"
     },
     "unbundledPlan" : {

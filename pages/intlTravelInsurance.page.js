@@ -1,8 +1,8 @@
 const { properties } = require("../utils/config");
 const { Helper } = require("../utils/helper");
-const { URL } = require('url');
 const axios = require('axios').default;
 const moment = require('moment');
+const { expect } = require('@playwright/test')
 
 
 class IntlTravelInsurancePage extends Helper{
@@ -25,8 +25,8 @@ class IntlTravelInsurancePage extends Helper{
         let newTargetDate =  targetDate.setMonth(targetDate.getMonth() + data.setMonth);
         let startFormattedDate = new Intl.DateTimeFormat('en-US', {month: 'long', year: 'numeric'}).format(nextMonthDate)
         let endFormattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(newTargetDate);
-        await this.clickElement(await this.findElement(data.firstOfMonth,startFormattedDate))
-        await this.clickElement(await this.findElement(data.lastOfMonth,endFormattedDate))
+        await this.clickElement(await this.findElement(data.travelStartDate,startFormattedDate))
+        await this.clickElement(await this.findElement(data.travelEndDate,endFormattedDate))
         await this.clickElement(await this.findElement('addTravellerCount',data.travellerType1))
         await this.sleep(0.5)
         await this.clickElement(await this.findElement('addTravellerCount',data.travellerType2))
@@ -87,8 +87,8 @@ class IntlTravelInsurancePage extends Helper{
         let newTargetDate =  targetDate.setMonth(targetDate.getMonth() + data.setMonth);
         let startFormattedDate = new Intl.DateTimeFormat('en-US', {month: 'long', year: 'numeric'}).format(nextMonthDate)
         let endFormattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(newTargetDate);
-        await this.clickElement(await this.findElement(data.firstOfMonth,startFormattedDate))
-        await this.clickElement(await this.findElement(data.lastOfMonth,endFormattedDate))
+        await this.clickElement(await this.findElement(data.travelStartDate,startFormattedDate))
+        await this.clickElement(await this.findElement(data.travelEndDate,endFormattedDate))
         await this.clickElement(await this.findElement('addTravellerCount',data.travellerType1))
         await this.sleep(0.5)
         await this.clickElement(await this.findElement('addTravellerCount',data.travellerType2))
@@ -199,7 +199,7 @@ class IntlTravelInsurancePage extends Helper{
             const tokenResponse = await axios.post(tokenUrl, tokenData, { headers: tokenHeaders });
             const token = tokenResponse.data.access_token;
 
-            // Log the token for debugging purposes
+            // Get the token and hit endpoint with tokenusing id
             console.log(`Token: ${token}`);
             let mUrl = "https://sureos-policy-service.internal.ackodev.com/policy-service/v1/policies/" + idAgain;
             let apiResponse = await axios.get(mUrl, {
@@ -207,26 +207,79 @@ class IntlTravelInsurancePage extends Helper{
                                 'Authorization': `Bearer ${token}`
                               }   
                         })
-            console.log(apiResponse.data)
 
-            if(startFormattedDate in data){
-                const travelStartDateFromAPI = moment(apiResponse.data.header.proposal_data.travel_start_date, "DD-MM-YYYY");
-                const travelStartDateFromInput = moment((data.firstOfMonth.split("stOf"))[0]+data.startFormattedDate, "DDMMMM YYYY");
-                if (travelStartDateFromAPI.isSame(travelStartDateFromInput, 'day')) {
-                    console.log('The travel start dates are equal.');
-                } else {
-                    console.log('The travel start dates are not equal.');
-                }
+            //Validating travel start dates
+            const travelStartDateFromAPI = moment(apiResponse.data.header.proposal_data.travel_start_date, "DD-MM-YYYY");
+            const travelStartDateFromInput = moment(data.travelStartDate+data.startFormattedDate, "DDMMMM YYYY");
+            if (travelStartDateFromAPI.isSame(travelStartDateFromInput, 'day')) {
+                console.log('The travel start dates are equal.');
+            } else {
+                console.log('The travel start dates are not equal.');
             }
-            if(endFormattedDate in data){
-                const travelEndDateFromAPI = moment(apiResponse.data.header.proposal_data.travel_end_date, "DD-MM-YYYY");
-                const travelEndDateFromInput = moment((data.firstOfMonth.split("stOf"))[0]+data.endFormattedDate, "DDMMMM YYYY");
-                if (travelEndDateFromAPI.isSame(travelEndDateFromInput, 'day')) {
-                    console.log('The travel end dates are equal.');
-                } else {
-                    console.log('The travel end dates are not equal.');
-                }
+
+            //Validating travel end dates
+            const travelEndDateFromAPI = moment(apiResponse.data.header.proposal_data.travel_end_date, "DD-MM-YYYY");
+            const travelEndDateFromInput = moment(data.travelEndDate+data.endFormattedDate, "DDMMMM YYYY");
+            if (travelEndDateFromAPI.isSame(travelEndDateFromInput, 'day')) {
+                console.log('The travel end dates are equal.');
+            } else {
+                console.log('The travel end dates are not equal.');
             }
+
+            //Validating country name
+            const countryKeys = Object.keys(data).filter(key => key.startsWith('clickOnCountry'));
+            const countryValues = countryKeys.map(key => data[key]);
+            const countryList = apiResponse.data.header.proposal_data.country_list;
+            const countryNames = countryList.map(country => country.name);
+            countryValues.forEach(country => {
+                expect(countryNames).toContain(country);
+            });
+
+            //Validating Child, Adult and Senior citizen count
+            // const insuredCategories = apiResponse.data.header.proposal_data.insured_category_list
+            // let childCountFromAPI = 0, adultCountFromAPI = 0, seniorCitizenCountFromAPI = 0;
+            // insuredCategories.forEach(category => {
+            // switch (category.category) {
+            //     case 'CHILD':
+            //         childCountFromAPI = category.count;
+            //         break;
+            //     case 'ADULT':
+            //         adultCountFromAPI = category.count;
+            //         break;
+            //     case 'SENIOR_CITIZEN':
+            //         seniorCitizenCountFromAPI = category.count;
+            //         break;
+            //     }
+            // });
+            // const travellerTypes = await this.travellerTypeCount(data)
+            // const counts = {};
+            // travellerTypes.forEach(type => {
+            //     if (counts[type]) {
+            //         counts[type]++;
+            //     } else {
+            //         counts[type] = 1;
+            //     }
+            // });
+            // const childCountFromInput = counts['Child'] ?? 0
+            // const adultCountFromInput = counts['Adult'] ?? 0
+            // const seniorCitizenCountFromInput = counts['Senior citizen'] ?? 0
+            // expect(childCountFromInput).toBe(childCountFromAPI)
+            // expect(adultCountFromInput).toBe(adultCountFromAPI)
+            // expect(seniorCitizenCountFromInput).toBe(seniorCitizenCountFromAPI)
+
+            //Validating the name
+            const fullNamesFromAPI = apiResponse.data.insured.map(item => item.parameters.full_name.value);
+            let fullNamesFromInput = Object.entries(data).filter(([key, value]) => key.includes('fullName'))
+            .map(([key, value]) => value);
+            const setsAreEqual = (set1, set2) => {
+                if (set1.size !== set2.size) return false;
+                for (let item of set1) {
+                    if (!set2.has(item)) return false;
+                }
+                return true;
+            };
+            const areNamesEqual = setsAreEqual(fullNamesFromAPI, fullNamesFromInput);
+            console.log(areNamesEqual);
         }
         catch (error) {
             // Handle any errors that occurred during the requests
