@@ -509,6 +509,12 @@ exports.Helper = class Helper{
         return travellerTypes
     }
 
+    async formatDOB(day, month, year) {
+        day = day.toString().padStart(2, '0');
+        month = month.toString().padStart(2, '0');
+        return `${day}-${month}-${year}`;
+    }
+
     async findRefreshAppElement(elementName, replaceWith, timeOut=60, elementStatus, refreshCount=2){
         return await this.findAppElement(elementName, replaceWith, timeOut, elementStatus, refreshCount);
     }

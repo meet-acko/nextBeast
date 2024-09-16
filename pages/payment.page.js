@@ -13,9 +13,9 @@ class PaymentPage extends Helper{
             let id = await (url.split("?id="))[1];
             await console.log(id);
             await this.setUrl("https://platform-simulator-frontend-uat.internal.ackodev.com/payments?id=" + id);
-            await this.sleep(3);
+            await this.sleep(2);
             await this.clickElement(await this.findElement("successMockCTAForWeb", "", 30));
-            await this.sleep(3);
+            await this.sleep(1);
         }else{
             if(paymentGateWay == "v2"){
                 await this.findElement("premiumOnPaymentGateway");

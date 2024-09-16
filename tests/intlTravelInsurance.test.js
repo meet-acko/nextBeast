@@ -9,7 +9,7 @@ const pages={
 }
 
 describe('International travel insurance scenarios',()=>{
-    it.only('Intl Travel buy journey for bundled plan for 1 Adults & 1 Child 10 days period and 50K SI', async()=>{
+    it('Intl Travel buy journey for bundled plan for 1 Adults & 1 Child 10 days period and 50K SI', async()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
@@ -47,8 +47,8 @@ describe('International travel insurance scenarios',()=>{
         let data = {
             clickOnCountry1 : "United Kingdom",
             setMonth : 4,
-            firstOfMonth: '01',
-            lastOfMonth: '01',
+            travelStartDate: '01',
+            travelEndDate: '01',
             travellerType1: "Adult",
             travellerType2: "Senior citizen",
             priceSet:'$100,000',
@@ -57,7 +57,7 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
-            pincode: pages.homePage.generateRandomPincode(),
+            pincode: "560037",
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
             fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
@@ -70,17 +70,19 @@ describe('International travel insurance scenarios',()=>{
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.intlTravelInsurancePage.clickOnBundledPlan(data)
+        let {startFormattedDate,endFormattedDate} = await pages.intlTravelInsurancePage.clickOnBundledPlan(data)
         await pages.paymentPage.sleep(2)
         await pages.paymentPage.completePayment()
+        await pages.paymentPage.sleep(8)
+        await pages.intlTravelInsurancePage.apiValidationUsingId({...data,startFormattedDate,endFormattedDate})
     })
 
     it('Intl Travel buy journey for bundled plan for 2 Adults 30days period and 200K SI', async()=>{
         let data = {
             clickOnCountry1 : "United Kingdom",
             setMonth : 1,
-            firstOfMonth: '01',
-            lastOfMonth: '01',
+            travelStartDate: '01',
+            travelEndDate: '01',
             travellerType1: "Adult",
             travellerType2: "Adult",
             priceSet:'$200,000',
@@ -89,7 +91,7 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
-            pincode: pages.homePage.generateRandomPincode(),
+            pincode: "560037",
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
             fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
@@ -101,17 +103,19 @@ describe('International travel insurance scenarios',()=>{
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.intlTravelInsurancePage.clickOnBundledPlan(data)
+        let {startFormattedDate,endFormattedDate} = await pages.intlTravelInsurancePage.clickOnBundledPlan(data)
         await pages.paymentPage.sleep(2)
         await pages.paymentPage.completePayment()
+        await pages.paymentPage.sleep(8)
+        await pages.intlTravelInsurancePage.apiValidationUsingId({...data,startFormattedDate,endFormattedDate})
     })
 
     it('Intl Travel buy journey for unbundled plan for 2 Adults 10 days period 4 hrs only flight cover', async()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
-            firstOfMonth: '01',
-            lastOfMonth: '10',
+            travelStartDate: '01',
+            travelEndDate: '10',
             travellerType1: "Adult",
             travellerType2: "Adult",
             fullName1: "JOHN DOE",
@@ -119,7 +123,7 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
-            pincode: pages.homePage.generateRandomPincode(),
+            pincode: "560037",
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
             fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
@@ -136,17 +140,19 @@ describe('International travel insurance scenarios',()=>{
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
+        let {startFormattedDate,endFormattedDate} = await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
         await pages.paymentPage.sleep(2)
         await pages.paymentPage.completePayment()
+        await pages.paymentPage.sleep(8)
+        await pages.intlTravelInsurancePage.apiValidationUsingId({...data,startFormattedDate,endFormattedDate})
     })
 
     it('Intl Travel buy journey for unbundled plan for 2 Adults, 10 days period, 100K SI, 4hrs, and all covers', async()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
-            firstOfMonth: '01',
-            lastOfMonth: '10',
+            travelStartDate: '01',
+            travelEndDate: '10',
             travellerType1: "Adult",
             travellerType2: "Adult",
             priceSet:'$100,000',
@@ -155,7 +161,7 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
-            pincode: pages.homePage.generateRandomPincode(),
+            pincode: "560037",
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
             fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
@@ -169,17 +175,19 @@ describe('International travel insurance scenarios',()=>{
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
+        let {startFormattedDate,endFormattedDate} = await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
         await pages.paymentPage.sleep(2)
         await pages.paymentPage.completePayment()
+        await pages.paymentPage.sleep(8)
+        await pages.intlTravelInsurancePage.apiValidationUsingId({...data,startFormattedDate,endFormattedDate})
     })
 
     it('Intl Travel buy journey for unbundled plan for 2 Adults 10 days period 100K SI only medical cover', async()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
-            firstOfMonth: '01',
-            lastOfMonth: '10',
+            travelStartDate: '01',
+            travelEndDate: '10',
             travellerType1: "Adult",
             travellerType2: "Adult",
             fullName1: "JOHN DOE",
@@ -187,7 +195,7 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
-            pincode: pages.homePage.generateRandomPincode(),
+            pincode: "560037",
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
             fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
@@ -202,17 +210,19 @@ describe('International travel insurance scenarios',()=>{
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
+        let {startFormattedDate,endFormattedDate} = await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
         await pages.paymentPage.sleep(2)
         await pages.paymentPage.completePayment()
+        await pages.paymentPage.sleep(8)
+        await pages.intlTravelInsurancePage.apiValidationUsingId({...data,startFormattedDate,endFormattedDate})
     })
 
     it('Intl Travel buy journey for unbundled plan for 2 Adults 10 days period and only baggage cover', async()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
-            firstOfMonth: '01',
-            lastOfMonth: '10',
+            travelStartDate: '01',
+            travelEndDate: '10',
             travellerType1: "Adult",
             travellerType2: "Adult",
             fullName1: "JOHN DOE",
@@ -220,7 +230,7 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB1: pages.homePage.randomNumber(2, 11),
             yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
             selectGender1: pages.homePage.getRandomGender(),
-            pincode: pages.homePage.generateRandomPincode(),
+            pincode: "560037",
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
             fullName2: "Self " + pages.homePage.randomName(5),
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
@@ -236,8 +246,10 @@ describe('International travel insurance scenarios',()=>{
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
-        await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
+        let {startFormattedDate,endFormattedDate} = await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
         await pages.paymentPage.sleep(2)
         await pages.paymentPage.completePayment()
+        await pages.paymentPage.sleep(8)
+        await pages.intlTravelInsurancePage.apiValidationUsingId({...data,startFormattedDate,endFormattedDate})
     })
 })

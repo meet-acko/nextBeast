@@ -175,6 +175,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('selectGender',data.selectGender2))
         await this.clickElement(await this.findElement('continueCTA'))
         await this.clickElement(await this.findElement('paySecurely'))
+        return {startFormattedDate,endFormattedDate}
     }
 
     async apiValidationUsingId(data){
@@ -236,50 +237,152 @@ class IntlTravelInsurancePage extends Helper{
             });
 
             //Validating Child, Adult and Senior citizen count
-            // const insuredCategories = apiResponse.data.header.proposal_data.insured_category_list
-            // let childCountFromAPI = 0, adultCountFromAPI = 0, seniorCitizenCountFromAPI = 0;
-            // insuredCategories.forEach(category => {
-            // switch (category.category) {
-            //     case 'CHILD':
-            //         childCountFromAPI = category.count;
-            //         break;
-            //     case 'ADULT':
-            //         adultCountFromAPI = category.count;
-            //         break;
-            //     case 'SENIOR_CITIZEN':
-            //         seniorCitizenCountFromAPI = category.count;
-            //         break;
-            //     }
-            // });
-            // const travellerTypes = await this.travellerTypeCount(data)
-            // const counts = {};
-            // travellerTypes.forEach(type => {
-            //     if (counts[type]) {
-            //         counts[type]++;
-            //     } else {
-            //         counts[type] = 1;
-            //     }
-            // });
-            // const childCountFromInput = counts['Child'] ?? 0
-            // const adultCountFromInput = counts['Adult'] ?? 0
-            // const seniorCitizenCountFromInput = counts['Senior citizen'] ?? 0
-            // expect(childCountFromInput).toBe(childCountFromAPI)
-            // expect(adultCountFromInput).toBe(adultCountFromAPI)
-            // expect(seniorCitizenCountFromInput).toBe(seniorCitizenCountFromAPI)
+            const insuredCategories = apiResponse.data.header.proposal_data.insured_category_list
+            let childCountFromAPI = 0, adultCountFromAPI = 0, seniorCitizenCountFromAPI = 0;
+            insuredCategories.forEach(category => {
+            switch (category.category) {
+                case 'CHILD':
+                    childCountFromAPI = category.count;
+                    break;
+                case 'ADULT':
+                    adultCountFromAPI = category.count;
+                    break;
+                case 'SENIOR_CITIZEN':
+                    seniorCitizenCountFromAPI = category.count;
+                    break;
+                }
+            });
+            const travellerTypes = await this.travellerTypeCount(data)
+            const counts = {};
+            travellerTypes.forEach(type => {
+                if (counts[type]) {
+                    counts[type]++;
+                } else {
+                    counts[type] = 1;
+                }
+            });
+            const childCountFromInput = counts['Child'] ?? 0
+            const adultCountFromInput = counts['Adult'] ?? 0
+            const seniorCitizenCountFromInput = counts['Senior citizen'] ?? 0
+            expect(childCountFromInput).toBe(childCountFromAPI)
+            expect(adultCountFromInput).toBe(adultCountFromAPI)
+            expect(seniorCitizenCountFromInput).toBe(seniorCitizenCountFromAPI)
 
             //Validating the name
-            const fullNamesFromAPI = apiResponse.data.insured.map(item => item.parameters.full_name.value);
+            const fullNamesFromAPI = apiResponse.data.insured.map(item => item.parameters.full_name.value.trim());
             let fullNamesFromInput = Object.entries(data).filter(([key, value]) => key.includes('fullName'))
-            .map(([key, value]) => value);
-            const setsAreEqual = (set1, set2) => {
-                if (set1.size !== set2.size) return false;
-                for (let item of set1) {
-                    if (!set2.has(item)) return false;
+            .map(([key, value]) => value.trim());
+            if (fullNamesFromAPI.length !== fullNamesFromInput.length) {
+                return false;
+            }
+            const sortedArr1 = fullNamesFromAPI.slice().sort();
+            const sortedArr2 = fullNamesFromInput.slice().sort();
+            if (sortedArr1.length !== sortedArr2.length) {
+                console.log("Lengths are not same")
+            }
+            for (let i = 0; i < sortedArr1.length; i++) {
+                if (sortedArr1[i] !== sortedArr2[i]) {
+                    console.log("Not equal")
                 }
-                return true;
-            };
-            const areNamesEqual = setsAreEqual(fullNamesFromAPI, fullNamesFromInput);
-            console.log(areNamesEqual);
+            }
+            
+            //Validating DOB
+            const dobsFromAPI = apiResponse.data.insured.map(item => item.parameters.dob.value.trim());
+            let dobsFromInput = [];
+            for (let key in data) {
+                if (key.startsWith('dayOfDOB')) {
+                    let index = key.replace('dayOfDOB', '');
+                    let day = data[key];
+                    let month = data['monthOfDOB' + index];
+                    let year = data['yearOfDOB' + index];
+                    if (day !== undefined && month !== undefined && year !== undefined) {
+                        dobsFromInput.push(await this.formatDOB(day, month, year));
+                    }
+                }
+            }
+            if (fullNamesFromAPI.length !== fullNamesFromInput.length) {
+                return false;
+            }
+            const sortArr1 = dobsFromInput.slice().sort();
+            const sortArr2 = dobsFromAPI.slice().sort();
+            if (sortArr1.length !== sortArr2.length) {
+                console.log("Lengths are not same")
+            }
+            for (let i = 0; i < sortArr1.length; i++) {
+                if (sortArr1[i] !== sortArr2[i]) {
+                    console.log("Not equal")
+                }
+            }
+
+            //Validating the genders
+            const gendersFromAPI = apiResponse.data.insured.map(item => item.parameters.gender.value.trim().toLowerCase());
+            let gendersFromInput = [];
+            for (let key in data) {
+                if (key.includes('selectGender')) {
+                    gendersFromInput.push(data[key].trim().toLowerCase());
+                }
+            }
+            if (gendersFromAPI.length !== gendersFromInput.length) {
+                return false;
+            }
+            const sortA1 = gendersFromAPI.slice().sort();
+            const sortA2 = gendersFromInput.slice().sort();
+            if (sortA1.length !== sortA2.length) {
+                console.log("Lengths are not same")
+            }
+            for (let i = 0; i < sortA2.length; i++) {
+                if (sortA1[i] !== sortA2[i]) {
+                    console.log("Not equal")
+                }
+            }
+
+            //Validating the email
+            const emailFromAPI = apiResponse.data.insured
+            .map(item => item.parameters.email.value.trim())
+            .filter(email => email !== '')
+            let emailFromInput = [];
+            for (let key in data) {
+                if (key.includes('emailInput')) {
+                    emailFromInput.push(data[key].trim().toLowerCase());
+                }
+            }
+            if (emailFromAPI.length !== emailFromInput.length) {
+                return false;
+            }
+            const sortAr1 = emailFromAPI.slice().sort();
+            const sortAr2 = emailFromInput.slice().sort();
+            if (sortAr1.length !== sortAr2.length) {
+                console.log("Lengths are not same")
+            }
+            for (let i = 0; i < sortAr2.length; i++) {
+                if (sortAr1[i] !== sortAr2[i]) {
+                    console.log("Not equal")
+                }
+            }
+            
+            //Validating the pincode
+            const pincodeFromAPI = apiResponse.data.insured
+            .map(item => item.parameters.pin_code.value.trim())
+            .filter(pincode => pincode !== '0')
+            let pincodeFromInput = [];
+            for (let key in data) {
+                if (key.includes('pincode')) {
+                    pincodeFromInput.push(data[key].trim().toLowerCase());
+                }
+            }
+            if (pincodeFromAPI.length !== pincodeFromInput.length) {
+                return false;
+            }
+            const sortAry1 = pincodeFromAPI.slice().sort();
+            const sortAry2 = pincodeFromInput.slice().sort();
+            if (sortAry1.length !== sortAry2.length) {
+                console.log("Lengths are not same")
+            }
+            for (let i = 0; i < sortAry2.length; i++) {
+                if (sortAry1[i] !== sortAry2[i]) {
+                    console.log("Not equal")
+                }
+            }
         }
         catch (error) {
             // Handle any errors that occurred during the requests

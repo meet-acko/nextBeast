@@ -18,7 +18,7 @@ describe('visual testing', () => {
             policyIndex : 0,
             isTravelDate : true,
             travel_start_date : "06-09-2024",
-            travel_end_date : "13-09-2024",
+            travel_end_date : "17-09-2024",
             policy_start_date : "2024-08-23T00:00:00.000+00:00",
             policy_end_date : "2024-09-23T00:00:00.000+00:00",
         };
