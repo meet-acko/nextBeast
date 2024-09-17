@@ -16,7 +16,13 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('pickFromOurStandardPlans'))
         await this.sleep(1)
         await this.clickElement(await this.findElement('wherePlaceholder'))
-        await this.clickElement(await this.findElement('clickOnCountry1',data.clickOnCountry1))
+        const countriesFromInput = Object.entries(data).filter(([key, value]) => key.includes('clickOnCountry'))
+            .map(([key, value]) => value.trim());
+        for (const clickOnCountry of countriesFromInput) {
+            const element = await this.findElement('clickOnCountry', clickOnCountry);
+            await this.clickElement(element);
+            await this.sleep(0.5);
+        }
         await this.clickElement(await this.findElement('done'))
         await this.clickElement(await this.findElement('dateInput'))
         let currentDate = new Date();
@@ -27,9 +33,13 @@ class IntlTravelInsurancePage extends Helper{
         let endFormattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(newTargetDate);
         await this.clickElement(await this.findElement(data.travelStartDate,startFormattedDate))
         await this.clickElement(await this.findElement(data.travelEndDate,endFormattedDate))
-        await this.clickElement(await this.findElement('addTravellerCount',data.travellerType1))
-        await this.sleep(0.5)
-        await this.clickElement(await this.findElement('addTravellerCount',data.travellerType2))
+        const travellerTypesFromInput = Object.entries(data).filter(([key, value]) => key.includes('travellerType'))
+            .map(([key, value]) => value.trim());
+        for (const travellerType of travellerTypesFromInput) {
+            const element = await this.findElement('addTravellerCount', travellerType);
+            await this.clickElement(element);
+            await this.sleep(0.5);
+        }
         await this.clickElement(await this.findElement('continueCTA'))
         await this.sleep(2)
         if('priceSet' in data)
@@ -40,30 +50,42 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('denailAddOn'))
         await this.clickElement(await this.findElement('continueCTA'))
         await this.sleep(1.5)
-        await this.clickElement(await this.findElement('fullName',1))
-        await this.sendKeys(data.fullName1)
-        await this.clickElement(await this.findElement('dayOfDOB',1))
-        await this.sendKeys(data.dayOfDOB1)
-        await this.clickElement(await this.findElement('monthOfDOB',1))
-        await this.sendKeys(data.monthOfDOB1)
-        await this.clickElement(await this.findElement('yearOfDOB',1))
-        await this.sendKeys(data.yearOfDOB1)
-        await this.clickElement(await this.findElement('gender',1))
-        await this.clickElement(await this.findElement('selectGender',data.selectGender1))
-        await this.clickElement(await this.findElement('pincode',1))
-        await this.sendKeys(data.pincode)
-        await this.clickElement(await this.findElement('emailInput',1))
-        await this.sendKeys(data.emailInput)
-        await this.clickElement(await this.findElement('fullName',2))
-        await this.sendKeys(data.fullName2)
-        await this.clickElement(await this.findElement('dayOfDOB',2))
-        await this.sendKeys(data.dayOfDOB2)
-        await this.clickElement(await this.findElement('monthOfDOB',2))
-        await this.sendKeys(data.monthOfDOB2)
-        await this.clickElement(await this.findElement('yearOfDOB',2))
-        await this.sendKeys(data.yearOfDOB2)
-        await this.clickElement(await this.findElement('gender',2))
-        await this.clickElement(await this.findElement('selectGender',data.selectGender2))
+        const fullNameFromInput = Object.entries(data).filter(([key, value]) => key.includes('fullName'))
+            .map(([key, value]) => value);
+        const dayFromInput = Object.entries(data).filter(([key, value]) => key.includes('dayOfDOB'))
+            .map(([key, value]) => value);
+        const monthFromInput = Object.entries(data).filter(([key, value]) => key.includes('monthOfDOB'))
+            .map(([key, value]) => value);
+        const yearFromInput = Object.entries(data).filter(([key, value]) => key.includes('yearOfDOB'))
+            .map(([key, value]) => value);
+        const genderFromInput = Object.entries(data).filter(([key, value]) => key.includes('selectGender'))
+            .map(([key, value]) => value);
+        const pincodeFromInput = Object.entries(data).filter(([key, value]) => key.includes('pincode'))
+            .map(([key, value]) => value);
+        const emailFromInput = Object.entries(data).filter(([key, value]) => key.includes('emailInput'))
+            .map(([key, value]) => value);
+        for (let i = 0; i < fullNameFromInput.length; i++) {
+            await this.clickElement(await this.findElement('fullName', i + 1));
+            await this.sendKeys(fullNameFromInput[i]);
+            await this.clickElement(await this.findElement('dayOfDOB', i + 1));
+            await this.sendKeys(dayFromInput[i]);
+            await this.clickElement(await this.findElement('monthOfDOB', i + 1));
+            await this.sendKeys(monthFromInput[i]);
+            await this.clickElement(await this.findElement('yearOfDOB', i + 1));
+            await this.sendKeys(yearFromInput[i]);
+            await this.clickElement(await this.findElement('gender', i + 1));
+            await this.clickElement(await this.findElement('selectGender', genderFromInput[i]))
+            if(pincodeFromInput[i])
+            {
+                await this.clickElement(await this.findElement('pincode', i + 1));
+                await this.sendKeys(pincodeFromInput[i]);
+            }
+            if(emailFromInput[i])
+            {
+                await this.clickElement(await this.findElement('emailInput', i + 1));
+                await this.sendKeys(emailFromInput[i]);
+            }
+        }
         await this.clickElement(await this.findElement('continueCTA'))
         if('specializedContinue' in data)
         {
@@ -78,7 +100,13 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('getTravel'))
         await this.clickElement(await this.findElement('unbundledPlan'))
         await this.clickElement(await this.findElement('wherePlaceholder'))
-        await this.clickElement(await this.findElement('clickOnCountry1',data.clickOnCountry1))
+        const countriesFromInput = Object.entries(data).filter(([key, value]) => key.includes('clickOnCountry'))
+            .map(([key, value]) => value.trim());
+        for (const clickOnCountry of countriesFromInput) {
+            const element = await this.findElement('clickOnCountry', clickOnCountry);
+            await this.clickElement(element);
+            await this.sleep(0.5);
+        }
         await this.clickElement(await this.findElement('done'))
         await this.clickElement(await this.findElement('dateInput'))
         let currentDate = new Date();
@@ -89,14 +117,22 @@ class IntlTravelInsurancePage extends Helper{
         let endFormattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(newTargetDate);
         await this.clickElement(await this.findElement(data.travelStartDate,startFormattedDate))
         await this.clickElement(await this.findElement(data.travelEndDate,endFormattedDate))
-        await this.clickElement(await this.findElement('addTravellerCount',data.travellerType1))
-        await this.sleep(0.5)
-        await this.clickElement(await this.findElement('addTravellerCount',data.travellerType2))
+        const travellerTypesFromInput = Object.entries(data).filter(([key, value]) => key.includes('travellerType'))
+            .map(([key, value]) => value.trim());
+        for (const travellerType of travellerTypesFromInput) {
+            const element = await this.findElement('addTravellerCount', travellerType);
+            await this.clickElement(element);
+            await this.sleep(0.5);
+        }
         await this.clickElement(await this.findElement('continueCTA'))
         await this.sleep(0.5)
         await this.clickElement(await this.findElement('continueCTA'))
         if('addForOnlyMedicalCover' in data)
         {
+            if('priceSet' in data)
+            {
+                await this.clickElement(await this.findElement('priceSet',data.priceSet))
+            }
             await this.clickElement(await this.findElement(data.addForOnlyMedicalCover,1))
             await this.sleep(0.5)
             await this.clickElement(await this.findElement(data.addForOnlyMedicalCover,2))
@@ -149,32 +185,55 @@ class IntlTravelInsurancePage extends Helper{
             await this.clickElement(await this.findElement(data.noThanksBagaggeCover,1))
         }
         await this.sleep(1)
-        await this.clickElement(await this.findElement('fullName',1))
-        await this.sendKeys(data.fullName1)
-        await this.clickElement(await this.findElement('dayOfDOB',1))
-        await this.sendKeys(data.dayOfDOB1)
-        await this.clickElement(await this.findElement('monthOfDOB',1))
-        await this.sendKeys(data.monthOfDOB1)
-        await this.clickElement(await this.findElement('yearOfDOB',1))
-        await this.sendKeys(data.yearOfDOB1)
-        await this.clickElement(await this.findElement('gender',1))
-        await this.clickElement(await this.findElement('selectGender',data.selectGender1))
-        await this.clickElement(await this.findElement('pincode',1))
-        await this.sendKeys(data.pincode)
-        await this.clickElement(await this.findElement('emailInput',1))
-        await this.sendKeys(data.emailInput)
-        await this.clickElement(await this.findElement('fullName',2))
-        await this.sendKeys(data.fullName2)
-        await this.clickElement(await this.findElement('dayOfDOB',2))
-        await this.sendKeys(data.dayOfDOB2)
-        await this.clickElement(await this.findElement('monthOfDOB',2))
-        await this.sendKeys(data.monthOfDOB2)
-        await this.clickElement(await this.findElement('yearOfDOB',2))
-        await this.sendKeys(data.yearOfDOB2)
-        await this.clickElement(await this.findElement('gender',2))
-        await this.clickElement(await this.findElement('selectGender',data.selectGender2))
+        const fullNameFromInput = Object.entries(data).filter(([key, value]) => key.includes('fullName'))
+            .map(([key, value]) => value);
+        const dayFromInput = Object.entries(data).filter(([key, value]) => key.includes('dayOfDOB'))
+            .map(([key, value]) => value);
+        const monthFromInput = Object.entries(data).filter(([key, value]) => key.includes('monthOfDOB'))
+            .map(([key, value]) => value);
+        const yearFromInput = Object.entries(data).filter(([key, value]) => key.includes('yearOfDOB'))
+            .map(([key, value]) => value);
+        const genderFromInput = Object.entries(data).filter(([key, value]) => key.includes('selectGender'))
+            .map(([key, value]) => value);
+        const pincodeFromInput = Object.entries(data).filter(([key, value]) => key.includes('pincode'))
+            .map(([key, value]) => value);
+        const emailFromInput = Object.entries(data).filter(([key, value]) => key.includes('emailInput'))
+            .map(([key, value]) => value);
+        for (let i = 0; i < fullNameFromInput.length; i++) {
+            await this.clickElement(await this.findElement('fullName', i + 1));
+            await this.sendKeys(fullNameFromInput[i]);
+            await this.clickElement(await this.findElement('dayOfDOB', i + 1));
+            await this.sendKeys(dayFromInput[i]);
+            await this.clickElement(await this.findElement('monthOfDOB', i + 1));
+            await this.sendKeys(monthFromInput[i]);
+            await this.clickElement(await this.findElement('yearOfDOB', i + 1));
+            await this.sendKeys(yearFromInput[i]);
+            await this.clickElement(await this.findElement('gender', i + 1));
+            await this.clickElement(await this.findElement('selectGender', genderFromInput[i]))
+            if(pincodeFromInput[i])
+            {
+                await this.clickElement(await this.findElement('pincode', i + 1));
+                await this.sendKeys(pincodeFromInput[i]);
+            }
+            if(emailFromInput[i])
+            {
+                await this.clickElement(await this.findElement('emailInput', i + 1));
+                await this.sendKeys(emailFromInput[i]);
+            }
+        }
         await this.clickElement(await this.findElement('continueCTA'))
-        await this.clickElement(await this.findElement('paySecurely'))
+        try{
+            if (await this.findElement('updatedPrice')) {
+                if('specializedContinue' in data)
+                {
+                    await this.clickElement(await this.findElement(data.specializedContinue))
+                }
+            }
+            await this.clickElement(await this.findElement('paySecurely'));
+        }
+        catch(error){
+            await this.clickElement(await this.findElement('paySecurely'));
+        }
         return {startFormattedDate,endFormattedDate}
     }
 
@@ -182,6 +241,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.sleep(2)
         let url = await this.getUrl();
         let id = await (url.split("/pdp/"))[1];
+        await this.sleep(1)
         let idAgain = await (id.split("?utm_"))[0]
         await console.log(idAgain);
         const tokenUrl = 'https://central-auth-uat.internal.ackodev.com/realms/SureOs-dev/protocol/openid-connect/token';
@@ -208,6 +268,10 @@ class IntlTravelInsurancePage extends Helper{
                                 'Authorization': `Bearer ${token}`
                               }   
                         })
+
+            //Validating policy id
+            const policyIdFromAPI = apiResponse.data.header.policy_id
+            expect(idAgain).toBe(policyIdFromAPI)
 
             //Validating travel start dates
             const travelStartDateFromAPI = moment(apiResponse.data.header.proposal_data.travel_start_date, "DD-MM-YYYY");
