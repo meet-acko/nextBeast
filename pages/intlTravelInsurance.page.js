@@ -3,6 +3,7 @@ const { Helper } = require("../utils/helper");
 const axios = require('axios').default;
 const moment = require('moment');
 const { expect } = require('@playwright/test')
+const { Builder, By, Key, until } = require('selenium-webdriver');
 
 
 class IntlTravelInsurancePage extends Helper{
@@ -42,9 +43,22 @@ class IntlTravelInsurancePage extends Helper{
         }
         await this.clickElement(await this.findElement('continueCTA'))
         await this.sleep(2)
-        if('priceSet' in data)
-        {
+        if('priceSet' in data){
             await this.clickElement(await this.findElement('priceSet',data.priceSet))
+        }
+        if('covers' in data){
+            switch (data.covers) {
+                case 'Standard':
+                    await this.clickElement(await this.findElement(data.covers,data.covers))
+                    await this.clickElement(await this.findElement('seeBenefits',1))
+                    const covers = await this.findElement('standardPlanCovers',1)
+                    
+                    await this.clickElement(await this.findElement('coversClose'))
+                    break;
+                // case 'Comfort':
+                    
+                //     break;
+            }
         }
         await this.clickElement(await this.findElement('continueCTA'))
         await this.clickElement(await this.findElement('denailAddOn'))
@@ -75,20 +89,17 @@ class IntlTravelInsurancePage extends Helper{
             await this.sendKeys(yearFromInput[i]);
             await this.clickElement(await this.findElement('gender', i + 1));
             await this.clickElement(await this.findElement('selectGender', genderFromInput[i]))
-            if(pincodeFromInput[i])
-            {
+            if(pincodeFromInput[i]){
                 await this.clickElement(await this.findElement('pincode', i + 1));
                 await this.sendKeys(pincodeFromInput[i]);
             }
-            if(emailFromInput[i])
-            {
+            if(emailFromInput[i]){
                 await this.clickElement(await this.findElement('emailInput', i + 1));
                 await this.sendKeys(emailFromInput[i]);
             }
         }
         await this.clickElement(await this.findElement('continueCTA'))
-        if('specializedContinue' in data)
-        {
+        if('specializedContinue' in data){
             await this.clickElement(await this.findElement(data.specializedContinue))
         }
         await this.sleep(1.5)
@@ -127,63 +138,32 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('continueCTA'))
         await this.sleep(0.5)
         await this.clickElement(await this.findElement('continueCTA'))
-        if('addForOnlyMedicalCover' in data)
-        {
-            if('priceSet' in data)
-            {
-                await this.clickElement(await this.findElement('priceSet',data.priceSet))
+        if ('addForOnlyMedicalCover' in data) {
+            await this.handleClick(data.addForOnlyMedicalCover, 1);
+            await this.handleClick(data.addForOnlyMedicalCover, 2);
+        }     
+        if ('addForAllCovers' in data) {
+            await this.handleClick('priceSet', data.priceSet);
+            await this.handleClick(data.addForAllCovers, 1);
+            await this.handleClick(data.addForAllCovers, 2);
+            if ('flightHoursWithAllCovers' in data) {
+                await this.clickElement(await this.findElement('hours', data.flightHoursWithAllCovers))
             }
-            await this.clickElement(await this.findElement(data.addForOnlyMedicalCover,1))
-            await this.sleep(0.5)
-            await this.clickElement(await this.findElement(data.addForOnlyMedicalCover,2))
-            await this.sleep(0.5)
+            await this.handleClick(data.addForAllCovers, 1);
+            await this.handleClick(data.addForAllCovers, 1);
         }
-        if('addForAllCovers' in data)
-        {
-            await this.clickElement(await this.findElement(data.addForAllCovers,1))
-            await this.sleep(0.5)
-            await this.clickElement(await this.findElement(data.addForAllCovers,2))
-            await this.sleep(0.5)
-            if('flightHoursWithAllCovers' in data)
-            {
-                await this.clickElement(await this.findElement('hours',data.flightHoursWithAllCovers))
-            }
-            await this.sleep(0.5)
-            await this.clickElement(await this.findElement(data.addForAllCovers,1))
-            await this.sleep(0.5)
-            await this.clickElement(await this.findElement(data.addForAllCovers,1))
+        await this.handleClick(data.noThanksMedicalCover, 1);
+        await this.handleClick(data.noThanksMissedMedicalCover, 2);
+        if('flightHoursOnlyFlightCover' in data){
+            await this.clickElement(await this.findElement('hours', data.flightHoursOnlyFlightCover))
+        }  
+        await this.handleClick(data.addForOnlyFlightCover, 1);
+        await this.handleClick(data.noThanksFlightCover, 1);
+        if ('addForBagaggeCover' in data) {
+            await this.sleep(1);
+            await this.handleClick(data.addForBagaggeCover, 1);
         }
-        if('noThanksMedicalCover' in data)
-        {
-            await this.clickElement(await this.findElement(data.noThanksMedicalCover,1))
-            await this.sleep(0.5)
-        }
-        if('noThanksMissedMedicalCover' in data)
-        {
-            await this.clickElement(await this.findElement(data.noThanksMissedMedicalCover,2))
-        }
-        if('flightHoursOnlyFlightCover' in data)
-        {
-            await this.clickElement(await this.findElement('hours',data.flightHoursOnlyFlightCover))
-        }
-        if('addForOnlyFlightCover' in data)
-        {
-            await this.clickElement(await this.findElement(data.addForOnlyFlightCover,1))
-        }
-        if('noThanksFlightCover' in data)
-        {
-            await this.clickElement(await this.findElement(data.noThanksFlightCover,1))
-        }
-        if('addForBagaggeCover' in data)
-        {
-            await this.sleep(1)
-            await this.clickElement(await this.findElement(data.addForBagaggeCover,1))
-        }
-        if('noThanksBagaggeCover' in data)
-        {
-            await this.sleep(0.5)
-            await this.clickElement(await this.findElement(data.noThanksBagaggeCover,1))
-        }
+        await this.handleClick(data.noThanksBagaggeCover, 1);
         await this.sleep(1)
         const fullNameFromInput = Object.entries(data).filter(([key, value]) => key.includes('fullName'))
             .map(([key, value]) => value);
@@ -210,13 +190,11 @@ class IntlTravelInsurancePage extends Helper{
             await this.sendKeys(yearFromInput[i]);
             await this.clickElement(await this.findElement('gender', i + 1));
             await this.clickElement(await this.findElement('selectGender', genderFromInput[i]))
-            if(pincodeFromInput[i])
-            {
+            if(pincodeFromInput[i]){
                 await this.clickElement(await this.findElement('pincode', i + 1));
                 await this.sendKeys(pincodeFromInput[i]);
             }
-            if(emailFromInput[i])
-            {
+            if(emailFromInput[i]){
                 await this.clickElement(await this.findElement('emailInput', i + 1));
                 await this.sendKeys(emailFromInput[i]);
             }
@@ -224,8 +202,7 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('continueCTA'))
         try{
             if (await this.findElement('updatedPrice')) {
-                if('specializedContinue' in data)
-                {
+                if('specializedContinue' in data){
                     await this.clickElement(await this.findElement(data.specializedContinue))
                 }
             }

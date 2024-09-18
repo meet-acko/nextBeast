@@ -515,6 +515,13 @@ exports.Helper = class Helper{
         return `${day}-${month}-${year}`;
     }
 
+    async handleClick(element, index, sleepDuration = 0.5) {
+        if (element) {
+            await this.clickElement(await this.findElement(element, index));
+            await this.sleep(sleepDuration);
+        }
+    }
+
     async findRefreshAppElement(elementName, replaceWith, timeOut=60, elementStatus, refreshCount=2){
         return await this.findAppElement(elementName, replaceWith, timeOut, elementStatus, refreshCount);
     }

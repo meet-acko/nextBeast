@@ -89,5 +89,17 @@
     },
     "updatedPrice" : {
         "xpath" : "//*[contains(text(),'Price updated')]"
+    },
+    "Standard" : {
+        "xpath" : "//*[text()='$']//preceding-sibling::input"
+    },
+    "seeBenefits" : {
+        "xpath" : "(//*[contains(text(),'See benefits')])[$]"
+    },
+    "standardPlanCovers" : {
+        "xpath" : "//*[text()='Standard plan includes']//ancestor::div[2]//descendant::img[contains(@src,'travel_v1')]//following-sibling::div[$]"
+    },
+    "coversClose" : {
+        "xpath" : "//img[@alt='close']"
     }
 }
