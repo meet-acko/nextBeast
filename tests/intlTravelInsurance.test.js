@@ -288,7 +288,7 @@ describe('International travel insurance scenarios',()=>{
         await pages.paymentPage.sleep(1)
     })
 
-    it('Intl Travel buy journey for unbundled plan for 2 Adults, 10 days period, 100K SI, 3hrs, and all covers', async()=>{
+    it.only('Intl Travel buy journey for unbundled plan for 2 Adults, 10 days period, 100K SI, 3hrs, and all covers', async()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,

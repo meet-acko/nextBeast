@@ -1,20 +1,8 @@
-const { toMatchImageSnapshot } = require('jest-image-snapshot');
 const { properties } = require('../utils/config');
 const { getDriver, closeDriver } = require('../utils/driverSetUp');
 const { Helper } = require('../utils/helper');
 
-expect.extend({ 
-    toMatchImageSnapshot(received, options) {
-        const customConfig = {
-            customSnapshotsDir: `${__dirname}/../results/snapshots`,
-            customDiffDir: `${__dirname}/../results/differences`,
-                ...options,
-            };
-        return toMatchImageSnapshot.call(this, received, customConfig);
-    } 
-});
-
-beforeAll(async function() {
+before(async function() {
 });
 
 beforeEach(async function() {
@@ -51,8 +39,7 @@ beforeEach(async function() {
     }
 });
 
-afterAll(async function() {
-    
+after(async function() {
 });
 
 afterEach(async function() {

@@ -3,7 +3,6 @@ const { Helper } = require("../utils/helper");
 const axios = require('axios').default;
 const moment = require('moment');
 const { expect } = require('@playwright/test')
-const { Builder, By, Key, until } = require('selenium-webdriver');
 
 
 class IntlTravelInsurancePage extends Helper{
