@@ -9,10 +9,7 @@
     "wherePlaceholder" : {
         "xpath" : "//input[@placeholder='Where']/../../.."
     },
-    "clickOnCountry1" : {
-        "xpath" : "//*[text()='Popular countries']//following::*[text()='$']"
-    },
-    "clickOnCountry2" : {
+    "clickOnCountry" : {
         "xpath" : "//*[text()='Popular countries']//following::*[text()='$']"
     },
     "done" : {
@@ -89,5 +86,20 @@
     },
     "hours" : {
         "xpath" : "//*[text()='$']"
-    } 
+    },
+    "updatedPrice" : {
+        "xpath" : "//*[contains(text(),'Price updated')]"
+    },
+    "Standard" : {
+        "xpath" : "//*[text()='$']//preceding-sibling::input"
+    },
+    "seeBenefits" : {
+        "xpath" : "(//*[contains(text(),'See benefits')])[$]"
+    },
+    "standardPlanCovers" : {
+        "xpath" : "//*[text()='Standard plan includes']//ancestor::div[2]//descendant::img[contains(@src,'travel_v1')]//following-sibling::div[$]"
+    },
+    "coversClose" : {
+        "xpath" : "//img[@alt='close']"
+    }
 }
