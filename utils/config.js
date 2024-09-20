@@ -8,6 +8,7 @@ exports.properties = {
     
     browserName : process.env.browserName ? process.env.browserName : properties.get("browserName"), 
     defaultURL : process.env.defaultURL ? process.env.defaultURL : properties.get("defaultURL"),
+    loadDefaultURLInitially : process.env.loadDefaultURLInitially ? process.env.loadDefaultURLInitially : properties.get("loadDefaultURLInitially"),
 
     masterDBHost : process.env.masterDBHost ? process.env.masterDBHost : properties.get("masterDBHost"),
     masterDBUsername : process.env.masterDBUsername ? process.env.masterDBUsername : properties.get("masterDBUsername"),
