@@ -49,15 +49,11 @@ class IntlTravelInsurancePage extends Helper{
         if('covers' in data){
             switch (data.covers) {
                 case 'Standard':
-                    await this.clickElement(await this.findElement(data.covers,data.covers))
-                    await this.clickElement(await this.findElement('seeBenefits',1))
-                    const covers = await this.findElement('standardPlanCovers',1)
-                    
-                    await this.clickElement(await this.findElement('coversClose'))
+                    await this.clickElement(await this.findElement('coversSelection',data.covers))
                     break;
-                // case 'Comfort':
-                    
-                //     break;
+                case 'Comfort':
+                    await this.clickElement(await this.findElement('coversSelection',data.covers))
+                    break;
             }
         }
         await this.clickElement(await this.findElement('continueCTA'))
@@ -138,32 +134,38 @@ class IntlTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('continueCTA'))
         await this.sleep(0.5)
         await this.clickElement(await this.findElement('continueCTA'))
-        if ('addForOnlyMedicalCover' in data) {
-            await this.handleClick(data.addForOnlyMedicalCover, 1);
-            await this.handleClick(data.addForOnlyMedicalCover, 2);
+        if ('addMedicalCover' in data) {
+            await this.handleClick(data.addMedicalCover, 1);
+            await this.handleClick(data.addMedicalCover, 2);
+            await this.handleClick(data.noFlightCover, 1);
+            await this.handleClick(data.noBagaggeCover, 1);
         }     
-        if ('addForAllCovers' in data) {
+        if ('allCovers' in data) {
             await this.handleClick('priceSet', data.priceSet);
-            await this.handleClick(data.addForAllCovers, 1);
-            await this.handleClick(data.addForAllCovers, 2);
-            if ('flightHoursWithAllCovers' in data) {
-                await this.clickElement(await this.findElement('hours', data.flightHoursWithAllCovers))
+            await this.handleClick(data.allCovers, 1);
+            await this.handleClick(data.allCovers, 2);
+            if ('addHourForFlightCover' in data) {
+                await this.clickElement(await this.findElement('hours', data.addHourForFlightCover))
             }
-            await this.handleClick(data.addForAllCovers, 1);
-            await this.handleClick(data.addForAllCovers, 1);
+            await this.handleClick(data.allCovers, 1);
+            await this.handleClick(data.allCovers, 1);
         }
-        await this.handleClick(data.noThanksMedicalCover, 1);
-        await this.handleClick(data.noThanksMissedMedicalCover, 2);
-        if('flightHoursOnlyFlightCover' in data){
-            await this.clickElement(await this.findElement('hours', data.flightHoursOnlyFlightCover))
-        }  
-        await this.handleClick(data.addForOnlyFlightCover, 1);
-        await this.handleClick(data.noThanksFlightCover, 1);
-        if ('addForBagaggeCover' in data) {
+        if('addFlightCover' in data){
+            await this.handleClick(data.noMedicalCover, 1);
+            await this.handleClick(data.noMissedMedicalCover, 2);
+            if ('addHourForFlightCover' in data) {
+                await this.clickElement(await this.findElement('hours', data.addHourForFlightCover))
+            }
+            await this.handleClick(data.addFlightCover, 1);
+            await this.handleClick(data.noBagaggeCover, 1);
+        }
+        if ('addBagaggeCover' in data) {
             await this.sleep(1);
-            await this.handleClick(data.addForBagaggeCover, 1);
+            await this.handleClick(data.noMedicalCover, 1);
+            await this.handleClick(data.noMissedMedicalCover, 2);
+            await this.handleClick(data.noFlightCover, 1);
+            await this.handleClick(data.addBaggageCover, 1);
         }
-        await this.handleClick(data.noThanksBagaggeCover, 1);
         await this.sleep(1)
         const fullNameFromInput = Object.entries(data).filter(([key, value]) => key.includes('fullName'))
             .map(([key, value]) => value);
@@ -422,6 +424,25 @@ class IntlTravelInsurancePage extends Helper{
             for (let i = 0; i < sortAry2.length; i++) {
                 if (sortAry1[i] !== sortAry2[i]) {
                     console.log("Not equal")
+                }
+            }
+
+            //Validating the covers
+            const covers = [];
+            apiResponse.data.plans.forEach(plan => {
+                plan.insured_mapping.forEach(mapping => {
+                    for (let coverName in mapping.covers) {
+                        covers.push(coverName);
+                    }
+                });
+            });
+            const set1 = new Set(data.plans);
+            const set2 = new Set(covers);
+            if (set1.size !== set2.size) console.log("Array Lengths are not same")
+            for (let item of set1) {
+                if (!set2.has(item)){ 
+                    console.log("Arrays are not same")
+                    break
                 }
             }
         }
