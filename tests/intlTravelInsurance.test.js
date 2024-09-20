@@ -416,7 +416,7 @@ describe('International travel insurance scenarios',()=>{
         await pages.paymentPage.sleep(1)
     })
 
-    it.only('All cover names of standard bundled plan', async()=>{
+    it('All cover names of standard bundled plan', async()=>{
         let data = {
             clickOnCountry1 : "United Kingdom",
             setMonth : 0,
