@@ -151,7 +151,7 @@ class IntlTravelInsurancePage extends Helper{
         }
         if('addFlightCover' in data){
             await this.handleClick(data.noMedicalCover, 1);
-            await this.handleClick(data.noMissedMedicalCover, 2);
+            await this.handleClick(data.noMedicalCover, 2);
             if ('addHourForFlightCover' in data) {
                 await this.clickElement(await this.findElement('hours', data.addHourForFlightCover))
             }
@@ -161,9 +161,9 @@ class IntlTravelInsurancePage extends Helper{
         if ('addBagaggeCover' in data) {
             await this.sleep(1);
             await this.handleClick(data.noMedicalCover, 1);
-            await this.handleClick(data.noMissedMedicalCover, 2);
+            await this.handleClick(data.noMedicalCover, 2);
             await this.handleClick(data.noFlightCover, 1);
-            await this.handleClick(data.addBaggageCover, 1);
+            await this.handleClick(data.addBagaggeCover, 1);
         }
         await this.sleep(1)
         const fullNameFromInput = Object.entries(data).filter(([key, value]) => key.includes('fullName'))

@@ -271,7 +271,6 @@ describe('International travel insurance scenarios',()=>{
             yearOfDOB2: pages.homePage.randomNumber(1991, 1995),
             selectGender2: pages.homePage.getRandomGender(),
             noMedicalCover: 'noThanks',
-            noMissedMedicalCover: 'noThanks',
             addHourForFlightCover: '4 hours',
             addFlightCover: 'addFor',
             noBagaggeCover: 'noThanks'
@@ -288,7 +287,7 @@ describe('International travel insurance scenarios',()=>{
         await pages.paymentPage.sleep(1)
     })
 
-    it.only('Intl Travel buy journey for unbundled plan for 2 Adults, 10 days period, 100K SI, 3hrs, and all covers', async()=>{
+    it('Intl Travel buy journey for unbundled plan for 2 Adults, 10 days period, 100K SI, 3hrs, and all covers', async()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
@@ -381,7 +380,6 @@ describe('International travel insurance scenarios',()=>{
             yearOfDOB2: pages.homePage.randomNumber(1991, 1995),
             selectGender2: pages.homePage.getRandomGender(),
             noMedicalCover: 'noThanks',
-            noMissedMedicalCover: 'noThanks',
             noFlightCover: 'noThanks',
             addBagaggeCover: 'addFor'
         }
@@ -557,10 +555,78 @@ describe('International travel insurance scenarios',()=>{
     })
 
     it('All cover names of flight cover in unbundled plan', async()=>{
-        
+        let data = {
+            clickOnCountry1 : "United Kingdom",
+            setMonth : 0,
+            travelStartDate: '01',
+            travelEndDate: '10',
+            travellerType1: "Adult",
+            fullName1: "JOHN DOE",
+            dayOfDOB1: pages.homePage.randomNumber(5, 20),
+            monthOfDOB1: pages.homePage.randomNumber(2, 11),
+            yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
+            selectGender1: pages.homePage.getRandomGender(),
+            pincode: "560037",
+            emailInput: 'nitin.kumar_eupho_blr@acko.tech',
+            noMedicalCover: 'noThanks',
+            addFlightCover: 'addFor',
+            noBagaggeCover: 'noThanks',
+            plans : [
+                'Flight delay',
+                'Missed flight',
+                'Trip cancellation',
+                'Trip rescheduling',
+                'Trip cancellation due to covid',
+                'Missed connecting flight'
+            ]
+        }
+        let mobileNumber=pages.homePage.randomMobileNumber()
+        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
+        await pages.homePage.login(mobileNumber)
+        await pages.homePage.sleep(3)
+        let {startFormattedDate,endFormattedDate} = await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
+        await pages.paymentPage.sleep(2)
+        await pages.paymentPage.completePayment()
+        await pages.paymentPage.sleep(8)
+        await pages.intlTravelInsurancePage.apiValidationUsingId({...data,startFormattedDate,endFormattedDate})
+        await pages.paymentPage.sleep(1)
     })
 
     it('All cover names of baggage cover in unbundled plan', async()=>{
-        
+        let data = {
+            clickOnCountry1 : "United Kingdom",
+            setMonth : 0,
+            travelStartDate: '01',
+            travelEndDate: '10',
+            travellerType1: "Adult",
+            fullName1: "JOHN DOE",
+            dayOfDOB1: pages.homePage.randomNumber(5, 20),
+            monthOfDOB1: pages.homePage.randomNumber(2, 11),
+            yearOfDOB1: pages.homePage.randomNumber(1990, 1999),
+            selectGender1: pages.homePage.getRandomGender(),
+            pincode: "560037",
+            emailInput: 'nitin.kumar_eupho_blr@acko.tech',
+            noMedicalCover: 'noThanks',
+            noFlightCover: 'noThanks',
+            addBagaggeCover: 'addFor',
+            plans : [
+                'Delay of checked-in baggage',
+                'Total loss of checked-in baggage',
+                'Damage of checked-in baggage',
+                'Loss of passport',
+                'Home cover',
+                'Legal liability'
+            ]
+        }
+        let mobileNumber=pages.homePage.randomMobileNumber()
+        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
+        await pages.homePage.login(mobileNumber)
+        await pages.homePage.sleep(3)
+        let {startFormattedDate,endFormattedDate} = await pages.intlTravelInsurancePage.clickOnUnbundledPlan(data)
+        await pages.paymentPage.sleep(2)
+        await pages.paymentPage.completePayment()
+        await pages.paymentPage.sleep(8)
+        await pages.intlTravelInsurancePage.apiValidationUsingId({...data,startFormattedDate,endFormattedDate})
+        await pages.paymentPage.sleep(1)
     })
 })
