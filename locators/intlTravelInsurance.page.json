@@ -98,5 +98,11 @@
     },
     "cross" : {
         "xpath" : "//img[@alt='close']"
+    },
+    "seeBenefits" : {
+        "xpath" : "(//*[text()='See benefits'])[$]"
+    },
+    "coverName" : {
+        "xpath" : "//div[text()='Hospitalisation due to illness']"
     }
 }

@@ -9,7 +9,7 @@ const pages={
 }
 
 describe('International travel insurance scenarios',()=>{
-    it('Intl Travel buy journey for bundled plan for 1 Adults & 1 Child 10 days period and 50K SI', async()=>{
+    it('Intl Travel buy journey for bundled plan for 1 Adult & 1 Child 10 days period and 50K SI', async()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 0,
@@ -44,7 +44,7 @@ describe('International travel insurance scenarios',()=>{
         await pages.paymentPage.sleep(1)
     })
 
-    it('Intl Travel buy journey for bundled plan for 1 Adults & 1 Senior 120 days period and 100K SI', async()=>{
+    it('Intl Travel buy journey for bundled plan for 1 Adult & 1 Senior 120 days period and 100K SI', async()=>{
         let data = {
             clickOnCountry1 : "United Kingdom",
             setMonth : 4,
@@ -79,7 +79,7 @@ describe('International travel insurance scenarios',()=>{
         await pages.paymentPage.sleep(1)
     })
 
-    it('Intl Travel buy journey for bundled plan for 2 Adults 30days period and 200K SI', async()=>{
+    it('Intl Travel buy journey for bundled plan for 2 Adult 30days period and 200K SI', async()=>{
         let data = {
             clickOnCountry1 : "United Kingdom",
             setMonth : 1,
@@ -113,7 +113,7 @@ describe('International travel insurance scenarios',()=>{
         await pages.paymentPage.sleep(1)
     })
 
-    it('Intl Travel buy journey for bundled plan for 1 Adults, 1 Senior, and 1 Child, 30 days period, and 150K SI', async()=>{
+    it('Intl Travel buy journey for bundled plan for 1 Adult, 1 Senior, and 1 Child, 30 days period, and 150K SI', async()=>{
         let data = {
             clickOnCountry1 : "United Kingdom",
             setMonth : 1,
@@ -395,7 +395,7 @@ describe('International travel insurance scenarios',()=>{
         await pages.paymentPage.sleep(1)
     })
 
-    it('Intl Travel buy journey for unbundled plan for 1 Adults, 1 Senior, 30 period, and 100K SI', async()=>{
+    it('Intl Travel buy journey for unbundled plan for 1 Adult, 1 Senior, 30 period, and 100K SI', async()=>{
         let data = {
             clickOnCountry1 : "Indonesia",
             setMonth : 1,
