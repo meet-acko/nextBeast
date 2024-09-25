@@ -1,0 +1,8 @@
+{
+    "getTravel" : {
+        "xpath" : "(//p[text()='Travel'])[1]"
+    },
+    "visa" : {
+        "xpath" : "(//p[contains(text(),'visa')])[$]"
+    }
+}
