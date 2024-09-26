@@ -1,5 +1,47 @@
 {
-    "" : {
-        "xpath" : ""
+   "getTravel" : {
+        "xpath" : "(//p[text()='Travel'])[1]"
+    },
+    "travelPass" : {
+        "xpath" : "//*[contains(text(),'Get protected against delays & cancellations for all your flights')]"
+    },
+    "canIAddMyFamilyMembersToMyPass" : {
+        "xpath" : "//*[contains(text(),'Can I add family members to my pass?')]"
+    },
+    "getItFor" : {
+        "xpath" : "//*[contains(text(),'Get it for')]"
+    },
+    "fullName" : {
+        "xpath" : "//*[contains(text(),'Full name')]//preceding-sibling::input"
+    },
+    "mobileNumber" : {
+        "xpath" : "//*[contains(text(),'Mobile number')]//preceding-sibling::input"
+    },
+    "pincode" : {
+        "xpath" : "//*[contains(text(),'Pin code')]//preceding-sibling::input"
+    },
+    "email" : {
+        "xpath" : "//*[contains(text(),'Email')]//preceding-sibling::input"
+    },
+    "continue" : {
+        "xpath" : "//*[contains(text(),'Continue')]"
+    },
+    "addAddress" : {
+        "xpath" : "(//*[contains(text(),'Add address')])[$]"
+    },
+    "save" : {
+        "xpath" : "(//*[contains(text(),'Save')])[$]"
+    },
+    "flatNo" : {
+        "xpath" : "//*[contains(text(),'Flat no')]//preceding-sibling::input"
+    },
+    "street" : {
+        "xpath" : "//*[contains(text(),'Street')]//preceding-sibling::input"
+    },
+    "city" : {
+        "xpath" : "//*[contains(text(),'City')]//preceding-sibling::input"
+    },
+    "state" : {
+        "xpath" : "//*[contains(text(),'State')]//preceding-sibling::input"
     }
 }

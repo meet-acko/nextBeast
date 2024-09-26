@@ -4,5 +4,11 @@
     },
     "visa" : {
         "xpath" : "(//p[contains(text(),'visa')])[$]"
+    },
+    "whereAreYouPlanningToGo" : {
+        "xpath" : "//*[contains(@placeholder,'Where are you planning')]"
+    },
+    "countrySuggestion" : {
+        "xpath" : "//div[text()='$']"
     }
 }

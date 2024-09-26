@@ -11,14 +11,15 @@ const pages={
 describe('Visa travel insurance scenarios',()=>{
     it('Dubai tourist visa application', async()=>{
         let data = {
-            fullName1 : 'JOHN DOE'
+            fullName : 'JOHN DOE',
+            country : 'Dubai'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
-        await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
+        await pages.homePage.addKYCSuccess(data.fullName, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
         await pages.visaTravelInsurancePage.buyVisaTravelInsurance(data)
-        await pages.paymentPage.sleep(2)
+        await pages.paymentPage.sleep(8)
         //await pages.paymentPage.completePayment()
     })
 
