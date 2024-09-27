@@ -9,12 +9,25 @@ const pages={
 }
 
 describe('Visa travel insurance scenarios',()=>{
-    it('Dubai tourist visa application', async()=>{
+    it('France tourist visa application', async()=>{
+        let mobileNumber=pages.homePage.randomMobileNumber()
         let data = {
             fullName : 'JOHN DOE',
-            country : 'Dubai'
+            country : 'France',
+            visaType : 'Tourist',
+            package : ' 30 Days Single Entry ',
+            travelStartDate: '01',
+            travelEndDate: '01',
+            travelStartMonth: ' '+pages.homePage.getNextMonthName()+' ',
+            setMonth: 1,
+            travelEndMonth: ' '+pages.homePage.getEndMonthName()+' ',
+            gender: pages.homePage.getRandomGender().toUpperCase(),
+            dob: pages.homePage.randomNumber(5, 20)+"/"+pages.homePage.randomNumber(2, 11)+"/"+pages.homePage.randomNumber(1990, 1999),
+            occupation: 'Employee',
+            mobile: mobileNumber,
+            email: 'nitin.kumar_eupho_blr@acko.tech',
+            passportNumber: pages.homePage.randomName(5)
         }
-        let mobileNumber=pages.homePage.randomMobileNumber()
         await pages.homePage.addKYCSuccess(data.fullName, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)

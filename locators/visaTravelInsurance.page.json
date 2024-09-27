@@ -10,5 +10,47 @@
     },
     "countrySuggestion" : {
         "xpath" : "//div[text()='$']"
+    },
+    "visaType" : {
+        "xpath" : "//*[text()='$']//parent::div//descendant::input"
+    },
+    "continue" : {
+        "xpath" : "//*[contains(text(),'Continue')]"
+    },
+    "select" : {
+        "xpath" : "//*[text()='$']/../../..//descendant::button"
+    },
+    "01" : {
+        "xpath" : "//*[text()='$']/../../..//descendant::span[text()='1']"
+    },
+    "right" : {
+        "xpath" : "(//chevronrighticon/..)[$]"
+    },
+    "setDates" : {
+        "xpath" : "//*[text()='Set Dates']"
+    },
+    "firstName" : {
+        "xpath" : "//*[@id='firstName']"
+    },
+    "selectGender" : {
+        "xpath" : "//input[@placeholder='Select Gender']/../.."
+    },
+    "maleOption" : {
+        "xpath" : "//*[text()='$']"
+    },
+    "selectOccupation" : {
+        "xpath" : "//*[text()='Select Occupation']"
+    },
+    "occupationOption" : {
+        "xpath" : "//*[text()='$']"
+    },
+    "mobileInput" : {
+        "xpath" : "//*[@id='cell']"
+    },
+    "email" : {
+        "xpath" : "//*[@id='emailId']"
+    },
+    "passportNumber" : {
+        "xpath" : "//*[@id='passportNumber']"
     }
 }

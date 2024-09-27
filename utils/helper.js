@@ -455,8 +455,34 @@ exports.Helper = class Helper{
         const randomNumber = Math.floor(Math.random() * (10 ** pincodeLength));
         const pincode = randomNumber.toString().padStart(pincodeLength, '0');
         return pincode;
-      }
-      
+    }
+
+    getMonthName(monthIndex) {
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        return monthNames[monthIndex];
+    }
+
+    getEndMonthName() {
+        let travelStartMonthName = this.getNextMonthName();
+        let currentYear = new Date().getFullYear(); 
+        let currentMonthIndex = new Date(Date.parse(travelStartMonthName + " 1, " + currentYear)).getMonth();
+        let setMonth = 1;  
+        let travelEndMonthIndex = (currentMonthIndex + setMonth) % 12;
+        let travelEndMonthName = this.getMonthName(travelEndMonthIndex);
+        return travelEndMonthName
+    }
+    
+    getNextMonthName() {
+        const currentDate = new Date();
+        const nextMonthIndex = (currentDate.getMonth() + 2) % 12;
+        const nextMonthDate = new Date(currentDate.getFullYear(), nextMonthIndex);
+        const options = { month: 'long' };
+        const nextMonthName = nextMonthDate.toLocaleString('default', options);
+        return nextMonthName
+    }
 
     getRandomGender() {
         const genders = ['Male','Female'];

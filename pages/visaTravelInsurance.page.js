@@ -17,6 +17,30 @@ class VisaTravelInsurancePage extends Helper{
         await this.sendKeys(data.country)
         await this.clickElement(await this.findElement('countrySuggestion', data.country))
         await this.clickElement(await this.findElement('countrySuggestion', data.country))
+        await this.clickElement(await this.findElement('visaType', data.visaType))
+        await this.clickElement(await this.findElement('continue'))
+        await this.clickElement(await this.findElement('select',data.package))
+        await this.clickElement(await this.findElement('continue'))
+        await this.clickElement(await this.findElement(data.travelStartDate,data.travelStartMonth))
+        for(let i=0;i<data.setMonth;i++){
+            await this.clickElement(await this.findElement('right',2))
+        }
+        await this.clickElement(await this.findElement(data.travelEndDate, data.travelEndMonth))
+        await this.clickElement(await this.findElement('setDates'))
+        await this.clickElement(await this.findElement('continue'))
+        await this.clickElement(await this.findElement('firstName'))
+        await this.sendKeys(data.fullName)
+        await this.clickElement(await this.findElement('selectGender'))
+        await this.clickElement(await this.findElement('maleOption',data.gender))
+        
+        // await this.clickElement(await this.findElement('selectOccupation'))
+        // await this.clickElement(await this.findElement('occupationOption', data.occupation))
+        // await this.clickElement(await this.findElement('mobileInput'))
+        // await this.sendKeys(data.mobile)
+        // await this.clickElement(await this.findElement('email'))
+        // await this.sendKeys(data.email)
+        // await this.clickElement(await this.findElement('passportNumber'))
+        // await this.sendKeys(data.passportNumber)
     }
 }
 
