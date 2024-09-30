@@ -3,6 +3,10 @@ const { Helper } = require("../utils/helper");
 const axios = require('axios').default;
 const moment = require('moment');
 const { expect } = require('@playwright/test')
+const getPageLocators = (pageName) => {
+    const path = `../locators/${pageName}.page.json`;
+    return require(path);
+};
 
 class VisaTravelInsurancePage extends Helper{
     constructor(){
@@ -32,7 +36,11 @@ class VisaTravelInsurancePage extends Helper{
         await this.sendKeys(data.fullName)
         await this.clickElement(await this.findElement('selectGender'))
         await this.clickElement(await this.findElement('maleOption',data.gender))
-        
+        await this.clickElement(await this.findElement('dob'))
+        await this.clickElement(await this.findElement('dobAttributes',2))
+        const pager = getPageLocators(data.pageName);
+        const locator = pager[data.locatorName].xpath;
+        await this.compareAndPerformYear(locator,data.yearOfDOB)
         // await this.clickElement(await this.findElement('selectOccupation'))
         // await this.clickElement(await this.findElement('occupationOption', data.occupation))
         // await this.clickElement(await this.findElement('mobileInput'))

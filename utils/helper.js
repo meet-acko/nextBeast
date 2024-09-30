@@ -267,6 +267,33 @@ exports.Helper = class Helper{
             await page.evaluate(jsScript);
     }
 
+    async executeJavaScript(jsScript){
+        return await driver.executeScript(jsScript,[]);
+    }
+
+    async getText(locator){
+        const jsScript = `
+            var xpath = "${locator}";
+            var element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+            return element ? element.innerText : null;
+        `;
+        const text = await this.executeJavaScript(jsScript);
+        return text
+    }
+
+    async compareAndPerformYear(locator,yearOfDOB){
+        while(true){
+            const dobYearRangeText = await this.getText(locator)
+            const [startYear, endYear] = dobYearRangeText.split('-').map(Number);
+            if(yearOfDOB >= startYear && yearOfDOB <= endYear){
+                await this.clickElement(await this.findElement('exact',yearOfDOB))
+                break
+            }else{
+                await this.clickElement(await this.findElement('leftDOB',1))
+            }
+        } 
+    }
+
     async takeFullPageScreenshot(){
         await driver.executeScript(`function smoothScrollToBottom() {
             const totalHeight = document.body.scrollHeight;
@@ -465,11 +492,11 @@ exports.Helper = class Helper{
         return monthNames[monthIndex];
     }
 
-    getEndMonthName() {
+    getEndMonthName(setMonthCount) {
         let travelStartMonthName = this.getNextMonthName();
         let currentYear = new Date().getFullYear(); 
         let currentMonthIndex = new Date(Date.parse(travelStartMonthName + " 1, " + currentYear)).getMonth();
-        let setMonth = 1;  
+        let setMonth = setMonthCount;  
         let travelEndMonthIndex = (currentMonthIndex + setMonth) % 12;
         let travelEndMonthName = this.getMonthName(travelEndMonthIndex);
         return travelEndMonthName

@@ -52,5 +52,20 @@
     },
     "passportNumber" : {
         "xpath" : "//*[@id='passportNumber']"
+    },
+    "dob": {
+        "xpath" : "//p-calendar[@id='dateOfBirth']//descendant::input"
+    },
+    "dobAttributes" : {
+        "xpath" : "//div[contains(@class,'datepicker-title')]//child::button[$]"
+    },
+    "dobYear" : {
+        "xpath" : "//span[contains(@class,'datepicker-decade')]"
+    },
+    "leftDOB" : {
+        "xpath" : "(//chevronlefticon/..)[$]"
+    },
+    "exact" : {
+        "xpath" : "//*[text()=' $ ']"
     }
 }

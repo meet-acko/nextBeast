@@ -10,7 +10,8 @@ const pages={
 
 describe('Visa travel insurance scenarios',()=>{
     it('France tourist visa application', async()=>{
-        let mobileNumber=pages.homePage.randomMobileNumber()
+        let mobileNumber = pages.homePage.randomMobileNumber()
+        let setMonthCount = pages.homePage.randomNumber(2,9)
         let data = {
             fullName : 'JOHN DOE',
             country : 'France',
@@ -19,14 +20,18 @@ describe('Visa travel insurance scenarios',()=>{
             travelStartDate: '01',
             travelEndDate: '01',
             travelStartMonth: ' '+pages.homePage.getNextMonthName()+' ',
-            setMonth: 1,
-            travelEndMonth: ' '+pages.homePage.getEndMonthName()+' ',
+            setMonth: setMonthCount,
+            travelEndMonth: ' '+pages.homePage.getEndMonthName(setMonthCount)+' ',
             gender: pages.homePage.getRandomGender().toUpperCase(),
-            dob: pages.homePage.randomNumber(5, 20)+"/"+pages.homePage.randomNumber(2, 11)+"/"+pages.homePage.randomNumber(1990, 1999),
+            dayOfDOB: pages.homePage.randomNumber(5, 20),
+            monthOfDOB: pages.homePage.randomNumber(2, 11),
+            yearOfDOB: pages.homePage.randomNumber(1990, 1999),
             occupation: 'Employee',
             mobile: mobileNumber,
             email: 'nitin.kumar_eupho_blr@acko.tech',
-            passportNumber: pages.homePage.randomName(5)
+            passportNumber: pages.homePage.randomName(5),
+            pageName: 'visaTravelInsurance',
+            locatorName: 'dobYear'
         }
         await pages.homePage.addKYCSuccess(data.fullName, mobileNumber);
         await pages.homePage.login(mobileNumber)
