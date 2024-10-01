@@ -25,6 +25,7 @@ class VisaTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('continue'))
         await this.clickElement(await this.findElement('select',data.package))
         await this.clickElement(await this.findElement('continue'))
+        await this.clickElement(await this.findElement('right',2))
         await this.clickElement(await this.findElement(data.travelStartDate,data.travelStartMonth))
         for(let i=0;i<data.setMonth;i++){
             await this.clickElement(await this.findElement('right',2))
@@ -37,18 +38,48 @@ class VisaTravelInsurancePage extends Helper{
         await this.clickElement(await this.findElement('selectGender'))
         await this.clickElement(await this.findElement('maleOption',data.gender))
         await this.clickElement(await this.findElement('dob'))
-        await this.clickElement(await this.findElement('dobAttributes',2))
+        await this.clickElement(await this.findElement('calenderAttributes',2))
         const pager = getPageLocators(data.pageName);
         const locator = pager[data.locatorName].xpath;
-        await this.compareAndPerformYear(locator,data.yearOfDOB)
-        // await this.clickElement(await this.findElement('selectOccupation'))
-        // await this.clickElement(await this.findElement('occupationOption', data.occupation))
-        // await this.clickElement(await this.findElement('mobileInput'))
-        // await this.sendKeys(data.mobile)
-        // await this.clickElement(await this.findElement('email'))
-        // await this.sendKeys(data.email)
-        // await this.clickElement(await this.findElement('passportNumber'))
-        // await this.sendKeys(data.passportNumber)
+        await this.compareAndPerformMonthAndYear(locator,data.dayOfDOB,data.monthOfDOB,data.yearOfDOB,'dob')
+        await this.clickElement(await this.findElement('selectOccupation'))
+        await this.clickElement(await this.findElement('occupationOption', data.occupation))
+        await this.clickElement(await this.findElement('mobileInput'))
+        await this.sendKeys(data.mobile)
+        await this.clickElement(await this.findElement('email'))
+        await this.sendKeys(data.email)
+        await this.clickElement(await this.findElement('passportNumber'))
+        await this.sendKeys(data.passportNumber)
+        await this.clickElement(await this.findElement('passportExpiry'))
+        await this.clickElement(await this.findElement('calenderAttributes',2))
+        await this.compareAndPerformMonthAndYear(locator,data.dayOfExpiry,data.monthOfExpiry,data.yearOfExpiry,'expiry')
+        await this.clickElement(await this.findElement('continue'))
+        await this.clickElement(await this.findElement('continue'))
+        await this.clickElement(await this.findElement('accept'))
+        await this.clickElement(await this.findElement('pay',4))
+    }
+
+    async validationPart(data){
+        await this.clickElement(await this.findElement('option'))
+        await this.clickElement(await this.findElement('viewDetails'))
+        const pager = getPageLocators(data.pageName);
+        const heading =  await this.getText(pager[data.heading].xpath)
+        const bookingId =  await this.getText(pager[data.bookingId].xpath)
+        const visaPlanCheck =  await this.getText(pager[data.visaPlanCheck].xpath)
+        const visaTypeCheck =  await this.getText(pager[data.visaTypeCheck].xpath)
+        const bookingDateCheck =  await this.getText(pager[data.bookingDateCheck].xpath)
+        const dateOfTravelCheck =  await this.getText(pager[data.dateOfTravelCheck].xpath)
+        const dateOfReturnCheck =  await this.getText(pager[data.dateOfReturnCheck].xpath)
+        const nameCheck =  await this.getText(pager[data.nameCheck].xpath)
+        const passportNumberCheck =  await this.getText(pager[data.passportNumberCheck].xpath)
+        const categoryCheck =  await this.getText(pager[data.categoryCheck].xpath)
+
+        //Validating heading
+        const present = heading.includes(data.country)
+        expect(present).toBe(true);
+
+        //Validating bookingId
+        
     }
 }
 

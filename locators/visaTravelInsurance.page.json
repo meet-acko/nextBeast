@@ -39,7 +39,7 @@
         "xpath" : "//*[text()='$']"
     },
     "selectOccupation" : {
-        "xpath" : "//*[text()='Select Occupation']"
+        "xpath" : "//*[@id='occupation']"
     },
     "occupationOption" : {
         "xpath" : "//*[text()='$']"
@@ -54,18 +54,66 @@
         "xpath" : "//*[@id='passportNumber']"
     },
     "dob": {
-        "xpath" : "//p-calendar[@id='dateOfBirth']//descendant::input"
+        "xpath" : "//*[@id='dateOfBirth']"
     },
-    "dobAttributes" : {
+    "calenderAttributes" : {
         "xpath" : "//div[contains(@class,'datepicker-title')]//child::button[$]"
     },
-    "dobYear" : {
+    "range" : {
         "xpath" : "//span[contains(@class,'datepicker-decade')]"
     },
-    "leftDOB" : {
+    "left" : {
         "xpath" : "(//chevronlefticon/..)[$]"
     },
     "exact" : {
         "xpath" : "//*[text()=' $ ']"
+    },
+    "exactAgain" : {
+        "xpath" : "(//*[text()='$'])[1]"
+    },
+    "passportExpiry" : {
+        "xpath" : "//*[@id='passportExpiry']"
+    },
+    "accept" : {
+        "xpath" : "//*[@id='checkbox_input_tnc']"
+    },
+    "pay" : {
+        "xpath" : "(//*[contains(text(),'Pay')])[$]"
+    },
+    "option" : {
+        "xpath" : "//*[contains(@class,'option')]"
+    },
+    "viewDetails" : {
+        "xpath" : "//*[contains(text(),'View Details')]"
+    },
+    "headingValidation" : {
+        "xpath" : "//*[contains(text(),'Tourist Visa Application')]"
+    },
+    "bookingIdValidation" : {
+        "xpath" : "//*[text()='Booking ID: ']//child::span"
+    },
+    "visaPlanValidation" : {
+        "xpath" : "//*[text()='Visa Plan']/..//child::span"
+    },
+    "visaTypeValidation" : {
+        "xpath" : "//*[text()='Visa Type']/..//child::span"
+    },
+    "bookingDateValidation" : {
+        "xpath" : "//*[text()='Booking Date']/..//child::span"
+    },
+    "dateOfTravelValidation" : {
+        "xpath" : "//*[text()='Date of Travel']/..//child::span"
+    },
+    "dateOfReturnValidation" : {
+        "xpath" : "//*[text()='Date of Return']/..//child::span"
+    },
+    "nameValidation" : {
+        "xpath" : "//th[text()='Traveler Name']//ancestor::table//descendant::td[2]"
+    },
+    "passportNumberValidation" : {
+        "xpath" : "//th[text()='Passport Number']//ancestor::table//descendant::td[3]"
+    },
+    "categoryValidation" : {
+        "xpath" : "//th[text()='Category']//ancestor::table//descendant::td[2]"
     }
 }

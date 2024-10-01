@@ -281,17 +281,50 @@ exports.Helper = class Helper{
         return text
     }
 
-    async compareAndPerformYear(locator,yearOfDOB){
+    randomOccupation() {
+        const occupations = ['Other', 'Retired', 'Housewife', 'Student', 'Employee'];
+        const randomIndex = Math.floor(Math.random() * occupations.length);
+        return occupations[randomIndex];
+    }
+
+    async compareAndPerformMonthAndYear(locator,day,month,year,type){
         while(true){
-            const dobYearRangeText = await this.getText(locator)
-            const [startYear, endYear] = dobYearRangeText.split('-').map(Number);
-            if(yearOfDOB >= startYear && yearOfDOB <= endYear){
-                await this.clickElement(await this.findElement('exact',yearOfDOB))
+            const rangeText = await this.getText(locator)
+            const [startYear, endYear] = rangeText.split('-').map(Number);
+            if(year >= startYear && year <= endYear){
+                await this.clickElement(await this.findElement('exact',year))
+                await this.clickElement(await this.findElement('exact',await this.getMonthAbbreviation(month)))
+                await this.clickElement(await this.findElement('exactAgain',day))
                 break
             }else{
-                await this.clickElement(await this.findElement('leftDOB',1))
+                if (type === 'dob') {
+                    await this.clickElement(await this.findElement('left', 1));
+                } else if (type === 'expiry') {
+                    await this.clickElement(await this.findElement('right', 1));
+                }
             }
         } 
+    }
+
+    async getMonthAbbreviation(monthNumber) {
+        const months = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ];
+        if (monthNumber < 1 || monthNumber > 12) {
+            return "Invalid month number";
+        }
+        return months[monthNumber - 1];
     }
 
     async takeFullPageScreenshot(){
@@ -490,6 +523,21 @@ exports.Helper = class Helper{
             "July", "August", "September", "October", "November", "December"
         ];
         return monthNames[monthIndex];
+    }
+
+    generateAlphanumeric(length) {
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        const digits = '0123456789';
+        if (length < 2) {
+            throw new Error("Length must be at least 2 to include a letter and digits.");
+        }
+        const firstCharacter = letters[Math.floor(Math.random() * letters.length)];
+        let result = firstCharacter;
+        for (let i = 1; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * digits.length);
+            result += digits[randomIndex];
+        }
+        return result;
     }
 
     getEndMonthName(setMonthCount) {
