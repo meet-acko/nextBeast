@@ -9,7 +9,7 @@ const pages={
 }
 
 describe('Visa travel insurance scenarios',()=>{
-    it.only('France tourist visa application', async()=>{
+    it('France tourist visa application', async()=>{
         let mobileNumber = pages.homePage.randomMobileNumber()
         let setMonthCount = pages.homePage.randomNumber(2,9)
         let data = {
@@ -18,10 +18,12 @@ describe('Visa travel insurance scenarios',()=>{
             visaType : 'Tourist',
             package : ' 30 Days Single Entry ',
             travelStartDate: '01',
-            travelEndDate: '01',
             travelStartMonth: ' '+pages.homePage.getNextMonthName()+' ',
+            travelStartYear: pages.homePage.getNextMonthNameYear(),
             setMonth: setMonthCount,
+            travelEndDate: '01',
             travelEndMonth: ' '+pages.homePage.getEndMonthName(setMonthCount)+' ',
+            travelEndYear: pages.homePage.getEndMonthNameYear(setMonthCount),
             gender: pages.homePage.getRandomGender().toUpperCase(),
             dayOfDOB: pages.homePage.randomNumber(5, 20),
             monthOfDOB: pages.homePage.randomNumber(2, 11),
@@ -50,8 +52,8 @@ describe('Visa travel insurance scenarios',()=>{
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
         await pages.visaTravelInsurancePage.buyVisaTravelInsurance(data)
-        await pages.paymentPage.sleep(8)
         await pages.paymentPage.completePayment()
+        await pages.paymentPage.sleep(3)
         await pages.visaTravelInsurancePage.validationPart(data)
     })
 
@@ -64,10 +66,12 @@ describe('Visa travel insurance scenarios',()=>{
             visaType : 'Tourist',
             package : '  Upto 30 Days Single Entry ',
             travelStartDate: '01',
-            travelEndDate: '01',
             travelStartMonth: ' '+pages.homePage.getNextMonthName()+' ',
+            travelStartYear: pages.homePage.getNextMonthNameYear(),
             setMonth: setMonthCount,
+            travelEndDate: '01',
             travelEndMonth: ' '+pages.homePage.getEndMonthName(setMonthCount)+' ',
+            travelEndYear: pages.homePage.getEndMonthNameYear(setMonthCount),
             gender: pages.homePage.getRandomGender().toUpperCase(),
             dayOfDOB: pages.homePage.randomNumber(5, 20),
             monthOfDOB: pages.homePage.randomNumber(2, 11),
@@ -80,14 +84,25 @@ describe('Visa travel insurance scenarios',()=>{
             locatorName: 'range',
             dayOfExpiry: pages.homePage.randomNumber(5, 20),
             monthOfExpiry: pages.homePage.randomNumber(2, 11),
-            yearOfExpiry: pages.homePage.randomNumber(2026, 2032)
+            yearOfExpiry: pages.homePage.randomNumber(2026, 2032),
+            headingCheck: 'headingValidation',
+            bookingIdCheck: 'bookingIdValidation',
+            visaPlanCheck: 'visaPlanValidation',
+            visaTypeCheck: 'visaTypeValidation',
+            bookingDateCheck: 'bookingDateValidation',
+            dateOfTravelCheck: 'dateOfTravelValidation',
+            dateOfReturnCheck: 'dateOfReturnValidation',
+            nameCheck: 'nameValidation',
+            passportNumberCheck: 'passportNumberValidation',
+            categoryCheck: 'categoryValidation'
         }
         await pages.homePage.addKYCSuccess(data.fullName, mobileNumber);
         await pages.homePage.login(mobileNumber)
         await pages.homePage.sleep(3)
         await pages.visaTravelInsurancePage.buyVisaTravelInsurance(data)
-        await pages.paymentPage.sleep(8)
         await pages.paymentPage.completePayment()
+        await pages.paymentPage.sleep(3)
+        await pages.visaTravelInsurancePage.validationPart(data)
     })
 
 })

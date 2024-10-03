@@ -60,16 +60,19 @@ class VisaTravelInsurancePage extends Helper{
     }
 
     async validationPart(data){
+        await this.sleep(1)
         await this.clickElement(await this.findElement('option'))
+        await this.sleep(1)
         await this.clickElement(await this.findElement('viewDetails'))
-        const pager = getPageLocators(data.pageName);
-        const heading =  await this.getText(pager[data.heading].xpath)
-        const bookingId =  await this.getText(pager[data.bookingId].xpath)
+        await this.sleep(2)
+        const pager = getPageLocators(data.pageName); 
+        const heading = await this.getText(pager[data.headingCheck].xpath)
+        const bookingId =  await this.getText(pager[data.bookingIdCheck].xpath)
         const visaPlanCheck =  await this.getText(pager[data.visaPlanCheck].xpath)
         const visaTypeCheck =  await this.getText(pager[data.visaTypeCheck].xpath)
         const bookingDateCheck =  await this.getText(pager[data.bookingDateCheck].xpath)
         const dateOfTravelCheck =  await this.getText(pager[data.dateOfTravelCheck].xpath)
-        const dateOfReturnCheck =  await this.getText(pager[data.dateOfReturnCheck].xpath)
+        const dateOfReturnCheck = await this.getText(pager[data.dateOfReturnCheck].xpath)
         const nameCheck =  await this.getText(pager[data.nameCheck].xpath)
         const passportNumberCheck =  await this.getText(pager[data.passportNumberCheck].xpath)
         const categoryCheck =  await this.getText(pager[data.categoryCheck].xpath)
@@ -79,7 +82,65 @@ class VisaTravelInsurancePage extends Helper{
         expect(present).toBe(true);
 
         //Validating bookingId
+        let url = await this.getUrl();
+        let id = await (url.split("/bookings/"))[1];
+        if(bookingId.toLowerCase().trim() === id.toLowerCase().trim()) {
+            console.log("Id's equal")
+        } else {
+            console.log("Id's not equal")
+        }
         
+        //Validating visaPlan
+        if(data.package.toLowerCase().trim() === visaPlanCheck.toLowerCase().trim()){
+            console.log("Visa plan equal")
+        } else {
+            console.log("Visa plan not equal")
+        }
+
+        //Validating visaType
+        if(data.visaType.toLowerCase().trim() === visaTypeCheck.toLowerCase().trim()){
+            console.log("Visa type equal")
+        } else {
+            console.log("Visa type not equal")
+        }
+
+        //Validating bookingDate
+        if(this.getCurrentDateFormatted().toLowerCase().trim() === bookingDateCheck.toLowerCase().trim()){
+            console.log("Booking date equal")
+        } else {
+            console.log("Booking date not equal")
+        }
+
+        //Validating travelDates
+        const travelStartDate = this.formatDate(data.travelStartDate+' '+data.travelStartMonth+' '+data.travelStartYear)
+        const travelEndDate = this.formatDate(data.travelEndDate+' '+data.travelEndMonth+' '+data.travelEndYear)
+        if(travelStartDate.toLowerCase().trim() === dateOfTravelCheck.toLowerCase().trim() && 
+            travelEndDate.toLowerCase().trim() === dateOfReturnCheck.toLowerCase().trim()){
+            console.log("Travel dates equal")
+        } else {
+            console.log("Travel dates not equal")
+        }
+
+        //Validaitng name
+        if(data.fullName.toLowerCase().trim() === nameCheck.toLowerCase().trim()){
+            console.log("Name equal")
+        } else {
+            console.log("Name not equal")
+        }
+
+        //Validating passportNumber
+        if(data.passportNumber.toLowerCase().trim() === passportNumberCheck.toLowerCase().trim()){
+            console.log("Passport number equal")
+        } else {
+            console.log("Passport number not equal")
+        }
+
+        //Validating category
+        if(this.getTravelerType(data.yearOfDOB).toLowerCase().trim() === categoryCheck.toLowerCase().trim()){
+            console.log("Category equal")
+        } else {
+            console.log("Category not equal")
+        }
     }
 }
 

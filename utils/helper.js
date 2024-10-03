@@ -274,11 +274,38 @@ exports.Helper = class Helper{
     async getText(locator){
         const jsScript = `
             var xpath = "${locator}";
-            var element = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-            return element ? element.innerText : null;
+            var result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+            var element = result.singleNodeValue;
+            console.log(element);
+            return element ? element.textContent : null;
         `;
         const text = await this.executeJavaScript(jsScript);
         return text
+    }
+
+    getTravelerType(birthYear) {
+        const currentYear = new Date().getFullYear();
+        const age = currentYear - birthYear;
+    
+        if (age < 0) {
+            return "Invalid birth year"; 
+        } else if (age <= 12) {
+            return "Child";
+        } else if (age <= 64) {
+            return "Adult";
+        } else {
+            return "Senior";
+        }
+    }
+
+    getCurrentDateFormatted() {
+        const now = new Date();
+        
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const day = String(now.getDate()).padStart(2, '0');
+        
+        return `${year}-${month}-${day}`;
     }
 
     randomOccupation() {
@@ -550,6 +577,39 @@ exports.Helper = class Helper{
         return travelEndMonthName
     }
     
+    formatDate(dateString) {
+        const [day, monthName, year] = dateString.trim().split(/\s+/);
+        
+        const monthMapping = {
+            January: '01',
+            February: '02',
+            March: '03',
+            April: '04',
+            May: '05',
+            June: '06',
+            July: '07',
+            August: '08',
+            September: '09',
+            October: '10',
+            November: '11',
+            December: '12'
+        };
+        
+        const month = monthMapping[monthName];
+        
+        return `${year}-${month}-${String(day).padStart(2, '0')}`;
+    }
+
+    getEndMonthNameYear(setMonthCount) {
+        let travelStartMonthName = this.getNextMonthName();
+        let currentYear = new Date().getFullYear();
+        let currentMonthIndex = new Date(Date.parse(travelStartMonthName + " 1, " + currentYear)).getMonth();
+        let setMonth = setMonthCount;
+        let travelEndMonthIndex = (currentMonthIndex + setMonth) % 12;
+        let travelEndYear = currentYear + (currentMonthIndex + setMonth >= 12 ? 1 : 0);
+        return travelEndYear;
+    }
+    
     getNextMonthName() {
         const currentDate = new Date();
         const nextMonthIndex = (currentDate.getMonth() + 2) % 12;
@@ -557,6 +617,13 @@ exports.Helper = class Helper{
         const options = { month: 'long' };
         const nextMonthName = nextMonthDate.toLocaleString('default', options);
         return nextMonthName
+    }
+
+    getNextMonthNameYear() {
+        const currentDate = new Date();
+        const nextMonthIndex = (currentDate.getMonth() + 2) % 12;
+        const nextYear = nextMonthIndex === 0 ? currentDate.getFullYear() + 1 : currentDate.getFullYear();
+        return nextYear;
     }
 
     getRandomGender() {

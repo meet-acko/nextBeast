@@ -87,7 +87,7 @@
         "xpath" : "//*[contains(text(),'View Details')]"
     },
     "headingValidation" : {
-        "xpath" : "//*[contains(text(),'Tourist Visa Application')]"
+        "xpath" : "//p[contains(text(),'Tourist Visa Application')]"
     },
     "bookingIdValidation" : {
         "xpath" : "//*[text()='Booking ID: ']//child::span"
