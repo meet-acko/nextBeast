@@ -1,0 +1,119 @@
+{
+    "getTravel" : {
+        "xpath" : "(//p[text()='Travel'])[1]"
+    },
+    "visa" : {
+        "xpath" : "(//p[contains(text(),'visa')])[$]"
+    },
+    "whereAreYouPlanningToGo" : {
+        "xpath" : "//*[contains(@placeholder,'Where are you planning')]"
+    },
+    "countrySuggestion" : {
+        "xpath" : "//div[text()='$']"
+    },
+    "visaType" : {
+        "xpath" : "//*[text()='$']//parent::div//descendant::input"
+    },
+    "continue" : {
+        "xpath" : "//*[contains(text(),'Continue')]"
+    },
+    "select" : {
+        "xpath" : "//*[text()='$']/../../..//descendant::button"
+    },
+    "01" : {
+        "xpath" : "//*[text()='$']/../../..//descendant::span[text()='1']"
+    },
+    "right" : {
+        "xpath" : "(//chevronrighticon/..)[$]"
+    },
+    "setDates" : {
+        "xpath" : "//*[text()='Set Dates']"
+    },
+    "firstName" : {
+        "xpath" : "//*[@id='firstName']"
+    },
+    "selectGender" : {
+        "xpath" : "//input[@placeholder='Select Gender']/../.."
+    },
+    "maleOption" : {
+        "xpath" : "//*[text()='$']"
+    },
+    "selectOccupation" : {
+        "xpath" : "//*[@id='occupation']"
+    },
+    "occupationOption" : {
+        "xpath" : "//*[text()='$']"
+    },
+    "mobileInput" : {
+        "xpath" : "//*[@id='cell']"
+    },
+    "email" : {
+        "xpath" : "//*[@id='emailId']"
+    },
+    "passportNumber" : {
+        "xpath" : "//*[@id='passportNumber']"
+    },
+    "dob": {
+        "xpath" : "//*[@id='dateOfBirth']"
+    },
+    "calenderAttributes" : {
+        "xpath" : "//div[contains(@class,'datepicker-title')]//child::button[$]"
+    },
+    "range" : {
+        "xpath" : "//span[contains(@class,'datepicker-decade')]"
+    },
+    "left" : {
+        "xpath" : "(//chevronlefticon/..)[$]"
+    },
+    "exact" : {
+        "xpath" : "//*[text()=' $ ']"
+    },
+    "exactAgain" : {
+        "xpath" : "(//*[text()='$'])[1]"
+    },
+    "passportExpiry" : {
+        "xpath" : "//*[@id='passportExpiry']"
+    },
+    "accept" : {
+        "xpath" : "//*[@id='checkbox_input_tnc']"
+    },
+    "pay" : {
+        "xpath" : "(//*[contains(text(),'Pay')])[$]"
+    },
+    "option" : {
+        "xpath" : "//*[contains(@class,'option')]"
+    },
+    "viewDetails" : {
+        "xpath" : "//*[contains(text(),'View Details')]"
+    },
+    "headingValidation" : {
+        "xpath" : "//p[contains(text(),'Tourist Visa Application')]"
+    },
+    "bookingIdValidation" : {
+        "xpath" : "//*[text()='Booking ID: ']//child::span"
+    },
+    "visaPlanValidation" : {
+        "xpath" : "//*[text()='Visa Plan']/..//child::span"
+    },
+    "visaTypeValidation" : {
+        "xpath" : "//*[text()='Visa Type']/..//child::span"
+    },
+    "bookingDateValidation" : {
+        "xpath" : "//*[text()='Booking Date']/..//child::span"
+    },
+    "dateOfTravelValidation" : {
+        "xpath" : "//*[text()='Date of Travel']/..//child::span"
+    },
+    "dateOfReturnValidation" : {
+        "xpath" : "//*[text()='Date of Return']/..//child::span"
+    },
+    "nameValidation" : {
+        "xpath" : "//th[text()='Traveler Name']//ancestor::table//descendant::td[2]"
+    },
+    "passportNumberValidation" : {
+        "xpath" : "//th[text()='Passport Number']//ancestor::table//descendant::td[3]"
+    },
+    "categoryValidation" : {
+        "xpath" : "//th[text()='Category']//ancestor::table//descendant::td[2]"
+    }
+}

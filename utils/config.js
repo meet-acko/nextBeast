@@ -8,6 +8,7 @@ exports.properties = {
     
     browserName : process.env.browserName ? process.env.browserName : properties.get("browserName"), 
     defaultURL : process.env.defaultURL ? process.env.defaultURL : properties.get("defaultURL"),
+    loadDefaultURLInitially : process.env.loadDefaultURLInitially ? process.env.loadDefaultURLInitially : properties.get("loadDefaultURLInitially"),
 
     masterDBHost : process.env.masterDBHost ? process.env.masterDBHost : properties.get("masterDBHost"),
     masterDBUsername : process.env.masterDBUsername ? process.env.masterDBUsername : properties.get("masterDBUsername"),
@@ -19,6 +20,12 @@ exports.properties = {
     masterMySqlDBUsername : process.env.masterMySqlDBUsername ? process.env.masterMySqlDBUsername : properties.get("masterMySqlDBUsername"),
     masterMySqlDBPassword : process.env.masterMySqlDBPassword ? process.env.masterMySqlDBPassword : properties.get("masterMySqlDBPassword"),
     
+    centralKYCDBHost : process.env.centralKYCDBHost ? process.env.centralKYCDBHost : properties.get("centralKYCDBHost"),
+    centralKYCDBUsername : process.env.centralKYCDBUsername ? process.env.centralKYCDBUsername : properties.get("centralKYCDBUsername"),
+    centralKYCDBPassword : process.env.centralKYCDBPassword ? process.env.centralKYCDBPassword : properties.get("centralKYCDBPassword"),
+    centralKYCDBName : process.env.centralKYCDBName ? process.env.centralKYCDBName : properties.get("centralKYCDBName"),
+    centralKYCDBPort : process.env.centralKYCDBPort ? process.env.centralKYCDBPort : properties.get("centralKYCDBPort"),
+
     appiumPort : process.env.appiumPort ? process.env.appiumPort : properties.get("appiumPort"),
     appiumDriverPath : process.env.appiumDriverPath ? process.env.appiumDriverPath : properties.get("appiumDriverPath"),
     appiumAutomationName : process.env.appiumAutomationName ? process.env.appiumAutomationName : properties.get("appiumAutomationName"),
@@ -27,6 +34,12 @@ exports.properties = {
     androidBuildPath : process.env.androidBuildPath ? process.env.androidBuildPath : properties.get("androidBuildPath"),
     chromeDriverExecutablePath : process.env.chromeDriverExecutablePath ? process.env.chromeDriverExecutablePath : properties.get("chromeDriverExecutablePath"),
     chromeDriverMappingFilePath : process.env.chromeDriverMappingFilePath ? process.env.chromeDriverMappingFilePath : properties.get("chromeDriverMappingFilePath"),
+    appPackageName : process.env.appPackageName ? process.env.appPackageName : properties.get("appPackageName"),
+    noReset : process.env.noReset ? process.env.noReset : properties.get("noReset"),
+    enforceXPath1 : process.env.enforceXPath1 ? process.env.enforceXPath1 : properties.get("enforceXPath1"),
+    isDebugModeEnabled : process.env.isDebugModeEnabled ? process.env.isDebugModeEnabled : properties.get("isDebugModeEnabled"),
+
+    isMockPaymentEnabled : process.env.isMockPaymentEnabled ? process.env.isMockPaymentEnabled : properties.get("isMockPaymentEnabled"),
 
     isVisualTestingEnabled : process.env.isVisualTestingEnabled ? process.env.isVisualTestingEnabled : properties.get("isVisualTestingEnabled"),
 

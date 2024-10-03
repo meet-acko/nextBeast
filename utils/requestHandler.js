@@ -117,6 +117,20 @@ class Request{
             throw Error("method can be set only once");
         }
     }
+
+    put(data){
+        if(this.requestObject.method === undefined){
+            this.requestObject.method = "put";
+            if(data){
+                this.requestObject["data"] = data;
+                this.requestObject.config["data"] = data;
+            }
+            return this;
+        }else{
+            throw Error("method can be set only once");
+        }
+    }
+
     async sleep(second) {
         return new Promise((resolve) => setTimeout(resolve, parseInt(second*1000)));
     }
@@ -148,7 +162,7 @@ class Request{
         }
         switch(this.requestObject.method){
             case "get" : {
-                this.response = new Promise(async (resolve, reject)=>{
+                this.response = await new Promise(async (resolve, reject)=>{
                     let res = await axios.get(this.requestObject.url.href, this.requestObject.config).catch(e=>{
                         if("status" in e.response)
                             resolve(e.response);
@@ -162,8 +176,22 @@ class Request{
                 break;
             }
             case "post" : {
-                this.response = new Promise(async (resolve, reject)=>{
+                this.response = await new Promise(async (resolve, reject)=>{
                     let res = await axios.post(this.requestObject.url.href, this.requestObject.config["data"], this.requestObject.config).catch(e=>{
+                        if("status" in e)
+                            resolve(e.response);
+                        else
+                            reject(e);
+                    }).catch(e=>{
+                        throw e;
+                    })
+                    await resolve(await res);
+                });
+                break;
+            }
+            case "put" : {
+                this.response = await new Promise(async (resolve, reject)=>{
+                    let res = await axios.put(this.requestObject.url.href, this.requestObject.config["data"], this.requestObject.config).catch(e=>{
                         if("status" in e)
                             resolve(e.response);
                         else

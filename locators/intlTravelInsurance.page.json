@@ -1,0 +1,108 @@
+{
+    "getTravel" : {
+        "xpath" : "(//p[text()='Travel'])[1]"
+    },
+    "pickFromOurStandardPlans" : {
+        "xpath" : "//*[contains(text(),'Pick from our standard plans')]",
+        "xpath2": "//*[contains(text(),'Pick from our standard plans')]//following-sibling::div[contains(text(),'Get')]"
+    },
+    "wherePlaceholder" : {
+        "xpath" : "//input[@placeholder='Where']/../../.."
+    },
+    "clickOnCountry" : {
+        "xpath" : "//*[text()='Popular countries']//following::*[text()='$']"
+    },
+    "done" : {
+        "xpath" : "//*[text()='Done']"
+    },
+    "dateInput" : {
+        "xpath" : "//label[text()='When']/../../.."
+    },
+    "01" : {
+        "xpath" : "(//*[text()='$']//following::*[text()='1'])[1]"
+    },
+    "addTravellerCount" : {
+        "xpath" : "(//*[text()='$']//following::*[text()='+'])[1]"
+    },
+    "continueCTA" : {
+        "xpath" : "//*[text()='Continue']"
+    },
+    "priceBreakUp" : {
+        "xpath" : "//div[text()='Price breakup']"
+    },
+    "denailAddOn" : {
+        "xpath" : "(//*[text()='Booking denial']//following::*[text()='Add'])[1]"
+    },
+    "fullName" : {
+        "xpath" : "(//label[text()='Full name']/../..)[$]"
+    },
+    "dayOfDOB" : {
+        "xpath" : "(//*[@placeholder='dd'])[$]"
+    },
+    "monthOfDOB" : {
+        "xpath" : "(//*[@placeholder='mm'])[$]"
+    },
+    "yearOfDOB" : {
+        "xpath" : "(//*[@placeholder='yyyy'])[$]"
+    },
+    "gender" : {
+        "xpath" : "(//*[@label='Gender'])[$]"
+    },
+    "selectGender" : {
+        "xpath" : "//div[text()='$']"
+    },
+    "pincode" : {
+        "xpath" : "(//*[contains(text(),'Pin code')]/../..)"
+    },
+    "emailInput" : {
+        "xpath" : "(//*[contains(text(),'Email')]/../..)[$]"
+    },
+    "paySecurely" : {
+        "xpath" : "//*[text()='Pay securely']"
+    },
+    "netBanking" : {
+        "xpath" : "//article[text()='Netbanking']"
+    },
+    "priceSet" : {
+        "xpath" : "(//*[text()='$'])[1]"   
+    },
+    "specializedContinue" : {
+        "xpath" : "//div[@class='sc-iwsKbI bEaGUN']//div[@class='sc-gqjmRU dHIiPq'][normalize-space()='Continue']"
+    },
+    "10" : {
+        "xpath" : "(//*[text()='$']//following::*[text()='10'])[1]"
+    },
+    "unbundledPlan" : {
+        "xpath" : "//div[text()='Pay only for what you want']"
+    },
+    "addFor" : {
+        "xpath" : "(//*[contains(text(),'Add for')])[$]"
+    },
+    "noThanks" : {
+        "xpath" : "(//*[contains(text(),'No, I am willing to take the risk')])[$]"
+    },
+    "skip" : {
+        "xpath" : "//*[contains(text(),'Skip')]"
+    },
+    "hours" : {
+        "xpath" : "//*[text()='$']"
+    },
+    "updatedPrice" : {
+        "xpath" : "//*[contains(text(),'Price updated')]"
+    },
+    "coversSelection" : {
+        "xpath" : "//*[text()='$']//preceding-sibling::input"
+    },
+    "seeAll" : {
+        "xpath" : "//*[contains(text(),'See all ->')]"
+    },
+    "cross" : {
+        "xpath" : "//img[@alt='close']"
+    },
+    "seeBenefits" : {
+        "xpath" : "(//*[text()='See benefits'])[$]"
+    },
+    "coverName" : {
+        "xpath" : "//div[text()='Hospitalisation due to illness']"
+    }
+}

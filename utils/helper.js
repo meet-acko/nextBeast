@@ -52,7 +52,7 @@ exports.Helper = class Helper{
             port: port,
             statement_timeout: 30000
         });
-        return await new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             pool.connect((err, client, done) => {
                 if (err) throw err;
                 console.log(`SQL Query : ${sqlQuery}`);
@@ -267,6 +267,93 @@ exports.Helper = class Helper{
             await page.evaluate(jsScript);
     }
 
+    async executeJavaScript(jsScript){
+        return await driver.executeScript(jsScript,[]);
+    }
+
+    async getText(locator){
+        const jsScript = `
+            var xpath = "${locator}";
+            var result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+            var element = result.singleNodeValue;
+            console.log(element);
+            return element ? element.textContent : null;
+        `;
+        const text = await this.executeJavaScript(jsScript);
+        return text
+    }
+
+    getTravelerType(birthYear) {
+        const currentYear = new Date().getFullYear();
+        const age = currentYear - birthYear;
+    
+        if (age < 0) {
+            return "Invalid birth year"; 
+        } else if (age <= 12) {
+            return "Child";
+        } else if (age <= 64) {
+            return "Adult";
+        } else {
+            return "Senior";
+        }
+    }
+
+    getCurrentDateFormatted() {
+        const now = new Date();
+        
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const day = String(now.getDate()).padStart(2, '0');
+        
+        return `${year}-${month}-${day}`;
+    }
+
+    randomOccupation() {
+        const occupations = ['Other', 'Retired', 'Housewife', 'Student', 'Employee'];
+        const randomIndex = Math.floor(Math.random() * occupations.length);
+        return occupations[randomIndex];
+    }
+
+    async compareAndPerformMonthAndYear(locator,day,month,year,type){
+        while(true){
+            const rangeText = await this.getText(locator)
+            const [startYear, endYear] = rangeText.split('-').map(Number);
+            if(year >= startYear && year <= endYear){
+                await this.clickElement(await this.findElement('exact',year))
+                await this.clickElement(await this.findElement('exact',await this.getMonthAbbreviation(month)))
+                await this.clickElement(await this.findElement('exactAgain',day))
+                break
+            }else{
+                if (type === 'dob') {
+                    await this.clickElement(await this.findElement('left', 1));
+                } else if (type === 'expiry') {
+                    await this.clickElement(await this.findElement('right', 1));
+                }
+            }
+        } 
+    }
+
+    async getMonthAbbreviation(monthNumber) {
+        const months = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ];
+        if (monthNumber < 1 || monthNumber > 12) {
+            return "Invalid month number";
+        }
+        return months[monthNumber - 1];
+    }
+
     async takeFullPageScreenshot(){
         await driver.executeScript(`function smoothScrollToBottom() {
             const totalHeight = document.body.scrollHeight;
@@ -446,6 +533,105 @@ exports.Helper = class Helper{
         return "" + (arr[index] * 1000000 + result);
     }
 
+    randomNumber(low, high){
+        return Math.floor((Math.random() * (high - low)) + low);
+    }
+
+    generateRandomPincode() {
+        const pincodeLength = 6;
+        const randomNumber = Math.floor(Math.random() * (10 ** pincodeLength));
+        const pincode = randomNumber.toString().padStart(pincodeLength, '0');
+        return pincode;
+    }
+
+    getMonthName(monthIndex) {
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        return monthNames[monthIndex];
+    }
+
+    generateAlphanumeric(length) {
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        const digits = '0123456789';
+        if (length < 2) {
+            throw new Error("Length must be at least 2 to include a letter and digits.");
+        }
+        const firstCharacter = letters[Math.floor(Math.random() * letters.length)];
+        let result = firstCharacter;
+        for (let i = 1; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * digits.length);
+            result += digits[randomIndex];
+        }
+        return result;
+    }
+
+    getEndMonthName(setMonthCount) {
+        let travelStartMonthName = this.getNextMonthName();
+        let currentYear = new Date().getFullYear(); 
+        let currentMonthIndex = new Date(Date.parse(travelStartMonthName + " 1, " + currentYear)).getMonth();
+        let setMonth = setMonthCount;  
+        let travelEndMonthIndex = (currentMonthIndex + setMonth) % 12;
+        let travelEndMonthName = this.getMonthName(travelEndMonthIndex);
+        return travelEndMonthName
+    }
+    
+    formatDate(dateString) {
+        const [day, monthName, year] = dateString.trim().split(/\s+/);
+        
+        const monthMapping = {
+            January: '01',
+            February: '02',
+            March: '03',
+            April: '04',
+            May: '05',
+            June: '06',
+            July: '07',
+            August: '08',
+            September: '09',
+            October: '10',
+            November: '11',
+            December: '12'
+        };
+        
+        const month = monthMapping[monthName];
+        
+        return `${year}-${month}-${String(day).padStart(2, '0')}`;
+    }
+
+    getEndMonthNameYear(setMonthCount) {
+        let travelStartMonthName = this.getNextMonthName();
+        let currentYear = new Date().getFullYear();
+        let currentMonthIndex = new Date(Date.parse(travelStartMonthName + " 1, " + currentYear)).getMonth();
+        let setMonth = setMonthCount;
+        let travelEndMonthIndex = (currentMonthIndex + setMonth) % 12;
+        let travelEndYear = currentYear + (currentMonthIndex + setMonth >= 12 ? 1 : 0);
+        return travelEndYear;
+    }
+    
+    getNextMonthName() {
+        const currentDate = new Date();
+        const nextMonthIndex = (currentDate.getMonth() + 2) % 12;
+        const nextMonthDate = new Date(currentDate.getFullYear(), nextMonthIndex);
+        const options = { month: 'long' };
+        const nextMonthName = nextMonthDate.toLocaleString('default', options);
+        return nextMonthName
+    }
+
+    getNextMonthNameYear() {
+        const currentDate = new Date();
+        const nextMonthIndex = (currentDate.getMonth() + 2) % 12;
+        const nextYear = nextMonthIndex === 0 ? currentDate.getFullYear() + 1 : currentDate.getFullYear();
+        return nextYear;
+    }
+
+    getRandomGender() {
+        const genders = ['Male','Female'];
+        const randomIndex = Math.floor(Math.random() * genders.length);
+        return genders[randomIndex];
+    }
+
     randomName(length) {
         var result = "";
         var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -477,6 +663,31 @@ exports.Helper = class Helper{
             statenum += num.charAt(Math.floor(Math.random() * numLength));
         }
         return statecode[state] + statenum + city + citycode;
+    }
+
+    async travellerTypeCount(data) {
+        let travellerTypes = [];
+        for (let key in data) {
+            // Check if the key starts with 'travellerType'
+            if (key.startsWith('travellerType')) {
+                // Add the value to the travellerTypes array
+                travellerTypes.push(data[key]);
+            }
+        }
+        return travellerTypes
+    }
+
+    async formatDOB(day, month, year) {
+        day = day.toString().padStart(2, '0');
+        month = month.toString().padStart(2, '0');
+        return `${day}-${month}-${year}`;
+    }
+
+    async handleClick(element, index, sleepDuration = 0.5) {
+        if (element) {
+            await this.clickElement(await this.findElement(element, index));
+            await this.sleep(sleepDuration);
+        }
     }
 
     async findRefreshAppElement(elementName, replaceWith, timeOut=60, elementStatus, refreshCount=2){
@@ -608,6 +819,21 @@ exports.Helper = class Helper{
                 await reject(new Error(e + "\nElement name is : " + elementName));
             }
         });
+    }
+
+    async swipe(initXPercentage, initYPercentage, endXPercentage, endYPercentage, duration=500){
+        let previousContext = await Helper.getCurrentContext();
+        await this.switchContext("native");
+        const { width, height } = await driver.getWindowSize();
+        await driver.actions([
+            await driver.action('pointer')
+            .move(parseInt((initXPercentage * width) / 100), parseInt((initYPercentage * height) / 100))
+            .down()
+            .pause(10)
+            .move({ "duration" : duration, "x" : parseInt((endXPercentage * width) / 100), "y" : parseInt((endYPercentage * height) / 100) })
+            .up()
+        ]);
+        await this.switchContext(previousContext);
     }
 
     async refreshFlutterPage(){
@@ -1036,15 +1262,24 @@ exports.Helper = class Helper{
     }
 
     async switchToFrame(frameId){
-        await driver.switchToFrame(frameId);
+        await driver.switchToFrame(frameId)
     }
 
     async getUrl(){
-        let currentContext = await Helper.getCurrentContext();
-        await this.switchContext("webview");
-        let url = await driver.getUrl();
-        await this.switchContext(currentContext);
-        return url;
+        switch(properties.configType){
+            case "web" : {
+                return await driver.getUrl();
+
+            }
+            case "android" : {
+                let currentContext = await Helper.getCurrentContext();
+                await this.switchContext("webview");
+                let url = await driver.getUrl();
+                await this.switchContext(currentContext);
+                return url;
+            }
+        }
+        
     }
 
     async pushFile(filePath, fileBinary){

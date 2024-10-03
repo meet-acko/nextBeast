@@ -1,0 +1,54 @@
+{
+    "travelCTAOnHomePage" : {
+        "context" : "native",
+        "xpath" : "//*[contains(@content-desc, 'Travel')]"
+    },
+    "countryDropdown" : {
+        "context" : "native",
+        "xpath" : "//*[contains(@hint, 'Where')]"
+    },
+    "contentContains" : {
+        "context" : "native",
+        "xpath" : "//*[contains(@content-desc, '$')]"
+    },
+    "textContains" : {
+        "context" : "native",
+        "xpath" : "//*[contains(@text, '$')]"
+    },
+    "textContainsWeb" : {
+        "context" : "webview",
+        "xpath" : "//*[contains(text(), '$')]"
+    },
+    "contentEquals" : {
+        "context" : "native",
+        "xpath" : "//*[@content-desc='$']"
+    },
+    "nextMonthsFirstDate" : {
+        "xpath" : "((//*[contains(text(),'$')]/../following-sibling::*)[1]//*[text()=1])[1]"
+    },
+    "nextMonthsFifthDate" : {
+        "xpath" : "((//*[contains(text(),'$')]/../following-sibling::*)[1]//*[text()=5])[1]"
+    },
+    "addTravelAddOns" : {
+        "xpath" : "(//*[contains(text(),'$')])/../..//*[text()='Add']"
+    },
+    "travellerDetailInputs" : {
+        "xpath" : "(//*[contains(text(), '$')])/.."
+    },
+    "dateInputs" : {
+        "xpath" : "(//input[contains(@placeholder, '$')])[1]"
+    },
+    "genderLabel" : {
+        "xpath" : "(//*[contains(@label, 'Gender')])[1]"
+    },
+    "doneButton" : {
+        "xpath" : "//*[text()='Done']",
+        "xpath2" : "//button[text()='Done']"
+    },
+    "adultMemberAdd" : {
+        "xpath" : "//*[text()='Adult']/../..//*[text()='+']"
+    },
+    "textEquals" : {
+        "xpath" : "//*[@text='$']"
+    }
+}
