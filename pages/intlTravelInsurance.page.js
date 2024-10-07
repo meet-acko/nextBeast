@@ -132,7 +132,7 @@ class IntlTravelInsurancePage extends Helper{
         }
         await this.clickElement(await this.findElement('continueCTA'))
         await this.sleep(0.5)
-        await this.clickElement(await this.findElement('continueCTA'))
+        //await this.clickElement(await this.findElement('continueCTA'))
         if ('addMedicalCover' in data) {
             await this.handleClick(data.addMedicalCover, 1);
             await this.handleClick(data.addMedicalCover, 2);

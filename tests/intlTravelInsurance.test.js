@@ -29,8 +29,7 @@ describe('International travel insurance scenarios',()=>{
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(2015, 2023),
-            selectGender2: pages.homePage.getRandomGender(),
-            specializedContinue: 'specializedContinue',
+            selectGender2: pages.homePage.getRandomGender()
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
@@ -64,8 +63,7 @@ describe('International travel insurance scenarios',()=>{
             dayOfDOB2: pages.homePage.randomNumber(4, 19),
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1955, 1960),
-            selectGender2: pages.homePage.getRandomGender(),
-            specializedContinue: 'specializedContinue'
+            selectGender2: pages.homePage.getRandomGender()
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
@@ -140,7 +138,6 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB3: pages.homePage.randomNumber(2, 7),
             yearOfDOB3: pages.homePage.randomNumber(2015, 2023),
             selectGender3: pages.homePage.getRandomGender(),
-            specializedContinue: 'specializedContinue',
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);

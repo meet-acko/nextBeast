@@ -25,7 +25,7 @@
         "xpath" : "(//*[text()='$']//following::*[text()='+'])[1]"
     },
     "continueCTA" : {
-        "xpath" : "//*[text()='Continue']"
+        "xpath" : "//*[contains(text(),'Continue')]"
     },
     "priceBreakUp" : {
         "xpath" : "//div[text()='Price breakup']"
@@ -58,7 +58,7 @@
         "xpath" : "(//*[contains(text(),'Email')]/../..)[$]"
     },
     "paySecurely" : {
-        "xpath" : "//*[text()='Pay securely']"
+        "xpath" : "//*[contains(text(),'Pay securely')]"
     },
     "netBanking" : {
         "xpath" : "//article[text()='Netbanking']"
