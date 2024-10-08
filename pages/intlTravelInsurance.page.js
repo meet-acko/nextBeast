@@ -12,9 +12,8 @@ class IntlTravelInsurancePage extends Helper{
 
     async clickOnBundledPlan(data){
         await this.clickElement(await this.findElement('getTravel'))
-        await this.sleep(1)
+        await this.clickElement(await this.findElement('getIntlTravelInsurance'))
         await this.clickElement(await this.findElement('pickFromOurStandardPlans'))
-        await this.sleep(1)
         await this.clickElement(await this.findElement('wherePlaceholder'))
         const countriesFromInput = Object.entries(data).filter(([key, value]) => key.includes('clickOnCountry'))
             .map(([key, value]) => value.trim());
@@ -104,6 +103,7 @@ class IntlTravelInsurancePage extends Helper{
 
     async clickOnUnbundledPlan(data){
         await this.clickElement(await this.findElement('getTravel'))
+        await this.clickElement(await this.findElement('getIntlTravelInsurance'))
         await this.clickElement(await this.findElement('unbundledPlan'))
         await this.clickElement(await this.findElement('wherePlaceholder'))
         const countriesFromInput = Object.entries(data).filter(([key, value]) => key.includes('clickOnCountry'))

@@ -6,6 +6,9 @@
         "xpath" : "//*[contains(text(),'Pick from our standard plans')]",
         "xpath2": "//*[contains(text(),'Pick from our standard plans')]//following-sibling::div[contains(text(),'Get')]"
     },
+    "getIntlTravelInsurance" : {
+        "xpath" : "//*[contains(text(),'Get international travel insurance')]"
+    },
     "wherePlaceholder" : {
         "xpath" : "//input[@placeholder='Where']/../../.."
     },
