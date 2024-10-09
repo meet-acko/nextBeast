@@ -103,7 +103,7 @@ class IntlTravelInsurancePage extends Helper{
 
     async clickOnUnbundledPlan(data){
         await this.clickElement(await this.findElement('getTravel'))
-        await this.clickElement(await this.findElement('getIntlTravelInsurance'))
+        // await this.clickElement(await this.findElement('getIntlTravelInsurance'))
         await this.clickElement(await this.findElement('unbundledPlan'))
         await this.clickElement(await this.findElement('wherePlaceholder'))
         const countriesFromInput = Object.entries(data).filter(([key, value]) => key.includes('clickOnCountry'))
