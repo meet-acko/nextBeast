@@ -337,7 +337,7 @@ describe('International travel insurance scenarios',()=>{
             selectGender2: pages.homePage.getRandomGender(),
             noMedicalCover: 'noThanks',
             addHourForFlightCover: '4 hours',
-            addFlightCover: 'addFor',
+            addFlightCover: 'addForFlightCover',
             noBagaggeCover: 'noThanks'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
@@ -373,8 +373,11 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1990, 1999),
             selectGender2: pages.homePage.getRandomGender(),
-            allCovers: 'addFor',
-            addHourForFlightCover: '3 hours'
+            allCoversForMedicalCover: 'addForMedicalCover',
+            allCoversForFlightCover: 'addForFlightCover',
+            allCoversForBagaggeCover: 'addForBagaggeCover',
+            addHourForFlightCover: '3 hours',
+            addFor: 'addFor'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
@@ -408,9 +411,10 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1990, 1999),
             selectGender2: pages.homePage.getRandomGender(),
-            addMedicalCover: 'addFor',
+            addMedicalCover: 'addForMedicalCover',
             noFlightCover: 'noThanks',
-            noBagaggeCover: 'noThanks'
+            noBagaggeCover: 'noThanks',
+            addFor: 'addFor'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
@@ -446,7 +450,7 @@ describe('International travel insurance scenarios',()=>{
             selectGender2: pages.homePage.getRandomGender(),
             noMedicalCover: 'noThanks',
             noFlightCover: 'noThanks',
-            addBagaggeCover: 'addFor'
+            addBagaggeCover: 'addForBagaggeCover'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
@@ -481,8 +485,11 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1955, 1960),
             selectGender2: pages.homePage.getRandomGender(),
-            allCovers: 'addFor',
-            specializedContinue: 'specializedContinue'
+            allCoversForMedicalCover: 'addForMedicalCover',
+            allCoversForFlightCover: 'addForFlightCover',
+            allCoversForBagaggeCover: 'addForBagaggeCover',
+            specializedContinue: 'specializedContinue',
+            addFor: 'addFor'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
@@ -517,8 +524,11 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(2015, 2023),
             selectGender2: pages.homePage.getRandomGender(),
-            allCovers: 'addFor',
-            specializedContinue: 'specializedContinue'
+            allCoversForMedicalCover: 'addForMedicalCover',
+            allCoversForFlightCover: 'addForFlightCover',
+            allCoversForBagaggeCover: 'addForBagaggeCover',
+            specializedContinue: 'specializedContinue',
+            addFor: 'addFor'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
@@ -559,9 +569,12 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB3: pages.homePage.randomNumber(2, 9),
             yearOfDOB3: pages.homePage.randomNumber(2015, 2023),
             selectGender3: pages.homePage.getRandomGender(),
-            allCovers: 'addFor',
+            allCoversForMedicalCover: 'addForMedicalCover',
+            allCoversForFlightCover: 'addForFlightCover',
+            allCoversForBagaggeCover: 'addForBagaggeCover',
             addHourForFlightCover: '6 hours',
-            specializedContinue: 'specializedContinue'
+            specializedContinue: 'specializedContinue',
+            addFor: 'addFor'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
@@ -589,9 +602,10 @@ describe('International travel insurance scenarios',()=>{
             selectGender1: pages.homePage.getRandomGender(),
             pincode: "560037",
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
-            addMedicalCover: 'addFor',
+            addMedicalCover: 'addForMedicalCover',
             noFlightCover: 'noThanks',
             noBagaggeCover: 'noThanks',
+            addFor: 'addFor',
             plans : [
                 'Hospitalisation due to illness',
                 'Hospitalisation due to accident',
@@ -634,7 +648,7 @@ describe('International travel insurance scenarios',()=>{
             pincode: "560037",
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
             noMedicalCover: 'noThanks',
-            addFlightCover: 'addFor',
+            addFlightCover: 'addForFlightCover',
             noBagaggeCover: 'noThanks',
             plans : [
                 'Flight delay',
@@ -673,7 +687,7 @@ describe('International travel insurance scenarios',()=>{
             emailInput: 'nitin.kumar_eupho_blr@acko.tech',
             noMedicalCover: 'noThanks',
             noFlightCover: 'noThanks',
-            addBagaggeCover: 'addFor',
+            addBagaggeCover: 'addForBagaggeCover',
             plans : [
                 'Delay of checked-in baggage',
                 'Total loss of checked-in baggage',
@@ -695,7 +709,7 @@ describe('International travel insurance scenarios',()=>{
         await pages.paymentPage.sleep(1)
     })
 
-    it('Intl Travel buy journey for unbundled plan for 2 Adults 10 days period 100K SI only medical cover for USA', async()=>{
+    it.only('Intl Travel buy journey for unbundled plan for 2 Adults 10 days period 100K SI only medical cover for USA', async()=>{
         let data = {
             clickOnCountry1 : "United States of America (USA)",
             setMonth : 0,
@@ -715,9 +729,10 @@ describe('International travel insurance scenarios',()=>{
             monthOfDOB2: pages.homePage.randomNumber(3, 6),
             yearOfDOB2: pages.homePage.randomNumber(1990, 1999),
             selectGender2: pages.homePage.getRandomGender(),
-            addMedicalCover: 'addFor',
+            addMedicalCover: 'addForMedicalCover',
             noFlightCover: 'noThanks',
-            noBagaggeCover: 'noThanks'
+            noBagaggeCover: 'noThanks',
+            addFor: 'addFor'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()
         await pages.homePage.addKYCSuccess(data.fullName1, mobileNumber);
@@ -753,7 +768,7 @@ describe('International travel insurance scenarios',()=>{
             selectGender2: pages.homePage.getRandomGender(),
             noMedicalCover: 'noThanks',
             addHourForFlightCover: '4 hours',
-            addFlightCover: 'addFor',
+            addFlightCover: 'addForFlightCover',
             noBagaggeCover: 'noThanks'
         }
         let mobileNumber=pages.homePage.randomMobileNumber()

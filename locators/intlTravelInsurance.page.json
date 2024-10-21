@@ -78,8 +78,17 @@
     "unbundledPlan" : {
         "xpath" : "//div[text()='Choose the coverages you need']"
     },
+    "addForMedicalCover" : {
+        "xpath" : "(//*[contains(text(),'Add medical cover')])[$]"
+    },
+    "addForFlightCover" : {
+        "xpath" : "(//*[contains(text(),'Add flight cover')])[$]"
+    },
+    "addForBagaggeCover" : {
+        "xpath" : "(//*[contains(text(),'Add baggage cover')])[$]"
+    },
     "addFor" : {
-        "xpath" : "(//*[contains(text(),'Add for')])[$]"
+        "xpath" : "(//*[contains(text(),'Add for')])[1]"
     },
     "noThanks" : {
         "xpath" : "(//*[contains(text(),'No, I am willing to take the risk')])[$]"

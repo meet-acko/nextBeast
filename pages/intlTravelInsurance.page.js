@@ -135,33 +135,41 @@ class IntlTravelInsurancePage extends Helper{
         //await this.clickElement(await this.findElement('continueCTA'))
         if ('addMedicalCover' in data) {
             await this.handleClick(data.addMedicalCover, 1);
-            await this.handleClick(data.addMedicalCover, 2);
+            if('addFor' in data){
+                await this.handleClick(data.addFor,1)
+            }
             await this.handleClick(data.noFlightCover, 1);
             await this.handleClick(data.noBagaggeCover, 1);
         }     
-        if ('allCovers' in data) {
+        if ('allCoversForMedicalCover' in data) {
             await this.handleClick('priceSet', data.priceSet);
-            await this.handleClick(data.allCovers, 1);
-            await this.handleClick(data.allCovers, 2);
+            await this.handleClick(data.allCoversForMedicalCover, 1);
+            if('addFor' in data){
+                await this.handleClick(data.addFor,1)
+            }
             if ('addHourForFlightCover' in data) {
                 await this.clickElement(await this.findElement('hours', data.addHourForFlightCover))
             }
-            await this.handleClick(data.allCovers, 1);
-            await this.handleClick(data.allCovers, 1);
+            await this.handleClick(data.allCoversForFlightCover, 1);
+            await this.handleClick(data.allCoversForBagaggeCover, 1);
         }
         if('addFlightCover' in data){
             await this.handleClick(data.noMedicalCover, 1);
-            await this.handleClick(data.noMedicalCover, 2);
+            if('addFor' in data){
+                await this.handleClick(data.addFor,1)
+            }
             if ('addHourForFlightCover' in data) {
                 await this.clickElement(await this.findElement('hours', data.addHourForFlightCover))
             }
             await this.handleClick(data.addFlightCover, 1);
-            await this.handleClick(data.noBagaggeCover, 1);
+            await this.handleClick(data.noBagaggeCover, 1)
         }
         if ('addBagaggeCover' in data) {
             await this.sleep(1);
             await this.handleClick(data.noMedicalCover, 1);
-            await this.handleClick(data.noMedicalCover, 2);
+            if('addFor' in data){
+                await this.handleClick(data.addFor,1)
+            }
             await this.handleClick(data.noFlightCover, 1);
             await this.handleClick(data.addBagaggeCover, 1);
         }
