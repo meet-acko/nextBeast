@@ -3,8 +3,8 @@
         "xpath" : "(//p[text()='Travel'])[1]"
     },
     "pickFromOurStandardPlans" : {
-        "xpath" : "//*[contains(text(),'Pick from our standard plans')]",
-        "xpath2": "//*[contains(text(),'Pick from our standard plans')]//following-sibling::div[contains(text(),'Get')]"
+        "xpath" : "//*[contains(text(),'Select a pre-built plan')]",
+        "xpath2": "//*[contains(text(),'Select a pre-built plan')]//following-sibling::div[contains(text(),'Get')]"
     },
     "getIntlTravelInsurance" : {
         "xpath" : "//*[contains(text(),'Get international travel insurance')]"
@@ -76,7 +76,7 @@
         "xpath" : "(//*[text()='$']//following::*[text()='10'])[1]"
     },
     "unbundledPlan" : {
-        "xpath" : "//div[text()='Pay only for what you want']"
+        "xpath" : "//div[text()='Choose the coverages you need']"
     },
     "addFor" : {
         "xpath" : "(//*[contains(text(),'Add for')])[$]"
