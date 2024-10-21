@@ -710,7 +710,7 @@ describe('International travel insurance scenarios',()=>{
         await pages.paymentPage.sleep(1)
     })
 
-    it.only('Intl Travel buy journey for unbundled plan for 2 Adults 10 days period 100K SI only medical cover for USA', async()=>{
+    it('Intl Travel buy journey for unbundled plan for 2 Adults 10 days period 100K SI only medical cover for USA', async()=>{
         let data = {
             clickOnCountry1 : "United States of America (USA)",
             setMonth : 0,
