@@ -88,7 +88,7 @@
         "xpath" : "(//*[contains(text(),'Add baggage cover')])[$]"
     },
     "addFor" : {
-        "xpath" : "(//*[contains(text(),'Add for')])[1]"
+        "xpath" : "(//*[contains(text(),'Add for')])[$]"
     },
     "noThanks" : {
         "xpath" : "(//*[contains(text(),'No, I am willing to take the risk')])[$]"

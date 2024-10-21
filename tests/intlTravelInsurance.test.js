@@ -9,6 +9,7 @@ const pages={
 }
 
 describe('International travel insurance scenarios',()=>{
+
     it('Intl Travel buy journey for bundled plan for 1 Adult & 1 Child 10 days period and 50K SI', async()=>{
         let data = {
             clickOnCountry1 : "Indonesia",

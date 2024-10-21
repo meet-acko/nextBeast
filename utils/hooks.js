@@ -54,9 +54,9 @@ afterEach(async function() {
                         break;
                     }
                     case "webdriverio" : {
-                        await closeDriver(await global.driver);
                         await Helper.verifySoftAssert();
                         await allure.attachment(new Buffer.from(await driver.takeScreenshot(), "base64"), "image/png", "Screenshot");
+                        await closeDriver(await global.driver);
                         break;
                     }
                 }
