@@ -134,11 +134,13 @@ exports.closeDriver = async function closeDriver(driver){
         case "webdriverio" : {
             switch (properties.configType) {
                 case "web" : {
-                    await driver.deleteSession();
+                    //await driver.deleteSession();
+                    await driver.close();
                     break;
                 }
                 case "android" : {
-                    await driver.deleteSession();
+                    //await driver.deleteSession();
+                    await driver.close();
                     break;
                 }
             }
