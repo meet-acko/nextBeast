@@ -42,39 +42,81 @@ beforeEach(async function() {
 after(async function() {
 });
 
+// afterEach(async function() {
+//     try{
+//         switch (properties.configType) {
+//             case "web" : {
+//                 switch (properties.driverType) {
+//                     case "playwright" : {
+//                         await closeDriver(await global.driver);
+//                         await Helper.verifySoftAssert();
+//                         await allure.attachment(new Buffer.from(await page.screenshot({ fullPage: true }), "base64"), "image/png", "Screenshot");
+//                         break;
+//                     }
+//                     case "webdriverio" : {
+//                         await closeDriver(await global.driver);
+//                         await Helper.verifySoftAssert();
+//                         await allure.attachment(new Buffer.from(await page.screenshot({ fullPage: true }), "base64"), "image/png", "Screenshot");
+//                         break;
+//                     }
+//                 }
+//                 break;
+//             }
+//             case "android" : {
+//                 switch (properties.driverType) {
+//                     case "webdriverio" : {
+//                         await closeDriver(await global.driver);
+//                         await Helper.verifySoftAssert();
+//                         await allure.attachment(new Buffer.from(await driver.takeScreenshot(), "base64"), "image/png", "Screenshot");
+//                         break;
+//                     }
+//                 }
+//                 break;
+//             }
+//         }
+//     }catch(error){
+//         console.log(error)
+//     }
+// });
+
 afterEach(async function() {
-    try{
+    try {
+        // Add your screenshot capturing logic
+        let screenshot;
         switch (properties.configType) {
-            case "web" : {
+            case "web": {
                 switch (properties.driverType) {
-                    case "playwright" : {
+                    case "playwright": {
+                        screenshot = await global.page.screenshot({ fullPage: true });
                         await closeDriver(await global.driver);
                         await Helper.verifySoftAssert();
-                        await allure.attachment(new Buffer.from(await page.screenshot({ fullPage: true }), "base64"), "image/png", "Screenshot");
+                        await allure.attachment('Screenshot', new Buffer.from(screenshot, 'base64'), 'image/png');
                         break;
                     }
-                    case "webdriverio" : {
+                    case "webdriverio": {
+                        screenshot = await global.page.screenshot({ fullPage: true });
                         await closeDriver(await global.driver);
                         await Helper.verifySoftAssert();
-                        await allure.attachment(new Buffer.from(await page.screenshot({ fullPage: true }), "base64"), "image/png", "Screenshot");
+                        await allure.attachment('Screenshot', new Buffer.from(screenshot, 'base64'), 'image/png');
                         break;
                     }
                 }
                 break;
             }
-            case "android" : {
+            case "android": {
                 switch (properties.driverType) {
-                    case "webdriverio" : {
+                    case "webdriverio": {
+                        screenshot = await global.driver.takeScreenshot();
                         await closeDriver(await global.driver);
                         await Helper.verifySoftAssert();
-                        await allure.attachment(new Buffer.from(await driver.takeScreenshot(), "base64"), "image/png", "Screenshot");
+                        await allure.attachment('Screenshot', new Buffer.from(screenshot, 'base64'), 'image/png');
                         break;
                     }
                 }
                 break;
             }
         }
-    }catch(error){
-        console.log(error)
+    } catch (error) {
+        console.log(error);
     }
 });
