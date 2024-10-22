@@ -44,7 +44,6 @@ after(async function() {
 
 afterEach(async function() {
     try{
-        let screenshot;
         switch (properties.configType) {
             case "web" : {
                 switch (properties.driverType) {
@@ -55,7 +54,9 @@ afterEach(async function() {
                         break;
                     }
                     case "webdriverio" : {
-                        screenshot = await global.driver.takeScreenshot();
+                        await closeDriver(await global.driver);
+                        await Helper.verifySoftAssert();
+                        await allure.attachment(new Buffer.from(await page.screenshot({ fullPage: true }), "base64"), "image/png", "Screenshot");
                         break;
                     }
                 }
@@ -73,13 +74,6 @@ afterEach(async function() {
                 break;
             }
         }
-        await Helper.verifySoftAssert();
-
-        if (screenshot) {
-            allure.addAttachment('Screenshot', Buffer.from(screenshot, 'base64'), 'image/png');
-        }
-
-        await closeDriver(await global.driver);
     }catch(error){
         console.log(error)
     }
