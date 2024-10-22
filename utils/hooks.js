@@ -42,43 +42,6 @@ beforeEach(async function() {
 after(async function() {
 });
 
-// afterEach(async function() {
-//     try{
-//         switch (properties.configType) {
-//             case "web" : {
-//                 switch (properties.driverType) {
-//                     case "playwright" : {
-//                         await closeDriver(await global.driver);
-//                         await Helper.verifySoftAssert();
-//                         await allure.attachment(new Buffer.from(await page.screenshot({ fullPage: true }), "base64"), "image/png", "Screenshot");
-//                         break;
-//                     }
-//                     case "webdriverio" : {
-//                         await closeDriver(await global.driver);
-//                         await Helper.verifySoftAssert();
-//                         await allure.attachment(new Buffer.from(await page.screenshot({ fullPage: true }), "base64"), "image/png", "Screenshot");
-//                         break;
-//                     }
-//                 }
-//                 break;
-//             }
-//             case "android" : {
-//                 switch (properties.driverType) {
-//                     case "webdriverio" : {
-//                         await closeDriver(await global.driver);
-//                         await Helper.verifySoftAssert();
-//                         await allure.attachment(new Buffer.from(await driver.takeScreenshot(), "base64"), "image/png", "Screenshot");
-//                         break;
-//                     }
-//                 }
-//                 break;
-//             }
-//         }
-//     }catch(error){
-//         console.log(error)
-//     }
-// });
-
 afterEach(async function() {
     try {
         // Add your screenshot capturing logic
@@ -87,17 +50,25 @@ afterEach(async function() {
             case "web": {
                 switch (properties.driverType) {
                     case "playwright": {
-                        screenshot = await page.screenshot({ fullPage: true });
+                        screenshot = await Helper.takeFullPageScreenshot();
+                        //screenshot = await page.screenshot({fullPage: true})
+                        //screenshot = await global.page.screenshot({fullPage: true})
                         await closeDriver(await global.driver);
                         await Helper.verifySoftAssert();
-                        await allure.attachment('Screenshot', new Buffer.from(screenshot, 'base64'), 'image/png');
+                        await allure.attachment('Screenshot', screenshot, 'image/png');
+                        //await allure.attachment('Screenshot', new Buffer.from(screenshot, 'base64'), 'image/png');
+                        //await allure.attachment(new Buffer.from(await page.screenshot({ fullPage: true }), "base64"), "image/png", "Screenshot");
                         break;
                     }
                     case "webdriverio": {
-                        screenshot = await page.screenshot({ fullPage: true });
+                        screenshot = await Helper.takeFullPageScreenshot();
+                        //screenshot = await page.screenshot({fullPage: true})
+                        //screenshot = await global.page.screenshot({fullPage: true})
                         await closeDriver(await global.driver);
                         await Helper.verifySoftAssert();
-                        await allure.attachment('Screenshot', new Buffer.from(screenshot, 'base64'), 'image/png');
+                        await allure.attachment('Screenshot', screenshot, 'image/png');
+                        //await allure.attachment('Screenshot', new Buffer.from(screenshot, 'base64'), 'image/png');
+                        //await allure.attachment(new Buffer.from(await page.screenshot({ fullPage: true }), "base64"), "image/png", "Screenshot");
                         break;
                     }
                 }
