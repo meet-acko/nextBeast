@@ -87,14 +87,14 @@ afterEach(async function() {
             case "web": {
                 switch (properties.driverType) {
                     case "playwright": {
-                        screenshot = await global.page.screenshot({ fullPage: true });
+                        screenshot = await page.screenshot({ fullPage: true });
                         await closeDriver(await global.driver);
                         await Helper.verifySoftAssert();
                         await allure.attachment('Screenshot', new Buffer.from(screenshot, 'base64'), 'image/png');
                         break;
                     }
                     case "webdriverio": {
-                        screenshot = await global.page.screenshot({ fullPage: true });
+                        screenshot = await page.screenshot({ fullPage: true });
                         await closeDriver(await global.driver);
                         await Helper.verifySoftAssert();
                         await allure.attachment('Screenshot', new Buffer.from(screenshot, 'base64'), 'image/png');
