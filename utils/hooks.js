@@ -1,6 +1,7 @@
 const { properties } = require('../utils/config');
 const { getDriver, closeDriver } = require('../utils/driverSetUp');
 const { Helper } = require('../utils/helper');
+const allure = require('allure-commandline');
 
 before(async function() {
 });
@@ -66,7 +67,8 @@ afterEach(async function() {
                         //screenshot = await global.page.screenshot({fullPage: true})
                         await closeDriver(await global.driver);
                         await Helper.verifySoftAssert();
-                        await allure.attachment('Screenshot', screenshot, 'image/png');
+                        //await allure.attachment('Screenshot', screenshot, 'image/png');
+                        await allure.attachment('Screenshot', Buffer.from(screenshot, 'base64'), 'image/png');
                         //await allure.attachment('Screenshot', new Buffer.from(screenshot, 'base64'), 'image/png');
                         //await allure.attachment(new Buffer.from(await page.screenshot({ fullPage: true }), "base64"), "image/png", "Screenshot");
                         break;
